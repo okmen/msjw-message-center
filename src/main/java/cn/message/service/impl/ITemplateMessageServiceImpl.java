@@ -11,6 +11,7 @@ import cn.message.bean.TemplateDataModel;
 import cn.message.bean.TemplateDataModel.Property;
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.dao.IMessageDao;
+import cn.message.model.TemplateMessageModel;
 import cn.message.service.ITemplateMessageService;
 import cn.message.utils.GsonUtil;
 import cn.message.utils.WebService4Wechat;
@@ -50,10 +51,10 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 		String json = WebService4Wechat.sendTemplateMessage(
 				iMessageCached.getToken(),
 				model);
-		Map<String, Object> resultMap = GsonUtil.fromJson(json, Map.class);
-		if(null != resultMap && null != resultMap.get("errcode")){ 
-			String errcode = resultMap.get("errcode").toString();
-			if("0".equals(errcode)){
+		TemplateMessageModel result = GsonUtil.fromJson(json, TemplateMessageModel.class);
+		if(null != result){ 
+			int errcode = result.getErrcode();
+			if(0 == errcode){
 				return true;
 			}
 		}
