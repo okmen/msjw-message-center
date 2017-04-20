@@ -186,15 +186,15 @@
 				<dubbo.registry.url><![CDATA[test-zookeeper.chudaokeji.me:2181]]></dubbo.registry.url>
 				<dubbo.monitor.address><![CDATA[test-monitor.chudaokeji.me:7070]]></dubbo.monitor.address>
 
-				<mysql.account.read.url><![CDATA[jdbc:mysql://rm-2zebn71x33j5h0430.mysql.rds.aliyuncs.com:3306/service?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8]]></mysql.account.read.url>
-				<mysql.account.read.username><![CDATA[db_chudaokeji]]></mysql.account.read.username>
-				<mysql.account.read.password><![CDATA[db_123456]]></mysql.account.read.password>
+				<mysql.message.read.url><![CDATA[jdbc:mysql://rm-2zebn71x33j5h0430.mysql.rds.aliyuncs.com:3306/service?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8]]></mysql.message.read.url>
+				<mysql.message.read.username><![CDATA[db_chudaokeji]]></mysql.message.read.username>
+				<mysql.message.read.password><![CDATA[db_123456]]></mysql.message.read.password>
 
-				<mysql.account.write.url><![CDATA[jdbc:mysql://rm-2zebn71x33j5h0430.mysql.rds.aliyuncs.com:3306/service?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8]]></mysql.account.write.url>
-				<mysql.account.write.username><![CDATA[db_chudaokeji]]></mysql.account.write.username>
-				<mysql.account.read.password><![CDATA[db_123456]]></mysql.account.read.password>
+				<mysql.message.write.url><![CDATA[jdbc:mysql://rm-2zebn71x33j5h0430.mysql.rds.aliyuncs.com:3306/service?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8]]></mysql.message.write.url>
+				<mysql.message.write.username><![CDATA[db_chudaokeji]]></mysql.message.write.username>
+				<mysql.message.read.password><![CDATA[db_123456]]></mysql.message.read.password>
 
-				<redis.user-center.configstr><![CDATA[account-center1:r-2ze5901305ba84b4.redis.rds.aliyuncs.com:6379,user-center2:r-2ze5901305ba84b4.redis.rds.aliyuncs.com:6379]]></redis.user-center.configstr>
+				<redis.user-center.configstr><![CDATA[message-center1:r-2ze5901305ba84b4.redis.rds.aliyuncs.com:6379,user-center2:r-2ze5901305ba84b4.redis.rds.aliyuncs.com:6379]]></redis.user-center.configstr>
 				<redis.user-center.password><![CDATA[Redis123456]]></redis.user-center.password>
 
 				<env.url_prefix><![CDATA[test.]]></env.url_prefix>
