@@ -66,7 +66,8 @@ public class MenuModel {
 	 */
 	public String init(){
 		MenuModel menuModel = new MenuModel();
-		Button button = menuModel.new Button("start_level_user","星级用户","view","https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65a828b7abc4516d&redirect_uri=http%3A%2F%2Fgxg.tunnel.qydev.com%2Fweb%2Foauth%2Fcallback.html&response_type=code&scope=snsapi_userinfo&state=http://np.tunnel.qydev.com#wechat_redirect");
+		//Button button = menuModel.new Button("start_level_user","星级用户","view","https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65a828b7abc4516d&redirect_uri=http%3A%2F%2Fgxg.tunnel.qydev.com%2Fweb%2Foauth%2Fcallback.html&response_type=code&scope=snsapi_userinfo&state=http://np.tunnel.qydev.com#wechat_redirect");
+		Button button = menuModel.new Button("start_level_user","星级用户","view","https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65a828b7abc4516d&redirect_uri=http%3A%2F%2Fgxg.tunnel.qydev.com%2Foauth%2Fcallback.html&response_type=code&scope=snsapi_userinfo&state=http://np.tunnel.qydev.com#wechat_redirect");
 		Button button2 = menuModel.new Button("info_query","信息查询",null,null);
 		button2.setSub_button(new Button[]{
 				menuModel.new Button("convenience_information","便民信息","click",null),

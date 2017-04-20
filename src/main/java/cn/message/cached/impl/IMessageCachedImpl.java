@@ -13,24 +13,79 @@ import cn.sdk.serialization.ISerializeManager;
 @Service
 public class IMessageCachedImpl implements IMessageCached{
 	protected Logger log = Logger.getLogger(this.getClass());
+
+	/**
+	 * 用户id
+	 */
+	@Value("${userid}")
+	private String userid;
+
+	/**
+	 * 用户密码
+	 */
+	@Value("${userpwd}")
+	private String userpwd;
+
+	/**
+	 * 请求地址
+	 */
+	@Value("${url}")
+	private String url;
+
+	/**
+	 * 方法
+	 */
+	@Value("${method}")
+	private String method;
+
+	/**
+	 * 秘钥
+	 */
+	@Value("${key}")
+	private String key;
+
+	/**
+	 * 微信appId
+	 */
+	@Value("${appid}")
+	private String appid;
+
+	/**
+	 * 微信token
+	 */
+	@Value("${token}")
+	private String token;
+
+	/**
+	 * 微信appsecret
+	 */
+	@Value("${appsecret}")
+	private String appsecret;
+	
+	/**
+	 * 微信 accessTokentime
+	 */
+	@Value("${accessTokentime}")
+	private int accessTokentime;
+
 	@Autowired
 	@Qualifier("jedisCacheManagerImpl")
 	private ICacheManger<String> cacheManger;
-	
+
 	@Autowired
 	@Qualifier("jedisCacheManagerImpl")
 	private ICacheManger<Object> objectcacheManger;
-	
+
 	@Autowired
-	private ISerializeManager< Map<String, String> > serializeManager;
-	
-	public String insertToken(String token) {
-	    cacheManger.set(IConfig.ACCESS_TOKEN_REDIS, token, tokenExprieTime);
-        return token;
-    }
+	private ISerializeManager<Map<String, String>> serializeManager;
+
+	public String insertAccessToken(String token) {
+		cacheManger.set(IConfig.ACCESS_TOKEN_REDIS, token, accessTokentime);
+		return token;
+	}
 
 	@Override
-	public String getToken() {
+	public String getAccessToken() {
 		String token = cacheManger.get(IConfig.ACCESS_TOKEN_REDIS);
 		if(null == token || "".equals(token)){
 			initTokenAndTicket();
@@ -41,7 +96,7 @@ public class IMessageCachedImpl implements IMessageCached{
 
 	@Override
 	public String insertTicket(String ticket) {
-		cacheManger.set(IConfig.TICKET_REDIS, ticket, tokenExprieTime);
+		cacheManger.set(IConfig.TICKET_REDIS, ticket, accessTokentime);
 		return ticket;
 	}
 
@@ -60,11 +115,11 @@ public class IMessageCachedImpl implements IMessageCached{
 	 */
 	private void initTokenAndTicket() {
 		try {
-			Map<String, Object> map = WebService4Wechat.getAccessToken();
+			Map<String, Object> map = WebService4Wechat.getAccessToken(appid, appsecret);
 			Object token = map.get("access_token");
 			if(null != token && !"".equals(token)){
 				//存入redis
-				insertToken(token.toString());
+				insertAccessToken(token.toString());
 				
 				Map<String, Object> jsapMap = WebService4Wechat.getJsapiTicket(token.toString());
 				Object ticket = jsapMap.get("ticket");
@@ -74,7 +129,35 @@ public class IMessageCachedImpl implements IMessageCached{
 				}
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage()+"获取 token失败");
+			log.error("获取 token失败",e);
 		}
+	}
+	
+	public String getUserid() {
+		return userid;
+	}
+	public String getUserpwd() {
+		return userpwd;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public String getMethod() {
+		return method;
+	}
+	public String getKey() {
+		return key;
+	}
+	public String getAppid() {
+		return appid;
+	}
+	public String getToken() {
+		return token;
+	}
+	public String getAppsecret() {
+		return appsecret;
+	}
+	public int getAccessTokentime() {
+		return accessTokentime;
 	}
 }

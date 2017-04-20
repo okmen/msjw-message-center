@@ -30,7 +30,13 @@ public class IMobileMessageServiceImpl implements IMobileMessageService {
 
 	@Override
 	public boolean sendMessage(String mobile, String content) {
-		String url = "http://123.56.180.216:19002/xxfbpt/services/xxfbptservice";
+		String url = iMessageCached.getUrl();
+		String method = iMessageCached.getMethod();
+		String jkid = "sms";//接口id jkid
+		String userId = iMessageCached.getUserid();
+		String userPwd = iMessageCached.getUserpwd();
+		String key = iMessageCached.getKey();
+		
 		StringBuffer sb = new StringBuffer();
 		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 		sb.append("<request>");
@@ -41,22 +47,17 @@ public class IMobileMessageServiceImpl implements IMobileMessageService {
 		sb.append("</request>");
 
 		String xml = sb.toString().replace(".$mobile.", mobile).replace(".$content.", content);
-		String method = "xxptSchuding";
-		String jkid = "sms";
-		
-		boolean bool = false;
 		JSONObject jsonObject;
 		try {
-			jsonObject = WebServiceClient.getInstance().requestWebService(url, method, jkid, xml.toString(),"WX02","WX02@168","94D863D9BE7FB032E6A19430CC892610");
+			jsonObject = WebServiceClient.getInstance().requestWebService(url, method, jkid, xml.toString(),userId,userPwd,key);
 			logger.info(mobile+"短信发送结果:"+jsonObject.toJSONString());
 			if(StringUtils.isNotBlank(jsonObject.getString("code")) && _SUCCESS.equals(jsonObject.getString("code"))){
-				bool = true;
+				return true;
 			}
 		} catch (Exception e) {
 			logger.error("手机短信发送异常",e);
-			bool = false;
 		}
-		return bool;
+		return false;
 	}
 	
 	public static void main(String[] args) {

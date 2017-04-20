@@ -145,11 +145,6 @@
 				<redis.user-center.configstr><![CDATA[message-center1:192.168.1.121:6379,user-center2:192.168.1.121:6379]]></redis.user-center.configstr>
 				
 				
-				<accessToken.time>86400</accessToken.time>
-				<refreshToken.time>2592000</refreshToken.time>
-                <encypt.access.token.time>86400</encypt.access.token.time>
-             
-                
 				<env.url_prefix><![CDATA[test.]]></env.url_prefix>
 				<log4j.rootLogger><![CDATA[debug,R,stdout]]></log4j.rootLogger>
 				<log4j.choumeiLevel><![CDATA[debug]]></log4j.choumeiLevel>
@@ -165,6 +160,12 @@
 				<jiaojing.url>http://123.56.180.216:19002/xxfbpt/services/xxfbptservice</jiaojing.url>
 				<jiaojing.method>xxptSchuding</jiaojing.method>
 				<jiaojing.key>94D863D9BE7FB032E6A19430CC892610</jiaojing.key>
+				
+				<!-- 微信参数 -->
+				<jiaojing.wechat.appid>wx65a828b7abc4516d</jiaojing.wechat.appid>
+				<jiaojing.wechat.token>takeoutsale</jiaojing.wechat.token>
+				<jiaojing.wechat.appsecret>d4624c36b6795d1d99dcf0547af5443d</jiaojing.wechat.appsecret>
+				<accessToken.time>7200</accessToken.time>
 			</properties>
 		</profile>
 
@@ -197,11 +198,6 @@
 
 				<redis.user-center.configstr><![CDATA[user-center1:test-redis1.choumei.me:6379,user-center2:test-redis1.choumei.me:6379]]></redis.user-center.configstr>
 
-                <!-- accessToken有效期60秒 -->
-                <accessToken.time>86400</accessToken.time>
-				<refreshToken.time>2592000</refreshToken.time>
-                <encypt.access.token.time>86400</encypt.access.token.time>
-                
 				<env.url_prefix><![CDATA[test.]]></env.url_prefix>
 				<log4j.rootLogger><![CDATA[error,R]]></log4j.rootLogger>
 				<log4j.choumeiLevel><![CDATA[debug]]></log4j.choumeiLevel>
@@ -218,6 +214,11 @@
 				<jiaojing.method>xxptSchuding</jiaojing.method>
 				<jiaojing.key>94D863D9BE7FB032E6A19430CC892610</jiaojing.key>
 
+				<!-- 微信参数 -->
+				<jiaojing.wechat.appid>wx48a8104946507c1e</jiaojing.wechat.appid>
+				<jiaojing.wechat.token>chudao88</jiaojing.wechat.token>
+				<jiaojing.wechat.appsecret>fa8978b9a67dc3cbfca17e0946c6efb8</jiaojing.wechat.appsecret>
+				<accessToken.time>7200</accessToken.time>
 			</properties>
 		</profile>
 		

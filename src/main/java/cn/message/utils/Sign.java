@@ -13,7 +13,7 @@ public class Sign {
 	/**
 	 * 获取sdk授权信息
 	 */
-	public synchronized static Map<String, Object> sign(String ticket,String url){
+	public synchronized static Map<String, Object> sign(String ticket,String url,String appId){
 		Map<String, Object> map = new HashMap<String, Object>();
 		String noncestr = UUID.randomUUID().toString();
 		Long tempTimestamp = System.currentTimeMillis();
@@ -23,7 +23,7 @@ public class Sign {
 		map.put("timestamp", timestamp);
 		map.put("noncestr", noncestr);
 		map.put("signature", sha1);
-		map.put("appId", Constants.APP_ID);
+		map.put("appId", appId);
 		return map;
 	}
 }

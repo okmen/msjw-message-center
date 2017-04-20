@@ -4,13 +4,13 @@ public interface IMessageCached extends ICacheKey {
 	/**
      * 插入token信息
      */
-    public String insertToken(String token);
+    public String insertAccessToken(String token);
     
     /**
      * 获取token
      * @return
      */
-    public String getToken();
+    public String getAccessToken();
     
     /**
      * 插入ticket信息

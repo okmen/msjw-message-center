@@ -49,7 +49,7 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 		}
 		model.setData(propertys);
 		String json = WebService4Wechat.sendTemplateMessage(
-				iMessageCached.getToken(),
+				iMessageCached.getAccessToken(),
 				model);
 		TemplateMessageModel result = GsonUtil.fromJson(json, TemplateMessageModel.class);
 		if(null != result){ 

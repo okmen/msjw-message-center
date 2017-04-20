@@ -15,7 +15,6 @@ import cn.message.bean.message.request.IMessage;
 import cn.message.bean.message.response.TextResponseMessage;
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.service.IWechatService;
-import cn.message.utils.Constants;
 import cn.message.utils.OpenIdUtil;
 import cn.message.utils.SHA1;
 import cn.message.utils.Sign;
@@ -35,7 +34,7 @@ public class IWechatServiceImpl implements IWechatService {
 	
 	@Override
 	public boolean checkServer(String signature, String timestamp, String nonce) {
-		String [] array = new String[]{Constants.TOKEN,timestamp,nonce};
+		String [] array = new String[]{iMessageCached.getToken(),timestamp,nonce};
 		Arrays.sort(array);
 		String str = "";
 		for (int i = 0; i < array.length; i++) {
@@ -83,7 +82,7 @@ public class IWechatServiceImpl implements IWechatService {
 
 	@Override
 	public String createMenu() {
-		return WebService4Wechat.createMenu(iMessageCached.getToken());
+		return WebService4Wechat.createMenu(iMessageCached.getAccessToken());
 	}
 
 	@Override
@@ -92,8 +91,8 @@ public class IWechatServiceImpl implements IWechatService {
 		String openId ="";
 		if (!"authdeny".equals(code)) {
 			WeiXinOauth2Token weiXinOauth2Token = OpenIdUtil
-					.getOauth2AccessToken(Constants.APP_ID,
-							Constants.APP_SECRET, code);
+					.getOauth2AccessToken(iMessageCached.getAppid(),
+							iMessageCached.getAppsecret(), code);
 			openId = weiXinOauth2Token.getOpenId();
 			//这个accessToken不同于之前的
 			String oauthToken = weiXinOauth2Token.getAccessToken();
@@ -122,7 +121,7 @@ public class IWechatServiceImpl implements IWechatService {
 	@Override
 	public Map<String, Object> sdkConfig(String url) {
 		//生成签名
-		Map<String, Object> map = Sign.sign(iMessageCached.getTicket(), url);
+		Map<String, Object> map = Sign.sign(iMessageCached.getTicket(), url , iMessageCached.getAppid());
 		return map;
 	}
 }

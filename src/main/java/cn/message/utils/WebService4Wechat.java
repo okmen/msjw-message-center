@@ -19,9 +19,9 @@ public class WebService4Wechat {
 	 * 获取全局accessToken
 	 * @return
 	 */
-	public static Map<String, Object> getAccessToken() {
+	public static Map<String, Object> getAccessToken(String appId,String appsecret) {
 		String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
-				+ Constants.APP_ID + "&secret=" + Constants.APP_SECRET;
+				+ appId + "&secret=" + appsecret;
 		String result = HttpRequest.sendGet(url);
 		Map<String, Object> map = GsonUtil.fromJson(result, Map.class);
 		return map;
