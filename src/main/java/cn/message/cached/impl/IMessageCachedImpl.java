@@ -67,6 +67,18 @@ public class IMessageCachedImpl implements IMessageCached{
 	 */
 	@Value("${accessTokentime}")
 	private int accessTokentime;
+	
+	/**
+	 * javaDomain java 环境域名
+	 */
+	@Value("${javaDomain}")
+	private String javaDomain;
+	
+	/**
+	 * h5环境域名
+	 */
+	@Value("${h5Domain}")
+	private String h5Domain;
 
 	@Autowired
 	@Qualifier("jedisCacheManagerImpl")
@@ -159,5 +171,11 @@ public class IMessageCachedImpl implements IMessageCached{
 	}
 	public int getAccessTokentime() {
 		return accessTokentime;
+	}
+	public String getJavaDomain() {
+		return javaDomain;
+	}
+	public String getH5Domain() {
+		return h5Domain;
 	}
 }

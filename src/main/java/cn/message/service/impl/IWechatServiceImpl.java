@@ -82,7 +82,7 @@ public class IWechatServiceImpl implements IWechatService {
 
 	@Override
 	public String createMenu() {
-		return WebService4Wechat.createMenu(iMessageCached.getAccessToken());
+		return WebService4Wechat.createMenu(iMessageCached.getAccessToken(),iMessageCached.getAppid(),iMessageCached.getJavaDomain(),iMessageCached.getH5Domain());
 	}
 
 	@Override

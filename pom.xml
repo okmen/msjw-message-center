@@ -112,6 +112,7 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
+			<!-- 这个确定调用那个环境 -->
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
@@ -166,6 +167,9 @@
 				<jiaojing.wechat.token>takeoutsale</jiaojing.wechat.token>
 				<jiaojing.wechat.appsecret>d4624c36b6795d1d99dcf0547af5443d</jiaojing.wechat.appsecret>
 				<accessToken.time>7200</accessToken.time>
+				
+				<java.domain>gxg.tunnel.qydev.com</java.domain>
+				<h5.domain>np.tunnel.qydev.com</h5.domain>
 			</properties>
 		</profile>
 
@@ -221,6 +225,9 @@
 				<jiaojing.wechat.token>chudao88</jiaojing.wechat.token>
 				<jiaojing.wechat.appsecret>fa8978b9a67dc3cbfca17e0946c6efb8</jiaojing.wechat.appsecret>
 				<accessToken.time>7200</accessToken.time>
+				
+				<java.domain>testh5.chudaokeji.com</java.domain>
+				<h5.domain>testjava.chudaokeji.com</h5.domain>
 			</properties>
 		</profile>
 		

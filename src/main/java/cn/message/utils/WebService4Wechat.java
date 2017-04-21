@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import cn.message.bean.TemplateDataModel;
 import cn.message.bean.TemplateDataModel.Property;
+import cn.message.model.MenuModel;
 
 /**
  * 
@@ -77,9 +78,9 @@ public class WebService4Wechat {
 	 * @param accessToken
 	 * @return
 	 */
-	public static String createMenu(String accessToken){
+	public static String createMenu(String accessToken,String appId,String javaDomain,String h5Domain){
 		String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+accessToken;
-		return HttpRequest.sendPost4Wechat(url, new MenuModel().init());
+		return HttpRequest.sendPost4Wechat(url, new MenuModel().init(appId,javaDomain,h5Domain));
 	}
 	
 	/**

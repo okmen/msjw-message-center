@@ -1,5 +1,6 @@
 package cn.message.model;
 
+import cn.message.utils.EncodeUtil;
 import cn.message.utils.GsonBuilderUtil;
 
 public class MenuModel {
@@ -67,24 +68,32 @@ public class MenuModel {
 	 * 初始化菜单
 	 * @return
 	 */
-	public String init(){
+	public String init(String appId,String javaDomain,String h5Domain){
+		String url=
+				"https://open.weixin.qq.com/connect/oauth2/authorize" +
+						"?appid="+appId +
+						"&redirect_uri=" + EncodeUtil.encodeUTF8("http://"+javaDomain+"/oauth/callback.html")+
+						"&response_type=code" +
+						"&scope=snsapi_userinfo" +
+						"&state=_STATE_"+
+						"#wechat_redirect";
 		MenuModel menuModel = new MenuModel();
-		Button button = menuModel.new Button("start_level_user","星级用户","view","https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65a828b7abc4516d&redirect_uri=http%3A%2F%2Fgxg.tunnel.qydev.com%2Fweb%2Foauth%2Fcallback.html&response_type=code&scope=snsapi_userinfo&state=http://np.tunnel.qydev.com#wechat_redirect");
+		Button button = menuModel.new Button("start_level_user","星级用户","view",url.replace("_STATE_", "http://"+h5Domain));
 		Button button2 = menuModel.new Button("info_query","信息查询",null,null);
 		button2.setSub_button(new Button[]{
 				menuModel.new Button("convenience_information","便民信息","click",null),
 				menuModel.new Button("service_guide","办事指南","click",null),
-				menuModel.new Button("trailer_query","拖车查询","view","http://zsc.tunnel.qydev.com/"),
+				menuModel.new Button("trailer_query","拖车查询","view",url.replace("_STATE_", "http://"+h5Domain+"/moveCar")),
 				menuModel.new Button("electronic_police_distributed_query","电子警察分布查询","view","http://zsc.tunnel.qydev.com/"),
-				menuModel.new Button("traffic_information_query","交通违法信息查询","click","http://zsc.tunnel.qydev.com/")});
+				menuModel.new Button("traffic_information_query","交通违法信息查询","click",url.replace("_STATE_","http://"+ h5Domain+"/queryLawless"))});
 		
 		
 		Button button3 = menuModel.new Button("traffic_police_interaction","交警互动",null,null);
 		button3.setSub_button(new Button[]{
-			menuModel.new Button("user_center","个人中心","view","http://zsc.tunnel.qydev.com/"),
+			menuModel.new Button("user_center","个人中心","view",url.replace("_STATE_", "http://"+h5Domain+"/personalCenter")),
 			menuModel.new Button("fault_reporting","故障报错和使用建议","view","http://zsc.tunnel.qydev.com/"),
 			menuModel.new Button("report_information_inquiry","举报信息查询","view","http://zsc.tunnel.qydev.com/"),
-			menuModel.new Button("readily_report","随手拍举报","view","http://zsc.tunnel.qydev.com/"),
+			menuModel.new Button("readily_report","随手拍举报","view",url.replace("_STATE_", "http://"+h5Domain+"/takePicturesInform")),
 			menuModel.new Button("emergency_traffic","突发路况","view","http://zsc.tunnel.qydev.com/")
 		});
 		
