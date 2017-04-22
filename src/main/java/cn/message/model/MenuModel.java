@@ -80,24 +80,25 @@ public class MenuModel {
 						"&scope=snsapi_userinfo" +
 						"&state=_STATE_"+
 						"#wechat_redirect";
+		String mainUrl = url.replace("_STATE_", "http://"+h5Domain);
 		MenuModel menuModel = new MenuModel();
-		Button button = menuModel.new Button("start_level_user","星级用户","view",url.replace("_STATE_", "http://"+h5Domain));
+		Button button = menuModel.new Button("start_level_user","星级用户","view",mainUrl);
 		Button button2 = menuModel.new Button("info_query","信息查询",null,null);
 		button2.setSub_button(new Button[]{
 				menuModel.new Button("convenience_information","便民信息","click",null),
 				menuModel.new Button("service_guide","办事指南","click",null),
-				menuModel.new Button("trailer_query","拖车查询","view",url.replace("_STATE_", "http://"+h5Domain+"/#/moveCar")),
-				menuModel.new Button("electronic_police_distributed_query","电子警察分布查询","view",""),
-				menuModel.new Button("traffic_information_query","交通违法信息查询","click",url.replace("_STATE_","http://"+ h5Domain+"/#/queryLawless"))});
+				menuModel.new Button("trailer_query","拖车查询","view", mainUrl+"/#/moveCar"),
+				menuModel.new Button("electronic_police_distributed_query","电子警察分布查询","view",mainUrl),
+				menuModel.new Button("traffic_information_query","交通违法信息查询","click",null)});
 		
 		
 		Button button3 = menuModel.new Button("traffic_police_interaction","交警互动",null,null);
 		button3.setSub_button(new Button[]{
-			menuModel.new Button("user_center","个人中心","view",url.replace("_STATE_", "http://"+h5Domain+"/#/personalCenter")),
-			menuModel.new Button("fault_reporting","故障报错和使用建议","view",""),
-			menuModel.new Button("report_information_inquiry","举报信息查询","view",""),
-			menuModel.new Button("readily_report","随手拍举报","view",url.replace("_STATE_", "http://"+h5Domain+"/#/takePicturesInform")),
-			menuModel.new Button("emergency_traffic","突发路况","view","")
+			menuModel.new Button("user_center","个人中心","view",	mainUrl+"/#/personalCenter"),
+			menuModel.new Button("fault_reporting","故障报错和使用建议","view",mainUrl),
+			menuModel.new Button("report_information_inquiry","举报信息查询","view",mainUrl),
+			menuModel.new Button("readily_report","随手拍举报","view", mainUrl+"/#/takePicturesInform"),
+			menuModel.new Button("emergency_traffic","突发路况","view",mainUrl)
 		});
 		
 		menuModel.setButton(new Button[]{button,button2,button3});
@@ -108,6 +109,8 @@ public class MenuModel {
 	}
 	
 	public static void main(String[] args) {
-		init("wx48a8104946507c1e", "testjava.chudaokeji.com", "testh5.chudaokeji.com");
+		//init("wx48a8104946507c1e", "testjava.chudaokeji.com", "testh5.chudaokeji.com");
+		System.out.println(init("wx65a828b7abc4516d", "gxg.tunnel.qydev.com", "np.tunnel.qydev.com"));
+		logger.info("ok");
 	}
 }	

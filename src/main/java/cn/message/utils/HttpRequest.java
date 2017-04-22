@@ -14,7 +14,7 @@ import java.net.URLConnection;
 import org.apache.log4j.Logger;
 
 public class HttpRequest {
-	private static Logger logger = Logger.getLogger(HttpRequest.class.getName());
+	private static Logger logger = Logger.getLogger(HttpRequest.class);
     /**
      * 向指定URL发送GET方法的请求
      * @param url
@@ -46,11 +46,8 @@ public class HttpRequest {
                 result += line;
             }
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
-            e.printStackTrace();
-        }
-        // 使用finally块来关闭输入流
-        finally {
+        	logger.error("发送GET请求出现异常"+url,e);
+        }finally {
             try {
                 if (in != null) {
                     in.close();
@@ -111,11 +108,8 @@ public class HttpRequest {
                 result += line;
             }
         } catch (Exception e) {
-            System.out.println("发送 POST 请求出现异常！"+e);
-            e.printStackTrace();
-        }
-        //使用finally块来关闭输出流、输入流
-        finally{
+        	logger.error("发送 POST 请求出现异常"+url,e);
+        }finally{
             try{
                 if(out!=null){
                     out.close();
@@ -166,11 +160,9 @@ public class HttpRequest {
         	inputStream = null;
         	conn.disconnect();
 		} catch (ConnectException ce) {
-			logger.error("连接超时：", ce);
+			logger.error("连接超时"+requestUrl, ce);
         } catch (Exception e) {
-        	// TODO Auto-generated catch block
-        	e.printStackTrace();
-        	logger.error("发送微信post请求异常:",e);
+        	logger.error("发送微信post请求异常"+requestUrl,e);
 		}
 		logger.info(buffer.toString());
         return buffer.toString();

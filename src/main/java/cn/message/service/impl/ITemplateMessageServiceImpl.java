@@ -33,20 +33,26 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 
 	@Override
 	public boolean sendMessage(String openId,String templateId,String url,Map<String, Property> map) {
-		TemplateDataModel model = new TemplateDataModel();
-		model.setTouser(openId);
-		model.setTemplate_id(templateId);
-		model.setUrl(url);
-		model.setData(map);
-		String json = WebService4Wechat.sendTemplateMessage(
-				iMessageCached.getAccessToken(),
-				model);
-		TemplateMessageModel result = GsonUtil.fromJson(json, TemplateMessageModel.class);
-		if(null != result){ 
-			int errcode = result.getErrcode();
-			if(0 == errcode){
-				return true;
+		try {
+			TemplateDataModel model = new TemplateDataModel();
+			model.setTouser(openId);
+			model.setTemplate_id(templateId);
+			model.setUrl(url);
+			model.setData(map);
+			String json = WebService4Wechat.sendTemplateMessage(
+					iMessageCached.getAccessToken(),
+					model);
+			
+			logger.info("模板消息发送结果:"+json);
+			TemplateMessageModel result = GsonUtil.fromJson(json, TemplateMessageModel.class);
+			if(null != result){ 
+				int errcode = result.getErrcode();
+				if(0 == errcode){
+					return true;
+				}
 			}
+		} catch (Exception e) {
+			logger.error("发送模板消息异常:"+"openId="+openId+",templateId="+url+"map="+map,e);
 		}
 		return false;
 	}

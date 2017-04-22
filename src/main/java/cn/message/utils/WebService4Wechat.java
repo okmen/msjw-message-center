@@ -78,9 +78,19 @@ public class WebService4Wechat {
 	 * @param accessToken
 	 * @return
 	 */
-	public static String createMenu(String accessToken,String appId,String javaDomain,String h5Domain){
+	public static String createMenu(String accessToken,String json){
 		String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+accessToken;
-		return HttpRequest.sendPost4Wechat(url, new MenuModel().init(appId,javaDomain,h5Domain));
+		return HttpRequest.sendPost4Wechat(url, json);
+	}
+	
+	/**
+	 * 查询菜单
+	 * @param accessToken
+	 * @return
+	 */
+	public static String queryMenu(String accessToken){
+		String url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token="+accessToken;
+		return HttpRequest.sendGet(url);
 	}
 	
 	/**
@@ -94,21 +104,5 @@ public class WebService4Wechat {
 		String result = HttpRequest.sendGet(url);
 		Map<String, Object> map = GsonUtil.fromJson(result, Map.class);
 		return map;
-	}
-
-	public static void main(String[] args) {
-		TemplateDataModel model = new TemplateDataModel();
-		model.setTouser("oTlk3s3LVb9RYwlBNF-Euurz9mS4");
-		model.setTemplate_id("NPDRVXV-5SA2P2CK_rDeL4xRLg3aR3og1Sq3lcCuxOE");
-		model.setUrl("http://gxgnet.6655.la/recharge/index.jsp");
-		Map<String, TemplateDataModel.Property> map = new HashMap<String, TemplateDataModel.Property>();
-		Property property = model.new Property();
-		property.setValue("动感地带");
-		property.setColor("#173177");
-		map.put("serviceName", property);
-		model.setData(map);
-		sendTemplateMessage(
-				"BRgkTrrzhEeidLg_VXtvKiNHYOjuFo-00GOuTLS4UpyoodY1MVnhOp4-Rsw0bwK3QTdPoypTMEU_ZIPm80FfMXPK7AsNkQ16UIG9Z0H3Jx-GdL5emSNwccB7LwgYTs99MIMdAHAHDH",
-				model);
 	}
 }

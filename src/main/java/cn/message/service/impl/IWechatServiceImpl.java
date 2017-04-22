@@ -72,47 +72,43 @@ public class IWechatServiceImpl implements IWechatService {
 	        	 if("LOCATION".equals(event)){
 	        	 }
 	         }
-	         xml = message.toXml();
 		} catch (Exception e) {
-			logger.error("处理微信消息包异常",e);
+			logger.error("处理微信消息包异常:"+model.toString(),e);
 			return null;
 		}
 		return message;
 	}
 
 	@Override
-	public String createMenu() {
-		return WebService4Wechat.createMenu(iMessageCached.getAccessToken(),iMessageCached.getAppid(),iMessageCached.getJavaDomain(),iMessageCached.getH5Domain());
+	public String createMenu(String json) {
+		try {
+			return WebService4Wechat.createMenu(iMessageCached.getAccessToken(),json);
+		} catch (Exception e) {
+			logger.error("创建菜单异常:"+json);
+		}
+		return "";
 	}
 
 	@Override
 	public WechatUserInfo callback4OpenId(String code, String state) {
-		logger.info("state:"+state);
-		String openId ="";
 		if (!"authdeny".equals(code)) {
-			WeiXinOauth2Token weiXinOauth2Token = OpenIdUtil
-					.getOauth2AccessToken(iMessageCached.getAppid(),
-							iMessageCached.getAppsecret(), code);
-			openId = weiXinOauth2Token.getOpenId();
-			//这个accessToken不同于之前的
-			String oauthToken = weiXinOauth2Token.getAccessToken();
 			try {
-				
+				WeiXinOauth2Token weiXinOauth2Token = OpenIdUtil
+						.getOauth2AccessToken(iMessageCached.getAppid(),
+								iMessageCached.getAppsecret(), code);
+				String openId = weiXinOauth2Token.getOpenId();
+				//这个accessToken不同于之前的
+				String oauthToken = weiXinOauth2Token.getAccessToken();
 				Map<String, Object> map = WebService4Wechat.getUserInfo(oauthToken, openId);
 				String nickname = null != map.get("nickname") ? map.get("nickname").toString() : "";
 				String headimgurl = null != map.get("headimgurl") ? map.get("headimgurl").toString() : "";
-				logger.info("---------------openId:"+openId);
-				logger.info("---------------nickname:"+nickname);
-				logger.info("---------------headimgurl:"+headimgurl);
-				
 				WechatUserInfo userInfo = new WechatUserInfo();
 				userInfo.setOpenId(openId);
 				userInfo.setNickName(nickname);
 				userInfo.setHeadUrlImg(headimgurl);
 				return userInfo;
 			} catch (Exception e) {
-				logger.error("获取openId异常 ,展示错误页面",e);
-				return null;
+				logger.error("callback获取openId以及用户信息异常 :"+"code="+code+",state="+state,e);
 			}
 		}
 		return null;
@@ -120,8 +116,24 @@ public class IWechatServiceImpl implements IWechatService {
 
 	@Override
 	public Map<String, Object> sdkConfig(String url) {
-		//生成签名
-		Map<String, Object> map = Sign.sign(iMessageCached.getTicket(), url , iMessageCached.getAppid());
-		return map;
+		try {
+			//生成签名
+			Map<String, Object> map = Sign.sign(iMessageCached.getTicket(), url , iMessageCached.getAppid());
+			return map;
+		} catch (Exception e) {
+			logger.error("获取sdk签名算法异常："+"url="+url,e);
+		}
+		return null;
+	}
+
+	@Override
+	public String queryMenu() {
+		try {
+			String json = WebService4Wechat.queryMenu(iMessageCached.getAccessToken());
+			return json;
+		} catch (Exception e) {
+			logger.error("查询菜单异常",e);
+		}
+		return "";
 	}
 }
