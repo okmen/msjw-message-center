@@ -226,8 +226,8 @@
 				<jiaojing.wechat.appsecret>fa8978b9a67dc3cbfca17e0946c6efb8</jiaojing.wechat.appsecret>
 				<accessToken.time>7200</accessToken.time>
 				
-				<java.domain>testh5.chudaokeji.com</java.domain>
-				<h5.domain>testjava.chudaokeji.com</h5.domain>
+				<java.domain>testjava.chudaokeji.com</java.domain>
+				<h5.domain>testh5.chudaokeji.com</h5.domain>
 			</properties>
 		</profile>
 		

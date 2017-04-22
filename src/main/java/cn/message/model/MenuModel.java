@@ -1,9 +1,12 @@
 package cn.message.model;
 
+import org.apache.log4j.Logger;
+
 import cn.message.utils.EncodeUtil;
 import cn.message.utils.GsonBuilderUtil;
 
 public class MenuModel {
+	private static Logger logger = Logger.getLogger(MenuModel.class);
 	private Button [] button;
 	public Button[] getButton() {
 		return button;
@@ -68,7 +71,7 @@ public class MenuModel {
 	 * 初始化菜单
 	 * @return
 	 */
-	public String init(String appId,String javaDomain,String h5Domain){
+	public static String init(String appId,String javaDomain,String h5Domain){
 		String url=
 				"https://open.weixin.qq.com/connect/oauth2/authorize" +
 						"?appid="+appId +
@@ -83,24 +86,28 @@ public class MenuModel {
 		button2.setSub_button(new Button[]{
 				menuModel.new Button("convenience_information","便民信息","click",null),
 				menuModel.new Button("service_guide","办事指南","click",null),
-				menuModel.new Button("trailer_query","拖车查询","view",url.replace("_STATE_", "http://"+h5Domain+"/moveCar")),
-				menuModel.new Button("electronic_police_distributed_query","电子警察分布查询","view","http://zsc.tunnel.qydev.com/"),
-				menuModel.new Button("traffic_information_query","交通违法信息查询","click",url.replace("_STATE_","http://"+ h5Domain+"/queryLawless"))});
+				menuModel.new Button("trailer_query","拖车查询","view",url.replace("_STATE_", "http://"+h5Domain+"/#/moveCar")),
+				menuModel.new Button("electronic_police_distributed_query","电子警察分布查询","view",""),
+				menuModel.new Button("traffic_information_query","交通违法信息查询","click",url.replace("_STATE_","http://"+ h5Domain+"/#/queryLawless"))});
 		
 		
 		Button button3 = menuModel.new Button("traffic_police_interaction","交警互动",null,null);
 		button3.setSub_button(new Button[]{
-			menuModel.new Button("user_center","个人中心","view",url.replace("_STATE_", "http://"+h5Domain+"/personalCenter")),
-			menuModel.new Button("fault_reporting","故障报错和使用建议","view","http://zsc.tunnel.qydev.com/"),
-			menuModel.new Button("report_information_inquiry","举报信息查询","view","http://zsc.tunnel.qydev.com/"),
-			menuModel.new Button("readily_report","随手拍举报","view",url.replace("_STATE_", "http://"+h5Domain+"/takePicturesInform")),
-			menuModel.new Button("emergency_traffic","突发路况","view","http://zsc.tunnel.qydev.com/")
+			menuModel.new Button("user_center","个人中心","view",url.replace("_STATE_", "http://"+h5Domain+"/#/personalCenter")),
+			menuModel.new Button("fault_reporting","故障报错和使用建议","view",""),
+			menuModel.new Button("report_information_inquiry","举报信息查询","view",""),
+			menuModel.new Button("readily_report","随手拍举报","view",url.replace("_STATE_", "http://"+h5Domain+"/#/takePicturesInform")),
+			menuModel.new Button("emergency_traffic","突发路况","view","")
 		});
 		
 		menuModel.setButton(new Button[]{button,button2,button3});
 		
 		String json = GsonBuilderUtil.toJson(menuModel);
-		System.out.println(json);
+		logger.info(json);
 		return json;
+	}
+	
+	public static void main(String[] args) {
+		init("wx48a8104946507c1e", "testjava.chudaokeji.com", "testh5.chudaokeji.com");
 	}
 }	
