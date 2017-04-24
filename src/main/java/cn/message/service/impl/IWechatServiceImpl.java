@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 import cn.message.bean.WechatPostMessageModel;
 import cn.message.bean.WechatUserInfo;
 import cn.message.bean.WeiXinOauth2Token;
-import cn.message.bean.message.request.IMessage;
+import cn.message.bean.message.IMessage;
+import cn.message.bean.message.response.NewsResponseMessage;
 import cn.message.bean.message.response.TextResponseMessage;
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.service.IWechatService;
@@ -57,16 +58,31 @@ public class IWechatServiceImpl implements IWechatService {
 	         String msgType = model.getMsgType();
 	         //事件类型
 	         String event = model.getEvent(); 
+	         //文本
+	         String content = model.getContent();
 	 
-	         message = new TextResponseMessage(fromUserName,toUserName,new Date().getTime(),"敬请期待");
-	         
 	         if(msgType.equals(IMessage.MESSAGE_TYPE_TEXT)){
-	        	 message =  new TextResponseMessage(fromUserName,toUserName,new Date().getTime(),"在线客服待开通");
+	        	 message =  new TextResponseMessage(fromUserName,toUserName,new Date().getTime(),"未知关键字");
+	        	 
+	        	 if(IMessage.KEYWORD_SZ.equals(content.trim())){
+	        		 logger.info(IMessage.KEYWORD_SZ.equals(content.trim()));
+	        		 message = new NewsResponseMessage(fromUserName, toUserName, new Date().getTime(), 
+	        				 1, new String[]{"材料一 ▍ 深圳，改革开放的前沿"}, new String[]{""},
+	        				 new String[]{"https://wallet.chudaokeji.com/szjj/assets/images/conference/1.jpg"}, 
+	        				 	new String[]{"http://mp.weixin.qq.com/s?__biz=MjM5MTgxMjY3MQ==&mid=213953035&idx=1&sn=e6338f3fb27a00fb3b3c4446d16fa92e&scene=1&srcid=0909O5806wQ56HEHfGYkDxIs&from=singlemessage&isappinstalled=0#rd"});
+	        	 }
+	        	 
+	        	 if(IMessage.KEYWORD_SZJJ.equals(content.trim())){
+	        		 message = new NewsResponseMessage(fromUserName, toUserName, new Date().getTime(), 
+	        				 1, new String[]{"材料二 ▍ 深圳交警：2200人队伍、6500公里道路、320万辆车"}, new String[]{""},
+	        				 new String[]{"https://wallet.chudaokeji.com/szjj/assets/images/conference/2.jpg"}, 
+	        				 	new String[]{"http://mp.weixin.qq.com/s?__biz=MjM5MTgxMjY3MQ==&mid=213959266&idx=1&sn=5dd757eb432a12afe782a64a6cd57307&scene=1&srcid=0909nDN7yYsMkV8iNeOkDZdp&from=singlemessage&isappinstalled=0#rd"});
+	        	 }
 	         }
 	         
 	         if(msgType.equals(IMessage.MESSAGE_TYPE_EVENT)){
 	        	 if("CLICK".equals(event)){
-	        		 message =  new TextResponseMessage(fromUserName,toUserName,new Date().getTime(),"敬请期待");
+	        		 message =  new TextResponseMessage(fromUserName,toUserName,new Date().getTime(),"事件消息");
 	        	 }
 	        	 //用户打开公众号会推送这个包过来 (第一次推送的包)
 	        	 if("LOCATION".equals(event)){
