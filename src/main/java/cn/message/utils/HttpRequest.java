@@ -62,6 +62,7 @@ public class HttpRequest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+        logger.info(result);
         return result;
     }
 
