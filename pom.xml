@@ -144,7 +144,7 @@
 
 
 				<redis.user-center.configstr><![CDATA[message-center1:192.168.1.121:6379,user-center2:192.168.1.121:6379]]></redis.user-center.configstr>
-				
+				<redis.user-center.password><![CDATA[123456]]></redis.user-center.password>
 				
 				<env.url_prefix><![CDATA[test.]]></env.url_prefix>
 				<log4j.rootLogger><![CDATA[DEBUG,socket,R,stdout]]></log4j.rootLogger>
