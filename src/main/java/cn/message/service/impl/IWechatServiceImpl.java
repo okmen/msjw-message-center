@@ -20,8 +20,8 @@ import cn.message.utils.OpenIdUtil;
 import cn.message.utils.SHA1;
 import cn.message.utils.Sign;
 import cn.message.utils.WebService4Wechat;
-import cn.message.utils.dispatch.IMessageExecutor;
 import cn.message.utils.dispatch.MessageDispatch;
+import cn.message.utils.dispatch.executor.AbstractGeneralExecutor;
 /**
  * 处理微信逻辑
  * @author gxg
@@ -54,13 +54,13 @@ public class IWechatServiceImpl implements IWechatService {
 		IMessage message = null;
 		try {
 			//选择消息类型执行器
-			IMessageExecutor executor = MessageDispatch.dispatch(model.getMsgType());
+			AbstractGeneralExecutor executor = MessageDispatch.dispatch(model.getMsgType());
 			
 			//无法识别的消息类型? 不处理 直接返回null 抛给web 返回给微信
 			if(null == executor) return null;
 			
 			//具体执行
-			message = executor.execute(model);
+			message = executor.invoke(model);
 		} catch (Exception e) {
 			logger.error("处理微信消息包异常:"+model.toString(),e);
 			message =  null;

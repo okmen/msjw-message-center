@@ -155,8 +155,8 @@ public class MenuModel {
 	}
 	public static void main(String[] args) {
 		//init("wx48a8104946507c1e", "testjava.chudaokeji.com", "testh5.chudaokeji.com");
-		//initFromH5("wx65a828b7abc4516d", "gxg.tunnel.qydev.com", "np.tunnel.qydev.com");
-		initFromH5("wx48a8104946507c1e", "testjava.chudaokeji.com" ,"testh5.chudaokeji.com");
+		initFromH5("wx65a828b7abc4516d", "gxg.tunnel.qydev.com", "np.tunnel.qydev.com");
+		//initFromH5("wx48a8104946507c1e", "testjava.chudaokeji.com" ,"testh5.chudaokeji.com");
 		
 		logger.info("ok");
 	}

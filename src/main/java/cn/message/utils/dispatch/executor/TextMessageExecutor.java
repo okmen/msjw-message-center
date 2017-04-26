@@ -1,37 +1,24 @@
 package cn.message.utils.dispatch.executor;
 
-import java.util.Date;
-
-import org.apache.log4j.Logger;
-
 import cn.message.bean.WechatPostMessageModel;
 import cn.message.bean.message.IMessage;
+import cn.message.bean.message.response.BaseResponseMessage;
 import cn.message.bean.message.response.NewsResponseMessage;
 import cn.message.bean.message.response.TextResponseMessage;
-import cn.message.utils.dispatch.IMessageExecutor;
 
-public class TextMessageExecutor implements IMessageExecutor {
-	private Logger logger = Logger.getLogger(TextMessageExecutor.class);
+public class TextMessageExecutor extends AbstractGeneralExecutor{
 
 	@Override
-	public IMessage execute(WechatPostMessageModel model) {
-		String fromUserName = model.getFromUserName();
-		// 开发者微信号
-		String toUserName = model.getToUserName();
+	public BaseResponseMessage execute(WechatPostMessageModel model) {
 		// 文本
 		String content = model.getContent();
-
 		// 返回message
-		IMessage message = null;
+		BaseResponseMessage message = null;
 
-		message = new TextResponseMessage(fromUserName, toUserName,
-				new Date().getTime(), "未知关键字");
+		message = new TextResponseMessage("未知关键字");
 
 		if (IMessage.KEYWORD_SZ.equals(content.trim())) {
 			message = new NewsResponseMessage(
-					fromUserName,
-					toUserName,
-					new Date().getTime(),
 					1,
 					new String[] { "材料一 ▍ 深圳，改革开放的前沿" },
 					new String[] { "" },
@@ -41,9 +28,6 @@ public class TextMessageExecutor implements IMessageExecutor {
 
 		if (IMessage.KEYWORD_SZJJ.equals(content.trim())) {
 			message = new NewsResponseMessage(
-					fromUserName,
-					toUserName,
-					new Date().getTime(),
 					1,
 					new String[] { "材料二 ▍ 深圳交警：2200人队伍、6500公里道路、320万辆车" },
 					new String[] { "" },
@@ -53,9 +37,6 @@ public class TextMessageExecutor implements IMessageExecutor {
 
 		if (IMessage.KEYWORD_XJYH.equals(content.trim())) {
 			message = new NewsResponseMessage(
-					fromUserName,
-					toUserName,
-					new Date().getTime(),
 					1,
 					new String[] { "材料三 ▍ 注册星级用户，认证手机号码，尽享交警掌上便利服务" },
 					new String[] { "" },
@@ -65,9 +46,6 @@ public class TextMessageExecutor implements IMessageExecutor {
 
 		if (IMessage.KEYWORD_TX.equals(content.trim())) {
 			message = new NewsResponseMessage(
-					fromUserName,
-					toUserName,
-					new Date().getTime(),
 					1,
 					new String[] { "材料四 ▍ 微信“互联网+交管”解决方案" },
 					new String[] { "" },
@@ -77,9 +55,6 @@ public class TextMessageExecutor implements IMessageExecutor {
 
 		if (IMessage.KEYWORD_HW.equals(content.trim())) {
 			message = new NewsResponseMessage(
-					fromUserName,
-					toUserName,
-					new Date().getTime(),
 					1,
 					new String[] { "材料五 ▍ 华为，中国通信行业的龙头" },
 					new String[] { "" },
@@ -90,9 +65,6 @@ public class TextMessageExecutor implements IMessageExecutor {
 
 		if (IMessage.KEYWORD_SP.equals(content.trim())) {
 			message = new NewsResponseMessage(
-					fromUserName,
-					toUserName,
-					new Date().getTime(),
 					1,
 					new String[] { "材料六 ▍ “互联网+”时代的深圳交通管理" },
 					new String[] { "" },
@@ -103,9 +75,6 @@ public class TextMessageExecutor implements IMessageExecutor {
 
 		if (IMessage.KEYWORD_XCDCWJ.equals(content.trim())) {
 			message = new NewsResponseMessage(
-					fromUserName,
-					toUserName,
-					new Date().getTime(),
 					2,
 					new String[] { "", "问卷调查" },
 					new String[] { "", "" },
@@ -118,9 +87,6 @@ public class TextMessageExecutor implements IMessageExecutor {
 
 		if (IMessage.KEYWORD_DYZP.equals(content.trim())) {
 			message = new NewsResponseMessage(
-					fromUserName,
-					toUserName,
-					new Date().getTime(),
 					1,
 					new String[] { "深圳交警，一直在路上" },
 					new String[] { "" },
