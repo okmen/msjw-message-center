@@ -1,5 +1,6 @@
 package cn.message.service.impl;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
@@ -74,8 +75,7 @@ public class IWechatServiceImpl implements IWechatService {
 	public String createMenu() {
 		String json = "";
 		try {
-			String filePath = StringUtils.class.getClassLoader().getResource("/").getPath()+ iMessageCached.getMenuFile();  
-			json = MenuFileUtil.readFileByChars(filePath);
+			json = MenuFileUtil.readJarResourceFile(iMessageCached.getMenuFile());
 			return WebService4Wechat.createMenu(iMessageCached.getAccessToken(),json);
 		} catch (Exception e) {
 			logger.error("创建菜单异常:"+json);

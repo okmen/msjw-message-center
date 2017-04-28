@@ -3,8 +3,9 @@ package cn.message.utils.wechat;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-
+import java.io.Reader;
 public class MenuFileUtil {
 	/**
 	 * 读取menu.json文件 用来创建菜单
@@ -37,6 +38,28 @@ public class MenuFileUtil {
 			}
 		}
 		return content;
+	}
+	
+	/**
+	 * 读取jar包中的资源文件
+	 * @param fileName
+	 * @return
+	 */
+	public static String readJarResourceFile(String fileName){
+		InputStream in= MenuFileUtil.class.getClass().getResourceAsStream("/"+fileName);  
+        Reader f = new InputStreamReader(in);         
+        BufferedReader fb = new BufferedReader(f);  
+        StringBuffer sb = new StringBuffer("");  
+        String s = "";  
+        try {
+			while((s = fb.readLine()) != null) {  
+			    sb = sb.append(s);  
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+        return sb.toString();  
 	}
 	
 	public static void main(String[] args) {
