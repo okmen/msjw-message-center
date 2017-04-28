@@ -156,7 +156,7 @@ public class MenuModel {
 	public static void main(String[] args) {
 		//initFromH5("wx65a828b7abc4516d", "http://gxg.tunnel.qydev.com", "np.tunnel.qydev.com");
 		//initFromH5("wx48a8104946507c1e", "http://testjava.chudaokeji.com" ,"testh5.chudaokeji.com");
-		initFromH5("wx48a8104946507c1e", "https://szjjapi.stc.gov.cn","https://gzh.stc.gov.cn");
+		initFromH5("wx629dea91ac256691", "https://szjjapi.stc.gov.cn","https://gzh.stc.gov.cn");
 		
 		logger.info("ok");
 	}

@@ -289,9 +289,9 @@
 				<jiaojing.key>94D863D9BE7FB032E6A19430CC892610</jiaojing.key>
 				
 				<!-- 微信参数 -->
-				<jiaojing.wechat.appid>wx48a8104946507c1e</jiaojing.wechat.appid>
-				<jiaojing.wechat.token>chudao88</jiaojing.wechat.token>
-				<jiaojing.wechat.appsecret>fa8978b9a67dc3cbfca17e0946c6efb8</jiaojing.wechat.appsecret>
+				<jiaojing.wechat.appid>wx629dea91ac256691</jiaojing.wechat.appid>
+				<jiaojing.wechat.token>weixin_CHUDAO</jiaojing.wechat.token>
+				<jiaojing.wechat.appsecret>494b7acd4af6a9c7e959873ec166a603</jiaojing.wechat.appsecret>
 				<accessToken.time>7200</accessToken.time>
 				
 				<java.domain>https://szjjapi.stc.gov.cn</java.domain>
