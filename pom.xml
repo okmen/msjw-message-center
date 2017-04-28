@@ -465,11 +465,5 @@
 			<artifactId>message-center-api</artifactId>
 			<version>${message.center.api.version}</version>
 		</dependency>
-		
-		<dependency>
-  			<groupId>com.alipay.api</groupId>
- 			<artifactId>alipay-sdk</artifactId>
-  			<version>1.0</version>
-</dependency>
 	</dependencies>
 </project>
