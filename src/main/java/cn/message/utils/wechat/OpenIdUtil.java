@@ -1,7 +1,7 @@
-package cn.message.utils;
+package cn.message.utils.wechat;
 import java.util.Map;
 
-import cn.message.bean.WeiXinOauth2Token;
+import cn.message.model.wechat.WeiXinOauth2Token;
 /**
  * 实际通过微信用户授权换取code完成之后,通过该类方法获取openId以及用户accessToken(这个token只能获取用户信息)
  * @author gaoxigang

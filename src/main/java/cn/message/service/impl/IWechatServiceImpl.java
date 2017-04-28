@@ -4,24 +4,26 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.message.bean.WechatPostMessageModel;
-import cn.message.bean.WechatUserInfo;
-import cn.message.bean.WeiXinOauth2Token;
-import cn.message.bean.message.IMessage;
-import cn.message.bean.message.response.NewsResponseMessage;
-import cn.message.bean.message.response.TextResponseMessage;
 import cn.message.cached.impl.IMessageCachedImpl;
+import cn.message.model.wechat.WechatPostMessageModel;
+import cn.message.model.wechat.WechatUserInfo;
+import cn.message.model.wechat.WeiXinOauth2Token;
+import cn.message.model.wechat.message.IMessage;
+import cn.message.model.wechat.message.response.NewsMessage;
+import cn.message.model.wechat.message.response.TextMessage;
 import cn.message.service.IWechatService;
-import cn.message.utils.OpenIdUtil;
-import cn.message.utils.SHA1;
-import cn.message.utils.Sign;
-import cn.message.utils.WebService4Wechat;
-import cn.message.utils.dispatch.MessageDispatch;
-import cn.message.utils.dispatch.executor.AbstractGeneralExecutor;
+import cn.message.utils.wechat.MenuFileUtil;
+import cn.message.utils.wechat.OpenIdUtil;
+import cn.message.utils.wechat.SHA1;
+import cn.message.utils.wechat.Sign;
+import cn.message.utils.wechat.WebService4Wechat;
+import cn.message.utils.wechat.dispatch.MessageDispatch;
+import cn.message.utils.wechat.dispatch.executor.AbstractGeneralExecutor;
 /**
  * 处理微信逻辑
  * @author gxg
@@ -69,8 +71,11 @@ public class IWechatServiceImpl implements IWechatService {
 	}
 
 	@Override
-	public String createMenu(String json) {
+	public String createMenu() {
+		String json = "";
 		try {
+			String filePath = StringUtils.class.getClassLoader().getResource("/").getPath()+ iMessageCached.getMenuFile();  
+			json = MenuFileUtil.readFileByChars(filePath);
 			return WebService4Wechat.createMenu(iMessageCached.getAccessToken(),json);
 		} catch (Exception e) {
 			logger.error("创建菜单异常:"+json);

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import cn.message.cached.IMessageCached;
 import cn.message.config.IConfig;
-import cn.message.utils.WebService4Wechat;
+import cn.message.utils.wechat.WebService4Wechat;
 import cn.sdk.cache.ICacheManger;
 import cn.sdk.serialization.ISerializeManager;
 @Service
@@ -79,6 +79,9 @@ public class IMessageCachedImpl implements IMessageCached{
 	 */
 	@Value("${h5Domain}")
 	private String h5Domain;
+	
+	@Value("${menuFile}")
+	private String menuFile;
 
 	@Autowired
 	@Qualifier("jedisCacheManagerImpl")
@@ -177,5 +180,8 @@ public class IMessageCachedImpl implements IMessageCached{
 	}
 	public String getH5Domain() {
 		return h5Domain;
+	}
+	public String getMenuFile() {
+		return menuFile;
 	}
 }

@@ -18,4 +18,5 @@
 	<dubbo:service interface="cn.message.service.IMobileMessageService" ref="mobileMessageService" />
 	<dubbo:service interface="cn.message.service.IWechatService" ref="wechatService" />
 	<dubbo:service interface="cn.message.service.ITemplateMessageService" ref="templateMessageService" />
+	<dubbo:service interface="cn.message.service.IAlipayService" ref="alipayService" />
 </beans>

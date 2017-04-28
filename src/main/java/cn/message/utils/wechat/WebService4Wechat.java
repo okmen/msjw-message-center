@@ -1,12 +1,13 @@
-package cn.message.utils;
+package cn.message.utils.wechat;
 
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
 
-import cn.message.bean.TemplateDataModel;
-import cn.message.bean.TemplateDataModel.Property;
 import cn.message.model.MenuModel;
+import cn.message.model.wechat.TemplateDataModel;
+import cn.message.model.wechat.TemplateDataModel.Property;
+import cn.message.utils.GsonUtil;
 
 /**
  * 

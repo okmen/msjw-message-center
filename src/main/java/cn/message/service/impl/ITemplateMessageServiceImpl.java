@@ -7,14 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.message.bean.TemplateDataModel;
-import cn.message.bean.TemplateDataModel.Property;
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.dao.IMessageDao;
 import cn.message.model.TemplateMessageModel;
+import cn.message.model.wechat.TemplateDataModel;
+import cn.message.model.wechat.TemplateDataModel.Property;
 import cn.message.service.ITemplateMessageService;
 import cn.message.utils.GsonUtil;
-import cn.message.utils.WebService4Wechat;
+import cn.message.utils.wechat.WebService4Wechat;
 /**
  * 消息中心
  * @author gxg

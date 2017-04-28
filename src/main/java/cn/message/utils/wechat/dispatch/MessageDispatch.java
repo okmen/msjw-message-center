@@ -1,8 +1,8 @@
-package cn.message.utils.dispatch;
-import cn.message.bean.message.IMessage;
-import cn.message.utils.dispatch.executor.AbstractGeneralExecutor;
-import cn.message.utils.dispatch.executor.EventMessageExecutor;
-import cn.message.utils.dispatch.executor.TextMessageExecutor;
+package cn.message.utils.wechat.dispatch;
+import cn.message.model.wechat.message.IMessage;
+import cn.message.utils.wechat.dispatch.executor.AbstractGeneralExecutor;
+import cn.message.utils.wechat.dispatch.executor.EventMessageExecutor;
+import cn.message.utils.wechat.dispatch.executor.TextMessageExecutor;
 
 /**
  * message 转发器

@@ -1,10 +1,10 @@
-package cn.message.utils.dispatch.executor;
+package cn.message.utils.wechat.dispatch.executor;
 
 import java.util.Date;
 
-import cn.message.bean.WechatPostMessageModel;
-import cn.message.bean.message.IMessage;
-import cn.message.bean.message.response.BaseResponseMessage;
+import cn.message.model.wechat.WechatPostMessageModel;
+import cn.message.model.wechat.message.IMessage;
+import cn.message.model.wechat.message.response.BaseMessage;
 
 public abstract class AbstractGeneralExecutor{
 
@@ -13,7 +13,7 @@ public abstract class AbstractGeneralExecutor{
 	 * @param model
 	 */
 	public IMessage invoke(WechatPostMessageModel model){
-		BaseResponseMessage responseMessage = execute(model);
+		BaseMessage responseMessage = execute(model);
 		if(null == responseMessage)  return null;
 		//用户微信号
 		String fromUserName = model.getFromUserName();
@@ -29,5 +29,5 @@ public abstract class AbstractGeneralExecutor{
 	 * 消息处理实现
 	 * @param model
 	 */
-	protected abstract BaseResponseMessage execute(WechatPostMessageModel model);
+	protected abstract BaseMessage execute(WechatPostMessageModel model);
 }

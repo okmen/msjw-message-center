@@ -1,8 +1,9 @@
-package cn.message.utils;
+package cn.message.utils.wechat;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 
 /**
  * 微信签名算法

@@ -1,4 +1,6 @@
-package cn.message.utils;
+package cn.message.utils.wechat;
+
+import cn.message.utils.EncodeUtil;
 
 /**
  * 获取用户授权url

@@ -1,4 +1,4 @@
-package cn.message.utils;
+package cn.message.utils.wechat;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

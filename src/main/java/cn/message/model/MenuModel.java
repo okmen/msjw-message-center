@@ -119,12 +119,12 @@ public class MenuModel {
 		String url=
 				"https://open.weixin.qq.com/connect/oauth2/authorize" +
 						"?appid="+appId +
-						"&redirect_uri=" + EncodeUtil.encodeUTF8("http://"+javaDomain+"/oauth/callback.html")+
+						"&redirect_uri=" + EncodeUtil.encodeUTF8(javaDomain+"/oauth/callback.html")+
 						"&response_type=code" +
 						"&scope=snsapi_userinfo" +
 						"&state=_STATE_"+
 						"#wechat_redirect";
-		String mainUrl = "http://"+h5Domain;
+		String mainUrl = h5Domain;
 		
 		MenuModel menuModel = new MenuModel();
 		Button button = menuModel.new Button("start_level_user","星级用户","view", mainUrl);
@@ -154,9 +154,9 @@ public class MenuModel {
 		return json;
 	}
 	public static void main(String[] args) {
-		//init("wx48a8104946507c1e", "testjava.chudaokeji.com", "testh5.chudaokeji.com");
-		initFromH5("wx65a828b7abc4516d", "gxg.tunnel.qydev.com", "np.tunnel.qydev.com");
-		//initFromH5("wx48a8104946507c1e", "testjava.chudaokeji.com" ,"testh5.chudaokeji.com");
+		//initFromH5("wx65a828b7abc4516d", "http://gxg.tunnel.qydev.com", "np.tunnel.qydev.com");
+		//initFromH5("wx48a8104946507c1e", "http://testjava.chudaokeji.com" ,"testh5.chudaokeji.com");
+		initFromH5("wx48a8104946507c1e", "https://szjjapi.stc.gov.cn","https://gzh.stc.gov.cn");
 		
 		logger.info("ok");
 	}

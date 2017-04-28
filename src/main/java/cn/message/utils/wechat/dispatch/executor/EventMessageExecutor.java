@@ -1,9 +1,10 @@
-package cn.message.utils.dispatch.executor;
+package cn.message.utils.wechat.dispatch.executor;
 
-import cn.message.bean.WechatPostMessageModel;
-import cn.message.bean.message.IEvent;
-import cn.message.bean.message.response.BaseResponseMessage;
-import cn.message.bean.message.response.NewsResponseMessage;
+import cn.message.model.EventKey;
+import cn.message.model.wechat.WechatPostMessageModel;
+import cn.message.model.wechat.message.IEvent;
+import cn.message.model.wechat.message.response.BaseMessage;
+import cn.message.model.wechat.message.response.NewsMessage;
 
 /**
  * 事件处理器
@@ -13,16 +14,16 @@ import cn.message.bean.message.response.NewsResponseMessage;
 public class EventMessageExecutor extends AbstractGeneralExecutor {
 
 	@Override
-	public BaseResponseMessage execute(WechatPostMessageModel model) {
+	public BaseMessage execute(WechatPostMessageModel model) {
 		//事件
 		String event = model.getEvent();
 		//事件key
 		String eventKey = model.getEventKey();
-		BaseResponseMessage message = null;
+		BaseMessage message = null;
 		
 		 if(IEvent.EVENT_TYPE_CLICK.equals(event)){
 			 //便民信息
-			 if(IEvent.EVENT_KEY_CONVENIENCE_INFOMATION.equals(eventKey)){
+			 if(EventKey.CONVENIENCE_INFOMATION.equals(eventKey)){
 				 
 				 String [] titles = new String[]{"交警24小时拖车电话","车管所及各分所地点","各区扣车场地点","各区中队地点及电话"};
 				 String [] descriptions = new String[]{"","","","",};
@@ -34,11 +35,11 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 						 "http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/vehicleAdrr",
 						 "http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/depotAdrr",
 						 "http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/lochusAdrr"};
-				 message =  new NewsResponseMessage(4, titles, descriptions, picUrls, urls);
+				 message =  new NewsMessage(4, titles, descriptions, picUrls, urls);
 			 }
 			 
 			 //便民信息
-			 if(IEvent.EVENT_KEY_SERVICE_GUIDE.equals(eventKey)){
+			 if(EventKey.CONVENIENCE_INFOMATION.equals(eventKey)){
 				 String [] titles = new String[]{"深圳交警星级用户认证业务","严重交通违法举报有奖业务","车驾管业务","交通违法处理业务","道路交通事故处理业务","行政许可业务","法制业务"};
 				 String [] descriptions = new String[]{"","","","","","",""};
 				 String [] picUrls = new String[]{"http://szjj.u-road.com/szjjpro/assets/images/handbook/1.pic_9ccbda5.jpg",
@@ -56,7 +57,7 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/roadAccidentServices",
 						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/administrativeLicense",
 						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/legalServices"};
-				 message = new NewsResponseMessage(7, titles, descriptions, picUrls, urls);
+				 message = new NewsMessage(7, titles, descriptions, picUrls, urls);
 			 }
     	 }
 		 
