@@ -288,8 +288,14 @@
 				<jiaojing.method>xxptSchuding</jiaojing.method>
 				<jiaojing.key>94D863D9BE7FB032E6A19430CC892610</jiaojing.key>
 				
-				<java.domain>testjava.chudaokeji.com</java.domain>
-				<h5.domain>testh5.chudaokeji.com</h5.domain>
+				<!-- 微信参数 -->
+				<jiaojing.wechat.appid>wx48a8104946507c1e</jiaojing.wechat.appid>
+				<jiaojing.wechat.token>chudao88</jiaojing.wechat.token>
+				<jiaojing.wechat.appsecret>fa8978b9a67dc3cbfca17e0946c6efb8</jiaojing.wechat.appsecret>
+				<accessToken.time>7200</accessToken.time>
+				
+				<java.domain>https://szjjapi.stc.gov.cn</java.domain>
+				<h5.domain>https://gzh.stc.gov.cn</h5.domain>
 				<wechat.menu.file>menu_online.json</wechat.menu.file>
 			</properties>
 		</profile>
