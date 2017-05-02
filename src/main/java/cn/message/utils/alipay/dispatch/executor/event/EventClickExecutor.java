@@ -49,7 +49,7 @@ public class EventClickExecutor extends AbstractGeneralExecutor {
 									"http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/lochusAdrr") });
 		}
 
-		// 便民信息
+		// 办事指南
 		if (EventKey.SERVICE_GUIDE.equals(actionParam)) {
 			// 这一条无法加到支付宝,微信目前支持10条 支付宝仅支持六条
 			/*

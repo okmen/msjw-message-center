@@ -38,8 +38,8 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 				 message =  new NewsMessage(4, titles, descriptions, picUrls, urls);
 			 }
 			 
-			 //便民信息
-			 if(EventKey.CONVENIENCE_INFOMATION.equals(eventKey)){
+			// 办事指南
+			 if(EventKey.SERVICE_GUIDE.equals(eventKey)){
 				 String [] titles = new String[]{"深圳交警星级用户认证业务","严重交通违法举报有奖业务","车驾管业务","交通违法处理业务","道路交通事故处理业务","行政许可业务","法制业务"};
 				 String [] descriptions = new String[]{"","","","","","",""};
 				 String [] picUrls = new String[]{"http://szjj.u-road.com/szjjpro/assets/images/handbook/1.pic_9ccbda5.jpg",
