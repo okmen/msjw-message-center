@@ -292,7 +292,7 @@
 				<jiaojing.wechat.appid>wx629dea91ac256691</jiaojing.wechat.appid>
 				<jiaojing.wechat.token>weixin_CHUDAO</jiaojing.wechat.token>
 				<jiaojing.wechat.appsecret>494b7acd4af6a9c7e959873ec166a603</jiaojing.wechat.appsecret>
-				<accessToken.time>7200</accessToken.time>
+				<accessToken.time>3600</accessToken.time>
 				
 				<java.domain>https://szjjapi.stc.gov.cn</java.domain>
 				<h5.domain>https://gzh.stc.gov.cn</h5.domain>
