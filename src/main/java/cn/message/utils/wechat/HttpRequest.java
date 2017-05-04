@@ -56,12 +56,6 @@ public class HttpRequest {
                 e2.printStackTrace();
             }
         }
-        try {
-			logger.info(new String(result.getBytes(),"utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
         logger.info(result);
         return result;
     }
