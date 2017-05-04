@@ -127,7 +127,7 @@ public class MenuModel {
 		String mainUrl = h5Domain;
 		
 		MenuModel menuModel = new MenuModel();
-		Button button = menuModel.new Button("start_level_user","星级用户","view", mainUrl);
+		Button button = menuModel.new Button("start_level_user","星级用户","view", h5Domain);
 		Button button2 = menuModel.new Button("info_query","信息查询",null,null);
 		button2.setSub_button(new Button[]{
 				menuModel.new Button("convenience_information","便民信息","click",null),
@@ -154,9 +154,9 @@ public class MenuModel {
 		return json;
 	}
 	public static void main(String[] args) {
-		//initFromH5("wx65a828b7abc4516d", "http://gxg.tunnel.qydev.com", "np.tunnel.qydev.com");
+		//initFromH5("wx65a828b7abc4516d", "http://gxg.tunnel.qydev.com", "http://np.tunnel.qydev.com");
 		//initFromH5("wx48a8104946507c1e", "http://testjava.chudaokeji.com" ,"testh5.chudaokeji.com");
-		initFromH5("wx629dea91ac256691", "https://szjjapi.stc.gov.cn","https://gzh.stc.gov.cn");
+		initFromH5("wxc2b699cf2f919b58", "https://szjjapi.stc.gov.cn","https://gzh.stc.gov.cn");
 		
 		logger.info("ok");
 	}
