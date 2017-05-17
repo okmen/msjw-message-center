@@ -128,24 +128,25 @@ public class IMessageCachedImpl implements IMessageCached{
 	 * 从微信段获取 token 和 ticket
 	 * @return
 	 */
-	private void initTokenAndTicket() {
+	public String initTokenAndTicket() {
 		try {
 			Map<String, Object> map = WebService4Wechat.getAccessToken(appid, appsecret);
 			Object token = map.get("access_token");
 			if(null != token && !"".equals(token)){
 				//存入redis
 				insertAccessToken(token.toString());
-				
+				log.info("获取新token:"+token);
 				Map<String, Object> jsapMap = WebService4Wechat.getJsapiTicket(token.toString());
 				Object ticket = jsapMap.get("ticket");
 				if(null != ticket && !"".equals(ticket)){
 					insertTicket(ticket.toString());
-					log.info("ticket："+ticket);
+					log.info("获取新ticket:"+ticket);
 				}
 			}
 		} catch (Exception e) {
-			log.error("获取 token失败",e);
+			log.error("获取 token and ticket失败",e);
 		}
+		return cacheManger.get(IConfig.ACCESS_TOKEN_REDIS);
 	}
 	
 	public String getUserid() {

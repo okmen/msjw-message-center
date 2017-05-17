@@ -132,7 +132,12 @@ public class IWechatServiceImpl implements IWechatService {
 	}
 
 	@Override
-	public String queryAccessToken(String temp) {
+	public String queryAccessToken() {
 		return iMessageCached.getAccessToken();
+	}
+
+	@Override
+	public String createAccessToken() {
+		return iMessageCached.initTokenAndTicket();
 	}
 }
