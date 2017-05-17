@@ -1,12 +1,11 @@
 package cn.message.utils.wechat;
-
-import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.model.MenuModel;
 import cn.message.model.wechat.TemplateDataModel;
-import cn.message.model.wechat.TemplateDataModel.Property;
 import cn.message.utils.GsonUtil;
 
 /**
@@ -16,7 +15,6 @@ import cn.message.utils.GsonUtil;
  */
 public class WebService4Wechat {
 	static Logger logger = Logger.getLogger(WebService4Wechat.class.getName());
-
 	/**
 	 * 获取全局accessToken
 	 * @return
@@ -82,6 +80,12 @@ public class WebService4Wechat {
 	public static String createMenu(String accessToken,String json){
 		String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+accessToken;
 		return HttpRequest.sendPost4Wechat(url, json);
+	}
+	
+	
+	public static void main(String[] args) {
+		String json = MenuModel.initFromH5("wxc2b699cf2f919b58", "http://szjj.u-road.com/api","http://szjj.u-road.com/h5");
+		createMenu("P5n-Rcn0lN5QCtfZBNXz4KOMpsTMmbdfma6TrIpTV3-ic_dWHDalk9QwVYipkqJLr2nJphyjhDs2vUrEMFSSWfe3enmglWOczM51_UsgzLHHYs8kjA0pCdQG0nq_NqbPNHZlCGAICU",json);
 	}
 	
 	/**

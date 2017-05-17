@@ -31,5 +31,16 @@ public class OauthUrlMain {
 						"&state=https://gzh.stc.gov.cn" +
 						"#wechat_redirect";
 		System.out.println("一摇夺宝:"+clickUrlToSellerList2);
+		
+		
+		String clickUrlToSellerList3=
+				"https://open.weixin.qq.com/connect/oauth2/authorize" +
+						"?appid=wxc2b699cf2f919b58"+ //一摇惊喜
+						"&redirect_uri=" + EncodeUtil.encodeUTF8("http://szjj.u-road.com/api/oauth/callback.html")+
+						"&response_type=code" +
+						"&scope=snsapi_userinfo" +
+						"&state=http://szjj.u-road.com/h5" +
+						"#wechat_redirect";
+		System.out.println("深圳交警:"+clickUrlToSellerList3);
 	}
 }
