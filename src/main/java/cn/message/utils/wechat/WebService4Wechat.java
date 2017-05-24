@@ -84,8 +84,11 @@ public class WebService4Wechat {
 	
 	
 	public static void main(String[] args) {
-		String json = MenuModel.initFromH5("wxc2b699cf2f919b58", "http://szjj.u-road.com/api","http://szjj.u-road.com/h5");
-		createMenu("P5n-Rcn0lN5QCtfZBNXz4KOMpsTMmbdfma6TrIpTV3-ic_dWHDalk9QwVYipkqJLr2nJphyjhDs2vUrEMFSSWfe3enmglWOczM51_UsgzLHHYs8kjA0pCdQG0nq_NqbPNHZlCGAICU",json);
+		/*Map<String, Object> map  = getAccessToken("wx48a8104946507c1e","fa8978b9a67dc3cbfca17e0946c6efb8");
+		String accessToken = map.get("access_token").toString();
+		System.out.println(accessToken);*/
+		String json = MenuModel.initFromH5("wxc2b699cf2f919b58","http://szjj.u-road.com/h5");
+		createMenu("SbW4Lx-UoVehWNJZTOGCH606GzLMLCvpphAFrEe88tUYgUxn2Eo3IhOk8Qv-ZafTfWVjud9DUE8iv0cjFWNGodV8bp5FfX0_xzsrXCyZ0oYNGBeCHAYRM",json);
 	}
 	
 	/**
