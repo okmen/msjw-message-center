@@ -19,7 +19,7 @@ import com.alibaba.fastjson.JSONObject;
  */
 @Service("mobileMessageService")
 @SuppressWarnings(value="all")
-public class IMobileMessageServiceImpl implements IMobileMessageService {
+public class IMobileMessageServiceImpl implements IMobileMessageService{
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final static String _SUCCESS = "1";
 	@Autowired

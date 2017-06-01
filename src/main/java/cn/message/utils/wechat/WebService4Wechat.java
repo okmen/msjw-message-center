@@ -84,12 +84,12 @@ public class WebService4Wechat {
 	
 	
 	public static void main(String[] args) {
-		/*Map<String, Object> map  = getAccessToken("wx48a8104946507c1e","fa8978b9a67dc3cbfca17e0946c6efb8");
+		Map<String, Object> map  = getAccessToken("wxc2b699cf2f919b58","cbfabef2717b14e416de93dd83498862");
 		String accessToken = map.get("access_token").toString();
-		System.out.println(accessToken);*/
-		String json = MenuModel.initFromH5("wxc2b699cf2f919b58","http://szjj.u-road.com/h5");
+		System.out.println(accessToken);
+		/*String json = MenuModel.initFromH5("wxc2b699cf2f919b58","http://szjj.u-road.com/h5");
 		createMenu("SbW4Lx-UoVehWNJZTOGCH606GzLMLCvpphAFrEe88tUYgUxn2Eo3IhOk8Qv-ZafTfWVjud9DUE8iv0cjFWNGodV8bp5FfX0_xzsrXCyZ0oYNGBeCHAYRM",json);
-	}
+*/	}
 	
 	/**
 	 * 查询菜单

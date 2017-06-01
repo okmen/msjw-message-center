@@ -93,6 +93,15 @@ public class TextMessageExecutor extends AbstractGeneralExecutor{
 					new String[] { "http://szjj.u-road.com/szjjpro/assets/images/conference/dyzp_dcbc8ba0.jpeg" },
 					new String[] { "http://www.wechatpicture.com/server/weixinweb/dispense.do?type=webPrint&appId=wx48a8104946507c1e" });
 		}
+		
+		if (KeyWord.KEYWORD_61HAPPY.equals(content.trim())) {
+			message = new NewsMessage(
+					1,
+					new String[] { "我是交警小铁骑。" },
+					new String[] { "" },
+					new String[] { "http://szjj.u-road.com/fileserver/img/61_20170601105357.png" },
+					new String[] { "http://gfd178.com/design/AWLco1md" });
+		}
 		return message;
 	}
 }
