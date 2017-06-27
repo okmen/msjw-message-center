@@ -1,11 +1,8 @@
 package cn.message.service.impl;
 
-import java.net.URL;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +12,6 @@ import cn.message.model.wechat.WechatPostMessageModel;
 import cn.message.model.wechat.WechatUserInfo;
 import cn.message.model.wechat.WeiXinOauth2Token;
 import cn.message.model.wechat.message.IMessage;
-import cn.message.model.wechat.message.response.NewsMessage;
-import cn.message.model.wechat.message.response.TextMessage;
 import cn.message.service.IWechatService;
 import cn.message.utils.wechat.MenuFileUtil;
 import cn.message.utils.wechat.OpenIdUtil;
@@ -34,7 +29,6 @@ import cn.message.utils.wechat.dispatch.executor.AbstractGeneralExecutor;
 @SuppressWarnings(value="all")
 public class IWechatServiceImpl implements IWechatService {
 	private Logger logger = Logger.getLogger(IWechatServiceImpl.class);
-	
 	@Autowired
 	private IMessageCachedImpl iMessageCached;
 	
@@ -139,5 +133,10 @@ public class IWechatServiceImpl implements IWechatService {
 	@Override
 	public String createAccessToken() {
 		return iMessageCached.initTokenAndTicket();
+	}
+
+	@Override
+	public String getJsapiTicket() {
+		return iMessageCached.getTicket();
 	}
 }
