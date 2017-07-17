@@ -7,6 +7,7 @@ import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.model.MenuModel;
 import cn.message.model.wechat.TemplateDataModel;
 import cn.message.utils.GsonUtil;
+import cn.sdk.util.GsonBuilderUtil;
 
 /**
  * 
@@ -23,7 +24,7 @@ public class WebService4Wechat {
 		String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
 				+ appId + "&secret=" + appsecret;
 		String result = HttpRequest.sendGet(url);
-		Map<String, Object> map = GsonUtil.fromJson(result, Map.class);
+		Map<String, Object> map = GsonBuilderUtil.fromJson(result, Map.class);
 		return map;
 	}
 
@@ -40,6 +41,19 @@ public class WebService4Wechat {
 		return map;
 	}
 
+	/**
+	 * 获取api_ticket
+	 * @param accessToken
+	 * @return
+	 */
+	public static Map<String, Object> getApiTicket(String accessToken) {
+		String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="
+				+ accessToken + "&type=wx_card";
+		String result = HttpRequest.sendGet(url);
+		Map<String, Object> map = GsonUtil.fromJson(result, Map.class);
+		return map;
+	}
+	
 	/**
 	 * 发送获取openId请求
 	 * @param appId

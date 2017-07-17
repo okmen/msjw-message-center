@@ -47,7 +47,7 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 					model);
 			
 			logger.info("模板消息发送结果:"+json);
-			TemplateMessageModel result = GsonBuilderUtil.fromJson(json, TemplateMessageModel.class);
+			TemplateMessageModel result = GsonUtil.fromJson(json, TemplateMessageModel.class);
 			if(null != result){ 
 				int errcode = result.getErrcode();
 				if(0 == errcode){
@@ -73,6 +73,34 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 			}
 		} catch (Exception e) {
 			logger.error("发送模板消息异常:"+"openId="+openId+",templateId="+url+"map="+map,e);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean hmdahs() throws Exception{
+		String interfaceNumber = "HM_DAHS";  //接口编号
+		
+		//拼装xml数据
+		StringBuffer sb = new StringBuffer();
+			sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
+			.append("<request>")
+				.append("<head>")   
+					.append("<yhdh>").append("C").append("</yhdh>")  
+					.append("<ip>").append("183.14.132.26").append("</ip>")    
+					.append("<lsh>").append("1").append("</lsh>")   
+					.append("<code>").append("J1").append("</code>")    
+				.append("</head>")   
+				.append("<body>")   
+					.append("<sqm>").append("A95670E4F5A0E66453480D2681A9CCCC").append("</sqm>")    
+				.append("</body>")   					
+			.append("</request>");
+			
+		try {
+			JSONObject respStr = WebServiceClient.getInstance().requestWebService(iMessageCached.getUrl(), iMessageCached.getMethod(), 
+					interfaceNumber,sb.toString(),iMessageCached.getUserid(),iMessageCached.getUserpwd(),iMessageCached.getKey());
+		} catch (Exception e) {
+			throw e;
 		}
 		return false;
 	}
