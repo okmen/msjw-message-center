@@ -24,7 +24,7 @@ public class WebService4Wechat {
 		String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
 				+ appId + "&secret=" + appsecret;
 		String result = HttpRequest.sendGet(url);
-		Map<String, Object> map = GsonBuilderUtil.fromJson(result, Map.class);
+		Map<String, Object> map = GsonUtil.fromJson(result, Map.class);
 		return map;
 	}
 
@@ -82,7 +82,7 @@ public class WebService4Wechat {
 			TemplateDataModel templateDataModel) {
 		String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="
 				+ accessToken;
-		String json = GsonUtil.toJson(templateDataModel);
+		String json = GsonBuilderUtil.toJson(templateDataModel);
 		return HttpRequest.sendPost4Wechat(url, json);
 	}
 	
