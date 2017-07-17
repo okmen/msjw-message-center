@@ -1,11 +1,12 @@
 package cn.message.service.impl;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSONObject;
 
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.dao.IMessageDao;
@@ -15,6 +16,8 @@ import cn.message.model.wechat.TemplateDataModel.Property;
 import cn.message.service.ITemplateMessageService;
 import cn.message.utils.GsonUtil;
 import cn.message.utils.wechat.WebService4Wechat;
+import cn.sdk.util.GsonBuilderUtil;
+import cn.sdk.webservice.WebServiceClient;
 /**
  * 消息中心
  * @author gxg
@@ -44,7 +47,7 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 					model);
 			
 			logger.info("模板消息发送结果:"+json);
-			TemplateMessageModel result = GsonUtil.fromJson(json, TemplateMessageModel.class);
+			TemplateMessageModel result = GsonBuilderUtil.fromJson(json, TemplateMessageModel.class);
 			if(null != result){ 
 				int errcode = result.getErrcode();
 				if(0 == errcode){
