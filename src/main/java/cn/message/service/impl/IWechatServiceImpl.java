@@ -55,6 +55,7 @@ public class IWechatServiceImpl implements IWechatService {
 		String xml = "";
 		IMessage message = null;
 		try {
+			logger.info("model:"+model.toString());
 			//选择消息类型执行器
 			AbstractGeneralExecutor executor = MessageDispatch.dispatch(model.getMsgType());
 			
@@ -156,14 +157,14 @@ public class IWechatServiceImpl implements IWechatService {
 	}
 
 	@Override
-	public boolean activeLicense(Integer id, String licenseNo, String code,
+	public boolean activeJsCard(Integer id, String licenseNo, String code,
 			String cardId, String ljjf, String zjcx, String syrq) {
 		
 		return false;
 	}
 
 	@Override
-	public boolean updateLicense(String code, String cardId, String ljjf,
+	public boolean updateJsCard(String code, String cardId, String ljjf,
 			String zjcx, String syrq) {
 		return false;
 	}
