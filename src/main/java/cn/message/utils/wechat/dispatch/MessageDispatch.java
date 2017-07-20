@@ -19,11 +19,11 @@ public class MessageDispatch {
 	 */
 	public static AbstractGeneralExecutor dispatch(String msgType) {
 		
-		if (msgType.equals(IMessage.MESSAGE_TYPE_TEXT)) {
+		if (IMessage.MESSAGE_TYPE_TEXT.equals(msgType)) {
 			return new TextMessageExecutor();
 		}
 
-		if (msgType.equals(IMessage.MESSAGE_TYPE_EVENT)) {
+		if (IMessage.MESSAGE_TYPE_EVENT.equals(msgType)) {
 			return new EventMessageExecutor();
 		}
 		return null;
