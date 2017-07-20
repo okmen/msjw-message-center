@@ -36,8 +36,9 @@ public class Sign {
 		String noncestr = UUID.randomUUID().toString();
 		Long tempTimestamp = System.currentTimeMillis();
 		String timestamp = tempTimestamp.toString().substring(0, 10);
-		String string = "api_ticket="+apiTicket+"&noncestr="+noncestr+"&timestamp="+timestamp+"&card_id="+cardId+"&openid="+openId;
+		String string = "api_ticket="+apiTicket+"noncestr="+noncestr+"timestamp="+timestamp+"card_id="+cardId+"openid="+openId;
 		String sha1 = SHA1.SHA1Digest(string);
+		map.put("apiTicket", apiTicket);
 		map.put("timestamp", timestamp);
 		map.put("noncestr", noncestr);
 		map.put("openId", openId);

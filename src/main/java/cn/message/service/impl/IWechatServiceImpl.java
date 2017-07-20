@@ -55,7 +55,6 @@ public class IWechatServiceImpl implements IWechatService {
 		String xml = "";
 		IMessage message = null;
 		try {
-			logger.info("model:"+model.toString());
 			//选择消息类型执行器
 			AbstractGeneralExecutor executor = MessageDispatch.dispatch(model.getMsgType());
 			
@@ -75,8 +74,7 @@ public class IWechatServiceImpl implements IWechatService {
 	public String createMenu() {
 		String json = "";
 		try {
-			json = MenuFileUtil.readJarResourceFile(iMessageCached.getMenuFile());
-			return WebService4Wechat.createMenu(iMessageCached.getAccessToken(),json);
+			return "";
 		} catch (Exception e) {
 			logger.error("创建菜单异常:"+json);
 		}
