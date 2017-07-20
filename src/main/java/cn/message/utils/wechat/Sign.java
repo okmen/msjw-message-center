@@ -1,8 +1,11 @@
 package cn.message.utils.wechat;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 
 /**
@@ -36,8 +39,14 @@ public class Sign {
 		String noncestr = UUID.randomUUID().toString();
 		Long tempTimestamp = System.currentTimeMillis();
 		String timestamp = tempTimestamp.toString().substring(0, 10);
-		String string = "api_ticket="+apiTicket+"noncestr="+noncestr+"timestamp="+timestamp+"card_id="+cardId+"openid="+openId;
-		String sha1 = SHA1.SHA1Digest(string);
+		String [] array = {apiTicket,noncestr,timestamp,cardId,openId};
+		Arrays.sort(array);
+		
+		String string = "";
+		for (String s : array) {
+			string += s;
+		}
+		String sha1 = DigestUtils.shaHex(string);
 		map.put("apiTicket", apiTicket);
 		map.put("timestamp", timestamp);
 		map.put("noncestr", noncestr);
@@ -45,5 +54,30 @@ public class Sign {
 		map.put("cardId", cardId);
 		map.put("signature", sha1);
 		return map;
+	}
+	
+	public static void main(String[] args) {
+		String apiTicket = "m7RQzjA_ljjEkt-JCoklRHpkob55r1Dc9Lk2eduWUvfw8rikPbRr2sqiFs5nqaFKiBmlVEUL6mOekZ3lEr37mQ";
+		String cardId = "pPyqQjq_2LnZeey0y5XK-ArtZDSo";
+		String openId = "oPyqQjhnNYEZ1nGT-6XizgLOTfAM";
+		Map<String, Object> map = new HashMap<String, Object>();
+		String noncestr = UUID.randomUUID().toString();
+		Long tempTimestamp = System.currentTimeMillis();
+		String timestamp = tempTimestamp.toString().substring(0, 10);
+		String [] array = {apiTicket,noncestr,timestamp,cardId,openId};
+		Arrays.sort(array);
+		
+		String string = "";
+		for (String s : array) {
+			string += s;
+		}
+		String sha1 = DigestUtils.shaHex(string);
+		map.put("apiTicket", apiTicket);
+		map.put("timestamp", timestamp);
+		map.put("noncestr", noncestr);
+		map.put("openId", openId);
+		map.put("cardId", cardId);
+		map.put("signature", sha1);
+		System.out.println(map.toString());
 	}
 }
