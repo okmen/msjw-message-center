@@ -1,10 +1,17 @@
 package cn.message.utils.wechat.dispatch.executor;
 
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+
+import cn.message.bean.WxMembercard;
+import cn.message.dao.IMessageDao;
 import cn.message.model.EventKey;
 import cn.message.model.wechat.WechatPostMessageModel;
 import cn.message.model.wechat.message.IEvent;
 import cn.message.model.wechat.message.response.BaseMessage;
 import cn.message.model.wechat.message.response.NewsMessage;
+import cn.sdk.util.StringUtil;
 
 /**
  * 事件处理器
@@ -12,9 +19,9 @@ import cn.message.model.wechat.message.response.NewsMessage;
  *
  */
 public class EventMessageExecutor extends AbstractGeneralExecutor {
-
+	Logger logger = Logger.getLogger(EventMessageExecutor.class);
 	@Override
-	public BaseMessage execute(WechatPostMessageModel model) {
+	public BaseMessage execute(WechatPostMessageModel model,IMessageDao iMessageDao) {
 		//事件
 		String event = model.getEvent();
 		//事件key
@@ -60,6 +67,33 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 				 message = new NewsMessage(7, titles, descriptions, picUrls, urls);
 			 }
     	 }
+		 
+		 if(IEvent.EVENT_USER_GET_CARD.equals(event)){
+			 String openId = model.getFromUserName();
+			 String cardId = model.getCardId();
+			 String code = model.getCode();
+			 Integer isGiveByFriend = StringUtil.isNotBlank(model.getIsGiveByFriend()) ? Integer.parseInt(model.getIsGiveByFriend()) : null;
+			 String giveOpenId = model.getGiveOpenId();
+			 String outerStr = model.getOuterStr();
+			 logger.info("用户领取卡券:code="+code);
+			 WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId, code);
+			 if(null != wxMembercard){
+				 wxMembercard.setState(0);
+				 iMessageDao.updateWxMembercard(wxMembercard);
+			 }else{
+				 WxMembercard newWxMembercard = new WxMembercard();
+				 newWxMembercard.setOpenid(openId);
+				 newWxMembercard.setCode(code);
+				 newWxMembercard.setCardid(cardId);
+				 newWxMembercard.setIsgivebyfriend(isGiveByFriend);
+				 newWxMembercard.setGiveopenid(giveOpenId);
+				 newWxMembercard.setState(0);
+				 newWxMembercard.setOuterstr(outerStr);
+				 newWxMembercard.setIntime(new Date());
+				 iMessageDao.insertWxMembercard(newWxMembercard);
+			 }
+			 message = null;
+		 }
 		 
     	 //用户打开公众号会推送这个包过来 (第一次推送的包)
     	 if(IEvent.EVENT_TYPE_LOCATION.equals(event)){

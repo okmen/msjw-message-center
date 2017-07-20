@@ -10,4 +10,9 @@ public class IConfig {
 	 * 微信全局ticket
 	 */
 	public static final String TICKET_REDIS = "WECHAT_TICKET";
+	
+	/**
+	 * 微信api_ticket
+	 */
+	public static final String API_TICKET_REDIS = "WECHAT_API_TICKET";
 }

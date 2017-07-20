@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.message.dao.mapper.WxMembercardMapper">
+    <resultMap type="cn.message.bean.WxMembercard" id="WxMembercard">
+		<result property="id" column="id" />
+		<result property="openid" column="openid" />
+		<result property="idno" column="idno" />
+		<result property="cardid" column="cardid" />
+		<result property="code" column="code" />
+		<result property="isgivebyfriend" column="isgivebyfriend" />
+		<result property="giveopenid" column="giveopenid" />
+		<result property="state" column="state" />
+		<result property="outerid" column="outerid" />
+		<result property="outerstr" column="outerstr" />
+		<result property="intime" column="intime" />
+		<result property="userid" column="userid" />
+	</resultMap>
+	
+	<sql id="AllWxMembercard">
+		`id`, `openid`, `idno`,`cardid`, `code`,`isgivebyfriend`, `giveopenid`, `state`, `outerid`,`outerstr`,`intime`,`userid`
+	</sql>
+	
+	<insert id="insertWxMembercard" parameterType="cn.message.bean.WxMembercard" useGeneratedKeys="true" keyProperty="id"  >
+		insert into wx_membercard (
+			openid,idno,cardid,code,isgivebyfriend,giveopenid,state,outerid,outerstr,intime,userid
+		)
+		values(
+			#{openid}, #{idno}, #{cardid}, #{code}, #{isgivebyfriend},
+			#{giveopenid}, #{state}, #{outerid}, #{outerstr}, #{intime}, #{userid}
+		)
+	</insert>
+	
+	<select id="selectWxMembercard" resultMap="WxMembercard" >
+		SELECT
+			<include refid="AllWxMembercard"></include>
+		FROM
+			`wx_membercard`
+		WHERE 1 = 1
+		AND	`openid` = #{openId}
+		AND `cardid` = #{cardId}
+		AND `code` = #{code}
+		limit 1
+	</select>
+	
+	<update id="updateWxMembercard" useGeneratedKeys="true" keyProperty="id" >
+		update wx_membercard 
+			set 
+				openid = #{openid},
+				idno = #{idno},
+				cardid = #{cardid},
+				code = #{code},
+				isgivebyfriend = #{isgivebyfriend},
+				giveopenid = #{giveopenid},
+				state = #{state},
+				outerid = #{outerid},
+				outerstr = ${outerstr},
+				intime = #{intime},
+				userid = #{userid}
+			where 
+				id = #{id}
+	</update>
+	
+</mapper>

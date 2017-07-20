@@ -1,5 +1,6 @@
 package cn.message.utils.wechat.dispatch.executor;
 
+import cn.message.dao.IMessageDao;
 import cn.message.model.KeyWord;
 import cn.message.model.wechat.WechatPostMessageModel;
 import cn.message.model.wechat.message.response.BaseMessage;
@@ -9,7 +10,7 @@ import cn.message.model.wechat.message.response.TextMessage;
 public class TextMessageExecutor extends AbstractGeneralExecutor{
 
 	@Override
-	public BaseMessage execute(WechatPostMessageModel model) {
+	public BaseMessage execute(WechatPostMessageModel model,IMessageDao iMessageDao) {
 		// 文本
 		String content = model.getContent();
 		// 返回message

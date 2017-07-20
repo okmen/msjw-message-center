@@ -1,8 +1,13 @@
-package cn.message.dao;
+package cn.message.dao.mapper;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import cn.message.bean.WxMembercard;
 
-public interface IMessageDao {
+@Repository
+public interface WxMembercardMapper {
+	
 	/**
 	 * 插入会员卡
 	 * @param wxMembercard
@@ -15,7 +20,7 @@ public interface IMessageDao {
 	 * @param wxMembercard
 	 * @return
 	 */
-	WxMembercard selectWxMembercard(String openId,String cardId,String code);
+	WxMembercard selectWxMembercard(@Param("openId")String openId,@Param("cardId")String cardId,@Param("code")String code);
 	
 	/**
 	 * 修改会员卡

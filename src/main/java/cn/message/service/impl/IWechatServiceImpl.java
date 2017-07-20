@@ -7,7 +7,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.message.bean.WxMembercard;
 import cn.message.cached.impl.IMessageCachedImpl;
+import cn.message.dao.IMessageDao;
 import cn.message.model.wechat.WechatPostMessageModel;
 import cn.message.model.wechat.WechatUserInfo;
 import cn.message.model.wechat.WeiXinOauth2Token;
@@ -31,6 +33,9 @@ public class IWechatServiceImpl implements IWechatService {
 	private Logger logger = Logger.getLogger(IWechatServiceImpl.class);
 	@Autowired
 	private IMessageCachedImpl iMessageCached;
+	
+	@Autowired
+	private IMessageDao iMessageDao;
 	
 	@Override
 	public boolean checkServer(String signature, String timestamp, String nonce) {
@@ -57,7 +62,7 @@ public class IWechatServiceImpl implements IWechatService {
 			if(null == executor) return null;
 			
 			//具体执行
-			message = executor.invoke(model);
+			message = executor.invoke(model,iMessageDao);
 		} catch (Exception e) {
 			logger.error("处理微信消息包异常:"+model.toString(),e);
 			message =  null;
@@ -138,5 +143,28 @@ public class IWechatServiceImpl implements IWechatService {
 	@Override
 	public String getJsapiTicket() {
 		return iMessageCached.getTicket();
+	}
+
+	@Override
+	public Map<String, Object> cardConfig(String openId, String cardId) {
+		try {
+			return Sign.sign4Card(iMessageCached.getApiTicket(), openId, cardId);
+		} catch (Exception e) {
+			logger.error("获取cardConfig签名算法异常："+"openId="+openId+",cardId="+cardId,e);
+		}
+		return null;
+	}
+
+	@Override
+	public boolean activeLicense(Integer id, String licenseNo, String code,
+			String cardId, String ljjf, String zjcx, String syrq) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean updateLicense(String code, String cardId, String ljjf,
+			String zjcx, String syrq) {
+		return false;
 	}
 }

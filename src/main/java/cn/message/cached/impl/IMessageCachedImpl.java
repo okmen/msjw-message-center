@@ -124,6 +124,21 @@ public class IMessageCachedImpl implements IMessageCached{
 		return cacheManger.get(IConfig.TICKET_REDIS);
 	}
 	
+	@Override
+	public String insertApiTicket(String ticket) {
+		cacheManger.set(IConfig.API_TICKET_REDIS, ticket, accessTokentime);
+		return ticket;
+	}
+
+	@Override
+	public String getApiTicket() {
+		String ticket = cacheManger.get(IConfig.API_TICKET_REDIS);
+		if(null == ticket || "".equals(ticket)){
+			initTokenAndTicket();
+		}
+		return cacheManger.get(IConfig.API_TICKET_REDIS);
+	}
+	
 	/**
 	 * 从微信段获取 token 和 ticket
 	 * @return
@@ -140,7 +155,14 @@ public class IMessageCachedImpl implements IMessageCached{
 				Object ticket = jsapMap.get("ticket");
 				if(null != ticket && !"".equals(ticket)){
 					insertTicket(ticket.toString());
-					log.info("获取新ticket:"+ticket);
+					log.info("获取新jsapi ticket:"+ticket);
+				}
+				
+				Map<String, Object> apiMap = WebService4Wechat.getApiTicket(token.toString());
+				Object apiTicket = apiMap.get("ticket");
+				if(null != apiTicket && !"".equals(apiTicket)){
+					insertApiTicket(apiTicket.toString());
+					log.info("获取新api ticket:"+apiTicket);
 				}
 			}
 		} catch (Exception e) {

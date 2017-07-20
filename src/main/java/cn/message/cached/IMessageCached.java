@@ -18,8 +18,20 @@ public interface IMessageCached extends ICacheKey {
     public String insertTicket(String ticket);
     
     /**
-     * 获取token
+     * 获取Ticket
      * @return
      */
     public String getTicket();
+    
+    
+    /**
+     * 插入apiTicket信息
+     */
+    public String insertApiTicket(String ticket);
+    
+    /**
+     * 获取apiTicket
+     * @return
+     */
+    public String getApiTicket();
 }
