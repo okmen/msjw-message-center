@@ -152,12 +152,12 @@ public class WebService4Wechat {
 	}
 	
 	/**
-	 * 激活卡
+	 * 激活驾驶证
 	 * @param accessToken
 	 * @param decryptCode
 	 * @return
 	 */
-	public static boolean activateCard(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
+	public static boolean activateJsCard(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
 		String url = "https://api.weixin.qq.com/card/generalcard/activate?access_token="+ accessToken;
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("card_number", code);
@@ -166,6 +166,31 @@ public class WebService4Wechat {
 		map.put("init_custom_field_value1", ljjf);
 		map.put("init_custom_field_value2", syrq);
 		map.put("init_custom_field_value3", zjcx);
+		
+		String data = GsonBuilderUtil.toJson(map);
+		
+		String result = HttpRequest.sendPost4Wechat(url,data);
+		BaseWechatResult baseWechatResult = GsonUtil.fromJson(result, BaseWechatResult.class);
+		if(null != baseWechatResult){
+			if(0 == baseWechatResult.getErrcode()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 激活行驶证
+	 * @param accessToken
+	 * @param decryptCode
+	 * @return
+	 */
+	public static boolean activateXsCard(String accessToken,String cardId,String code){
+		String url = "https://api.weixin.qq.com/card/generalcard/activate?access_token="+ accessToken;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("card_number", code);
+		map.put("code", code);
+		map.put("card_id", cardId);
 		
 		String data = GsonBuilderUtil.toJson(map);
 		
