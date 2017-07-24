@@ -1,4 +1,5 @@
 package cn.message.utils.wechat;
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,5 +127,82 @@ public class WebService4Wechat {
 		String result = HttpRequest.sendGet(url);
 		Map<String, Object> map = GsonUtil.fromJson(result, Map.class);
 		return map;
+	}
+	
+	/**
+	 * 解密code
+	 * @param accessToken
+	 * @param decryptCode
+	 * @return
+	 */
+	public static String decryptCode(String accessToken,String decryptCode){
+		String url = "https://api.weixin.qq.com/card/code/decrypt?access_token="+ accessToken;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("encrypt_code", decryptCode);
+		String data = GsonUtil.toJson(map);
+		
+		String result = HttpRequest.sendPost4Wechat(url,data);
+		DecryptCodeResult decryptCodeResult = GsonUtil.fromJson(result, DecryptCodeResult.class);
+		if(null != decryptCodeResult){
+			if(0 == decryptCodeResult.getErrcode()){
+				return decryptCodeResult.getCode();
+			}
+		}
+		return "";
+	}
+	
+	/**
+	 * 激活卡
+	 * @param accessToken
+	 * @param decryptCode
+	 * @return
+	 */
+	public static boolean activateCard(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
+		String url = "https://api.weixin.qq.com/card/generalcard/activate?access_token="+ accessToken;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("card_number", code);
+		map.put("code", code);
+		map.put("card_id", cardId);
+		map.put("init_custom_field_value1", ljjf);
+		map.put("init_custom_field_value2", syrq);
+		map.put("init_custom_field_value3", zjcx);
+		
+		String data = GsonUtil.toJson(map);
+		
+		String result = HttpRequest.sendPost4Wechat(url,data);
+		BaseWechatResult baseWechatResult = GsonUtil.fromJson(result, BaseWechatResult.class);
+		if(null != baseWechatResult){
+			if(0 == baseWechatResult.getErrcode()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static class BaseWechatResult{
+		private Integer errcode;
+		private String errmsg;
+		public Integer getErrcode() {
+			return errcode;
+		}
+		public void setErrcode(Integer errcode) {
+			this.errcode = errcode;
+		}
+		public String getErrmsg() {
+			return errmsg;
+		}
+		public void setErrmsg(String errmsg) {
+			this.errmsg = errmsg;
+		}
+	}
+	
+	public static class DecryptCodeResult extends BaseWechatResult{
+		private String code;
+		public String getCode() {
+			return code;
+		}
+		public void setCode(String code) {
+			this.code = code;
+		}
 	}
 }

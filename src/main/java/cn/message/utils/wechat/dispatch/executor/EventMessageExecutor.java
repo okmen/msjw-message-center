@@ -76,9 +76,10 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 			 String giveOpenId = model.getGiveOpenId();
 			 String outerStr = model.getOuterStr();
 			 logger.info("用户领取卡券:code="+code);
-			 WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId, code);
+			 WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
 			 if(null != wxMembercard){
 				 wxMembercard.setState(0);
+				 wxMembercard.setCode(code);
 				 iMessageDao.updateWxMembercard(wxMembercard);
 			 }else{
 				 WxMembercard newWxMembercard = new WxMembercard();

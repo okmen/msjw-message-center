@@ -39,7 +39,7 @@
 		WHERE 1 = 1
 		AND	`openid` = #{openId}
 		AND `cardid` = #{cardId}
-		AND `code` = #{code}
+		order by id desc
 		limit 1
 	</select>
 	

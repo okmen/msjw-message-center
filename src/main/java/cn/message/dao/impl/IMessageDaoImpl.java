@@ -17,8 +17,8 @@ public class IMessageDaoImpl implements IMessageDao {
 	}
 
 	@Override
-	public WxMembercard selectWxMembercard(String openId,String cardId,String code) {
-		return wxMembercardMapper.selectWxMembercard(openId, cardId, code);
+	public WxMembercard selectWxMembercard(String openId,String cardId) {
+		return wxMembercardMapper.selectWxMembercard(openId, cardId);
 	}
 
 	@Override

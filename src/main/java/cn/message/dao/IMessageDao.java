@@ -15,7 +15,7 @@ public interface IMessageDao {
 	 * @param wxMembercard
 	 * @return
 	 */
-	WxMembercard selectWxMembercard(String openId,String cardId,String code);
+	WxMembercard selectWxMembercard(String openId,String cardId);
 	
 	/**
 	 * 修改会员卡

@@ -20,7 +20,7 @@ public interface WxMembercardMapper {
 	 * @param wxMembercard
 	 * @return
 	 */
-	WxMembercard selectWxMembercard(@Param("openId")String openId,@Param("cardId")String cardId,@Param("code")String code);
+	WxMembercard selectWxMembercard(@Param("openId")String openId,@Param("cardId")String cardId);
 	
 	/**
 	 * 修改会员卡

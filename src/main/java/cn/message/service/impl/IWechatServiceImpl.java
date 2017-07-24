@@ -1,6 +1,7 @@
 package cn.message.service.impl;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -155,10 +156,38 @@ public class IWechatServiceImpl implements IWechatService {
 	}
 
 	@Override
-	public boolean activeJsCard(Integer id, String licenseNo, String code,
-			String cardId, String ljjf, String zjcx, String syrq) {
-		
-		return false;
+	public boolean activeJsCard(String openId,String cardId,String decryptCode) throws Exception {
+		try {
+			String code = WebService4Wechat.decryptCode(iMessageCached.getAccessToken(), decryptCode);
+			WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
+			if("".equals(code)) {
+				logger.error("decryptCode 解密失败,decryptCode="+decryptCode);
+				return false;
+			}
+			//在激活之前 本来会新建一张卡记录的 , 但是由于是异步的 可能在激活的时候 微信还没有推送消息过来  ,这里做一个新增操作
+			if(null != wxMembercard){
+				 WxMembercard newWxMembercard = new WxMembercard();
+				 newWxMembercard.setOpenid(openId);
+				 newWxMembercard.setCode(code);
+				 newWxMembercard.setCardid(cardId);
+				 newWxMembercard.setIsgivebyfriend(0);
+				 newWxMembercard.setGiveopenid("0");
+				 newWxMembercard.setState(0);
+				 newWxMembercard.setOuterstr("default");
+				 newWxMembercard.setIntime(new Date());
+				 iMessageDao.insertWxMembercard(newWxMembercard);
+			}
+			
+			boolean bool = WebService4Wechat.activateCard(iMessageCached.getAccessToken(), cardId, code, "", "", "");
+			if(!bool){
+				logger.error("activateCard 激活卡失败,openId="+openId + ",cardId="+cardId);
+				return false;
+			}
+			return true;
+		} catch (Exception e) {
+			logger.error("activeJsCard 出现异常,openId="+openId+",cardId="+cardId+",code="+decryptCode,e);
+			return false;
+		}
 	}
 
 	@Override
