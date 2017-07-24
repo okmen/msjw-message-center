@@ -139,7 +139,7 @@ public class WebService4Wechat {
 		String url = "https://api.weixin.qq.com/card/code/decrypt?access_token="+ accessToken;
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("encrypt_code", decryptCode);
-		String data = GsonUtil.toJson(map);
+		String data = GsonBuilderUtil.toJson(map);
 		
 		String result = HttpRequest.sendPost4Wechat(url,data);
 		DecryptCodeResult decryptCodeResult = GsonUtil.fromJson(result, DecryptCodeResult.class);
@@ -167,7 +167,7 @@ public class WebService4Wechat {
 		map.put("init_custom_field_value2", syrq);
 		map.put("init_custom_field_value3", zjcx);
 		
-		String data = GsonUtil.toJson(map);
+		String data = GsonBuilderUtil.toJson(map);
 		
 		String result = HttpRequest.sendPost4Wechat(url,data);
 		BaseWechatResult baseWechatResult = GsonUtil.fromJson(result, BaseWechatResult.class);
