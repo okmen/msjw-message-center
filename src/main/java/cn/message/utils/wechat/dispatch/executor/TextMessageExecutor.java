@@ -103,6 +103,10 @@ public class TextMessageExecutor extends AbstractGeneralExecutor{
 					new String[] { "http://szjj.u-road.com/fileserver/img/61_20170601105357.png" },
 					new String[] { "http://gfd178.com/design/AWLco1md" });
 		}
+		
+		if(KeyWord.KEYWORD_BM.equals(content.trim())){
+			message = new TextMessage("http://pan.baidu.com/s/1dFu3Xq5");
+		}
 		return message;
 	}
 }
