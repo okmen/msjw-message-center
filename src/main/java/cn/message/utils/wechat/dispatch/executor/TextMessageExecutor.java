@@ -105,7 +105,7 @@ public class TextMessageExecutor extends AbstractGeneralExecutor{
 		}
 		
 		if(KeyWord.KEYWORD_BM.equals(content.trim())){
-			message = new TextMessage("http://pan.baidu.com/s/1dFu3Xq5");
+			message = new TextMessage("网盘链接:http://pan.baidu.com/s/1dFu3Xq5");
 		}
 		return message;
 	}
