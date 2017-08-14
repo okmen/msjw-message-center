@@ -171,6 +171,25 @@
 				<java.domain>gxg.tunnel.qydev.com</java.domain>
 				<h5.domain>np.tunnel.qydev.com</h5.domain>
 				<wechat.menu.file>menu_dev.json</wechat.menu.file>
+				
+				
+				<!-- 支付宝参数配置 -->
+				<alipay.alipayPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1enDJFrhV3BXiXli2MKBRc3GPlag17iKdnZ7uEr4sCUUAh4oz1dnU3ukSTrl98YCB7BNaOarDMwwtph226BquIzuVuL9bIGkwarrZddR+rlC6/sbrIBiYzDqFvXnqPddV04QtgMyBNsjPSneDn0bxamjUI80vZImYITznzJGNQNdCXQCGm9N8aBX/S1mG7ycPogHr/HTszvIB144My/SwbHubMqIczn9BsZEfvoAuVH4P+vddjcPIeow4FgOQSBHRfRH9LYfvxiE1aTDr7WRzpAJL2n4VJoXf30amd956F9fnCWlNXJ3qKbQWUomLP7GRqqRgHjG4oUEyqEKwJqaHwIDAQAB</alipay.alipayPublicKey>
+				
+				<!-- <alipay.alipayPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05eCmRNy0kv2us++CvQw5p+/wQ2TJCaZqWPb5LesjlApqvIkWBgFREwMrp2uN5IUhPzWG+v5pxxF27lJHgg/lgRCUrxve27R+kvacCrhPmd7jl2b/qdOMiztmqEDzNx34/kv7lEEOZNnGM+JRe9BCsGexp+fypZdwLHiGGmdJwTKVN7Y2NxRQhSmHTulehy/UhuIT5ET357XGpGaVchuAIAMxChdsVw9BPb4E8UB5L0YIoDK6zNTQB31hlXfMK+r1vrB248/v554UtpzGNmjOaD8bX2xnm74N4D93hEJCh1N8Ag/sIklRTirelo4973zm/5jX2e5pJGrckXhBjNkZwIDAQAB</alipay.alipayPublicKey> -->
+				
+				<alipay.signCharset>utf-8</alipay.signCharset>
+				<alipay.charset>utf-8</alipay.charset>
+				<alipay.signType>RSA2</alipay.signType>
+				<alipay.appId>2016082201786470</alipay.appId>
+				
+				<!-- <alipay.appId>2016080500171363</alipay.appId> -->
+				
+				<alipay.privateKey>MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDHaKUHE1t/gbOlvfvh/lajinXLMJXF16MlhcRtPYU1xDXspTN4dieEjABKNuGxYc72Jiu6MVdG0Jo3j6/bsQsekeRtTjwDpyzxwEnGMs+hbhxdJ4l7RpRb9f3WzGhlSQzVjIPsq0+RgWpLV1+hJ/CCUYbmuXjmbp51y5prJswv8drqKHi5Vp97Vsdm//Tx1bHcQEGCv4UhNVdDVgGYCRmGSHwNbpR+NXp1BS6SLIjjUpIKOJfgrBFKnAtPm4f7hnf+ch0DHw7SJVb4z/W1fEmy2VJuAgigNdEzhSaOC/2mHj3zO6Qu/cMkp6C3ZB4QdO5jjhixctka7fh9TBoy9+OzAgMBAAECggEBAJrTAO7RdMU3KwiQzbTWCObJZlPw0RjfKGjFx5EZpwfr5AJs8d2hv2UGXmNA4VMcIdi0IldaX+03ocVp5pyohX2iwLytdaNQdXDuX1lnshYgrB0XyYLRdfdAs2nHI3cglLppczSafhj3ZlRA7prtq6tDKX6SmvAvCxFil+6CHR9LRgzKMMHtHrkGCqxCnVzTDLadoDVdV66oLolJN9/fzDxa8B++uEItCYps/O6rR8yWA0eZj9/74XUhIimrtjCGQAh0BMykOjOIupFVHX3bQURBGmcOdGZeHFhCQtts7CQhf0oXh1+oXVgwtbdaSUpqQfkDexbC72tGhL4Wln8PQeECgYEA61dBOqJFgAzM+Sd2yUnrJQGL5ZIRuw56Hzae3DvNhzbc1eVpLmw8DaAwSZS4IjoaNwO5iBRaqu1ia/t30mUWrC9geCQs1yiXaucr7Fe8DcCupZr2vpz6FM0DC2G/ZFig/JGStX4mfYkIIafCdeiPfvxmnSpMq4mGS5eBpnfMsycCgYEA2OnmJeZ1Hd8W0UZ+CJ9cgX7yTq7yBndFxKFGBZ5xZzk6SC7UMeyEQ3BHQ3mUZ/1pIycIbqK+GoLN1zg3wPTlwuulIMW0iuWw3ggvGcrw60U/Y8CqmFT3GUgl11Nr+YLe3FcFJ3xB9yQOB2wfTySZH0rKusRbVc4mc+cfVUE6MpUCgYB3p4hxsFmXzmpU75y0oRGeYhfn5AmBys2KmzHQFdPcwKctVZPR15P89Yo3jxbDyDjV6d3l8ztaFpHpBxUX8u/BIeFxlCr8RhYec2TgqIbjkyj46D42EggQlV/L5Knz8h//6l/mSTp2rzpkKjBz1IdI8DmYBQ6wVJ7kRibUJar9FwKBgQDB1nshYUlFcWeNikX0ZJyg6BWWdMW5O3qwVUIioU1L5hsMCDT9jBNBxKMaTBpvt0ft7uKdI3dob32MlyNTnkV4I2ZD3AkTmmCseXnFvdH/HLmh5blNOZg7Ensmadjydp27H1RuzZ6RQLn8rgVojxb6nLZ/ohrQmdFI/7/DSu+75QKBgQCua4XB5i3kZ0oz9/ykFxlNZl/Cbm+aqaIlQ8Mrd7eKlEDP8HmQ8OhuJL14jpIFt1h/vgmlVwfIQY6B7qED8sNAETNoVNDDoIZwVJt1QuEoOxN1vxRfEg0W7Tn/p0jOPfsG/0SgXYtyAcbBkasuFV5GSAqbjJIjckGtm3a+PBIqKQ==</alipay.privateKey>
+				<alipay.publicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx2ilBxNbf4Gzpb374f5Wo4p1yzCVxdejJYXEbT2FNcQ17KUzeHYnhIwASjbhsWHO9iYrujFXRtCaN4+v27ELHpHkbU48A6cs8cBJxjLPoW4cXSeJe0aUW/X91sxoZUkM1YyD7KtPkYFqS1dfoSfwglGG5rl45m6edcuaaybML/Ha6ih4uVafe1bHZv/08dWx3EBBgr+FITVXQ1YBmAkZhkh8DW6UfjV6dQUukiyI41KSCjiX4KwRSpwLT5uH+4Z3/nIdAx8O0iVW+M/1tXxJstlSbgIIoDXRM4Umjgv9ph498zukLv3DJKegt2QeEHTuY44YsXLZGu34fUwaMvfjswIDAQAB</alipay.publicKey>
+				<alipay.alipayGateWay>https://openapi.alipay.com/gateway.do</alipay.alipayGateWay>
+				<alipay.grantType>authorization_code</alipay.grantType>
+				
 			</properties>
 		</profile>
 
@@ -230,6 +249,18 @@
 				<java.domain>testjava.chudaokeji.com</java.domain>
 				<h5.domain>testh5.chudaokeji.com</h5.domain>
 				<wechat.menu.file>menu_test.json</wechat.menu.file>
+				
+				<!-- 支付宝参数配置 -->
+				<alipay.alipayPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1enDJFrhV3BXiXli2MKBRc3GPlag17iKdnZ7uEr4sCUUAh4oz1dnU3ukSTrl98YCB7BNaOarDMwwtph226BquIzuVuL9bIGkwarrZddR+rlC6/sbrIBiYzDqFvXnqPddV04QtgMyBNsjPSneDn0bxamjUI80vZImYITznzJGNQNdCXQCGm9N8aBX/S1mG7ycPogHr/HTszvIB144My/SwbHubMqIczn9BsZEfvoAuVH4P+vddjcPIeow4FgOQSBHRfRH9LYfvxiE1aTDr7WRzpAJL2n4VJoXf30amd956F9fnCWlNXJ3qKbQWUomLP7GRqqRgHjG4oUEyqEKwJqaHwIDAQAB</alipay.alipayPublicKey>
+				<alipay.signCharset>utf-8</alipay.signCharset>
+				<alipay.charset>utf-8</alipay.charset>
+				<alipay.signType>RSA2</alipay.signType>
+				<alipay.appId>2016082201786470</alipay.appId>
+				<alipay.privateKey>MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDHaKUHE1t/gbOlvfvh/lajinXLMJXF16MlhcRtPYU1xDXspTN4dieEjABKNuGxYc72Jiu6MVdG0Jo3j6/bsQsekeRtTjwDpyzxwEnGMs+hbhxdJ4l7RpRb9f3WzGhlSQzVjIPsq0+RgWpLV1+hJ/CCUYbmuXjmbp51y5prJswv8drqKHi5Vp97Vsdm//Tx1bHcQEGCv4UhNVdDVgGYCRmGSHwNbpR+NXp1BS6SLIjjUpIKOJfgrBFKnAtPm4f7hnf+ch0DHw7SJVb4z/W1fEmy2VJuAgigNdEzhSaOC/2mHj3zO6Qu/cMkp6C3ZB4QdO5jjhixctka7fh9TBoy9+OzAgMBAAECggEBAJrTAO7RdMU3KwiQzbTWCObJZlPw0RjfKGjFx5EZpwfr5AJs8d2hv2UGXmNA4VMcIdi0IldaX+03ocVp5pyohX2iwLytdaNQdXDuX1lnshYgrB0XyYLRdfdAs2nHI3cglLppczSafhj3ZlRA7prtq6tDKX6SmvAvCxFil+6CHR9LRgzKMMHtHrkGCqxCnVzTDLadoDVdV66oLolJN9/fzDxa8B++uEItCYps/O6rR8yWA0eZj9/74XUhIimrtjCGQAh0BMykOjOIupFVHX3bQURBGmcOdGZeHFhCQtts7CQhf0oXh1+oXVgwtbdaSUpqQfkDexbC72tGhL4Wln8PQeECgYEA61dBOqJFgAzM+Sd2yUnrJQGL5ZIRuw56Hzae3DvNhzbc1eVpLmw8DaAwSZS4IjoaNwO5iBRaqu1ia/t30mUWrC9geCQs1yiXaucr7Fe8DcCupZr2vpz6FM0DC2G/ZFig/JGStX4mfYkIIafCdeiPfvxmnSpMq4mGS5eBpnfMsycCgYEA2OnmJeZ1Hd8W0UZ+CJ9cgX7yTq7yBndFxKFGBZ5xZzk6SC7UMeyEQ3BHQ3mUZ/1pIycIbqK+GoLN1zg3wPTlwuulIMW0iuWw3ggvGcrw60U/Y8CqmFT3GUgl11Nr+YLe3FcFJ3xB9yQOB2wfTySZH0rKusRbVc4mc+cfVUE6MpUCgYB3p4hxsFmXzmpU75y0oRGeYhfn5AmBys2KmzHQFdPcwKctVZPR15P89Yo3jxbDyDjV6d3l8ztaFpHpBxUX8u/BIeFxlCr8RhYec2TgqIbjkyj46D42EggQlV/L5Knz8h//6l/mSTp2rzpkKjBz1IdI8DmYBQ6wVJ7kRibUJar9FwKBgQDB1nshYUlFcWeNikX0ZJyg6BWWdMW5O3qwVUIioU1L5hsMCDT9jBNBxKMaTBpvt0ft7uKdI3dob32MlyNTnkV4I2ZD3AkTmmCseXnFvdH/HLmh5blNOZg7Ensmadjydp27H1RuzZ6RQLn8rgVojxb6nLZ/ohrQmdFI/7/DSu+75QKBgQCua4XB5i3kZ0oz9/ykFxlNZl/Cbm+aqaIlQ8Mrd7eKlEDP8HmQ8OhuJL14jpIFt1h/vgmlVwfIQY6B7qED8sNAETNoVNDDoIZwVJt1QuEoOxN1vxRfEg0W7Tn/p0jOPfsG/0SgXYtyAcbBkasuFV5GSAqbjJIjckGtm3a+PBIqKQ==</alipay.privateKey>
+				<alipay.publicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx2ilBxNbf4Gzpb374f5Wo4p1yzCVxdejJYXEbT2FNcQ17KUzeHYnhIwASjbhsWHO9iYrujFXRtCaN4+v27ELHpHkbU48A6cs8cBJxjLPoW4cXSeJe0aUW/X91sxoZUkM1YyD7KtPkYFqS1dfoSfwglGG5rl45m6edcuaaybML/Ha6ih4uVafe1bHZv/08dWx3EBBgr+FITVXQ1YBmAkZhkh8DW6UfjV6dQUukiyI41KSCjiX4KwRSpwLT5uH+4Z3/nIdAx8O0iVW+M/1tXxJstlSbgIIoDXRM4Umjgv9ph498zukLv3DJKegt2QeEHTuY44YsXLZGu34fUwaMvfjswIDAQAB</alipay.publicKey>
+				<alipay.alipayGateWay>https://openapi.alipay.com/gateway.do</alipay.alipayGateWay>
+				<alipay.grantType>authorization_code</alipay.grantType>
+				
 			</properties>
 		</profile>
 		
@@ -297,6 +328,18 @@
 				<java.domain>https://szjjapi.stc.gov.cn</java.domain>
 				<h5.domain>https://gzh.stc.gov.cn</h5.domain>
 				<wechat.menu.file>menu_online.json</wechat.menu.file>
+				
+				<!-- 支付宝参数配置 -->
+				<alipayPublicKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB</alipayPublicKey>
+				<signCharset>utf-8</signCharset>
+				<charset>utf-8</charset>
+				<signType>RSA2</signType>
+				<appId>2015041000044041</appId>
+				<privateKey>MIICXgIBAAKBgQDIByktrZ+LhRACBhj4N6U1FAAEL06clJJjkUBa/Gx/Pu4fOYwpJ1mBILOGyPDL53hVm9kL+1d4Tms2bUxJsY6cqUBg6uO1Vqo3I99LxRf0n5t76cID2v6NpQhR25tH4aWqG4z4avsW4fpSy2hDzGEB5u4oDeU/eNxx28+UImwR+wIDAQABAoGBAKNCRPfFR/zmA+TC+UpOkIa75i+ENRNTqA+gE/ivIhbRVCUkISPNvB3KhPyzsOWb7PlilEpVQFUvHA52MtfLFeuQ6XBlsPOkWR8Gyh5H42DsULbak78/6BevFB23IszPc/hOn/zE7FF6BuoZy0WlExhnWUCkiewhPebRkIccQyKxAkEA9sK89DukOjdazS2fBOVkBZYJwEHjMIFrKi7wFmJBfc7Of/0FIgP9ZYCSyEKy1JPmJNcuUvs9TIybkeXSC6lyzwJBAM+EemWgX84PlYkuJHdd360qsbGvtdOG0FaD5rVSRp257slwXbNrIzgcgAo+FSKGy76izTZZsxgdc0yCni5VqRUCQQDhk952irsz+PyKCsWPDUCllqZtWg4dfoH/+w7B96qVHuRJvnzdvrX7/1Cvv8GJcXb3gLq5YzGDdBqXgnfE72+jAkAHVVst9Djug0Z5jpPjVAHvkK6u5NK8IuuB4y9oAPxV3pg9ribhjEu2U+uCcSc2DSVuGzq9TPYzR/cnIQaOBKDxAkEA2W2/R2PdIuU6PaD/uTE6l5dv/mBQWyMozLhxQ+dWKvYBqJlikC4mxHDD3OFJT8AtZSLbMoiVbNs1E7SvHmMt7w==</privateKey>
+				<publicKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIByktrZ+LhRACBhj4N6U1FAAEL06clJJjkUBa/Gx/Pu4fOYwpJ1mBILOGyPDL53hVm9kL+1d4Tms2bUxJsY6cqUBg6uO1Vqo3I99LxRf0n5t76cID2v6NpQhR25tH4aWqG4z4avsW4fpSy2hDzGEB5u4oDeU/eNxx28+UImwR+wIDAQAB</publicKey>
+				<alipayGateWay>https://openapi.alipay.com/gateway.do</alipayGateWay>
+				<grantType>authorization_code</grantType>
+				
 			</properties>
 		</profile>
 	</profiles>
