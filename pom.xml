@@ -330,15 +330,15 @@
 				<wechat.menu.file>menu_online.json</wechat.menu.file>
 				
 				<!-- 支付宝参数配置 -->
-				<alipayPublicKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB</alipayPublicKey>
-				<signCharset>utf-8</signCharset>
-				<charset>utf-8</charset>
-				<signType>RSA2</signType>
-				<appId>2015041000044041</appId>
-				<privateKey>MIICXgIBAAKBgQDIByktrZ+LhRACBhj4N6U1FAAEL06clJJjkUBa/Gx/Pu4fOYwpJ1mBILOGyPDL53hVm9kL+1d4Tms2bUxJsY6cqUBg6uO1Vqo3I99LxRf0n5t76cID2v6NpQhR25tH4aWqG4z4avsW4fpSy2hDzGEB5u4oDeU/eNxx28+UImwR+wIDAQABAoGBAKNCRPfFR/zmA+TC+UpOkIa75i+ENRNTqA+gE/ivIhbRVCUkISPNvB3KhPyzsOWb7PlilEpVQFUvHA52MtfLFeuQ6XBlsPOkWR8Gyh5H42DsULbak78/6BevFB23IszPc/hOn/zE7FF6BuoZy0WlExhnWUCkiewhPebRkIccQyKxAkEA9sK89DukOjdazS2fBOVkBZYJwEHjMIFrKi7wFmJBfc7Of/0FIgP9ZYCSyEKy1JPmJNcuUvs9TIybkeXSC6lyzwJBAM+EemWgX84PlYkuJHdd360qsbGvtdOG0FaD5rVSRp257slwXbNrIzgcgAo+FSKGy76izTZZsxgdc0yCni5VqRUCQQDhk952irsz+PyKCsWPDUCllqZtWg4dfoH/+w7B96qVHuRJvnzdvrX7/1Cvv8GJcXb3gLq5YzGDdBqXgnfE72+jAkAHVVst9Djug0Z5jpPjVAHvkK6u5NK8IuuB4y9oAPxV3pg9ribhjEu2U+uCcSc2DSVuGzq9TPYzR/cnIQaOBKDxAkEA2W2/R2PdIuU6PaD/uTE6l5dv/mBQWyMozLhxQ+dWKvYBqJlikC4mxHDD3OFJT8AtZSLbMoiVbNs1E7SvHmMt7w==</privateKey>
-				<publicKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIByktrZ+LhRACBhj4N6U1FAAEL06clJJjkUBa/Gx/Pu4fOYwpJ1mBILOGyPDL53hVm9kL+1d4Tms2bUxJsY6cqUBg6uO1Vqo3I99LxRf0n5t76cID2v6NpQhR25tH4aWqG4z4avsW4fpSy2hDzGEB5u4oDeU/eNxx28+UImwR+wIDAQAB</publicKey>
-				<alipayGateWay>https://openapi.alipay.com/gateway.do</alipayGateWay>
-				<grantType>authorization_code</grantType>
+				<alipay.alipayPublicKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB</alipay.alipayPublicKey>
+				<alipay.signCharset>utf-8</alipay.signCharset>
+				<alipay.charset>utf-8</alipay.charset>
+				<alipay.signType>RSA2</alipay.signType>
+				<alipay.appId>2015041000044041</alipay.appId>
+				<alipay.privateKey>MIICXgIBAAKBgQDIByktrZ+LhRACBhj4N6U1FAAEL06clJJjkUBa/Gx/Pu4fOYwpJ1mBILOGyPDL53hVm9kL+1d4Tms2bUxJsY6cqUBg6uO1Vqo3I99LxRf0n5t76cID2v6NpQhR25tH4aWqG4z4avsW4fpSy2hDzGEB5u4oDeU/eNxx28+UImwR+wIDAQABAoGBAKNCRPfFR/zmA+TC+UpOkIa75i+ENRNTqA+gE/ivIhbRVCUkISPNvB3KhPyzsOWb7PlilEpVQFUvHA52MtfLFeuQ6XBlsPOkWR8Gyh5H42DsULbak78/6BevFB23IszPc/hOn/zE7FF6BuoZy0WlExhnWUCkiewhPebRkIccQyKxAkEA9sK89DukOjdazS2fBOVkBZYJwEHjMIFrKi7wFmJBfc7Of/0FIgP9ZYCSyEKy1JPmJNcuUvs9TIybkeXSC6lyzwJBAM+EemWgX84PlYkuJHdd360qsbGvtdOG0FaD5rVSRp257slwXbNrIzgcgAo+FSKGy76izTZZsxgdc0yCni5VqRUCQQDhk952irsz+PyKCsWPDUCllqZtWg4dfoH/+w7B96qVHuRJvnzdvrX7/1Cvv8GJcXb3gLq5YzGDdBqXgnfE72+jAkAHVVst9Djug0Z5jpPjVAHvkK6u5NK8IuuB4y9oAPxV3pg9ribhjEu2U+uCcSc2DSVuGzq9TPYzR/cnIQaOBKDxAkEA2W2/R2PdIuU6PaD/uTE6l5dv/mBQWyMozLhxQ+dWKvYBqJlikC4mxHDD3OFJT8AtZSLbMoiVbNs1E7SvHmMt7w==</alipay.privateKey>
+				<alipay.publicKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIByktrZ+LhRACBhj4N6U1FAAEL06clJJjkUBa/Gx/Pu4fOYwpJ1mBILOGyPDL53hVm9kL+1d4Tms2bUxJsY6cqUBg6uO1Vqo3I99LxRf0n5t76cID2v6NpQhR25tH4aWqG4z4avsW4fpSy2hDzGEB5u4oDeU/eNxx28+UImwR+wIDAQAB</alipay.publicKey>
+				<alipay.alipayGateWay>https://openapi.alipay.com/gateway.do</alipay.alipayGateWay>
+				<alipay.grantType>authorization_code</alipay.grantType>
 				
 			</properties>
 		</profile>
