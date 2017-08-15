@@ -162,7 +162,8 @@ public class IAlipayServiceImpl implements IAlipayService {
 
 	@Override
 	public AlipayUserInfo callback4UserId(String code) {
-		String content = "";
+		String content1 = "";
+		String content2 = "";
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Map<String, String> parameters = new LinkedHashMap<String, String>();
@@ -177,9 +178,9 @@ public class IAlipayServiceImpl implements IAlipayService {
 	        parameters.put("refresh_token", "");
 	        parameters.put("sign", AlipaySignature.rsaSign(parameters, AlipayServiceEnvConstants.PRIVATE_KEY, "GBK"));
 	        
-	        content = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, parameters, 100000, 100000);
-	        logger.info("alipay.system.oauth.token响应的信息是：" + content);
-	        JSONObject jsonObject =  JSON.parseObject(content);
+	        content1 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, parameters, 100000, 100000);
+	        logger.info("alipay.system.oauth.token响应的信息是：" + content1);
+	        JSONObject jsonObject =  JSON.parseObject(content1);
 			String xddd = jsonObject.getString("alipay_system_oauth_token_response");
 			jsonObject = JSON.parseObject(xddd);
 			String accessToken = jsonObject.getString("access_token");
@@ -193,9 +194,9 @@ public class IAlipayServiceImpl implements IAlipayService {
             param.put("version", "1.0");
             param.put("sign_type", "RSA");
             param.put("sign",AlipaySignature.rsaSign(param, AlipayServiceEnvConstants.PRIVATE_KEY, "GBK"));
-            content = content = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
+            content2 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
             
-            logger.info("content2：" + content);
+            logger.info("content2：" + content2);
             
 	        
 			// 3. 利用authCode获得authToken
