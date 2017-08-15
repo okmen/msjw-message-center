@@ -194,7 +194,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 			} else {
 				System.out.println("调用失败====----------------");
 			}
-			logger.info("xxxxxxxxxxxxxxx：" + response);
+			logger.info("xxxxxxxxxxxxxxx：" + response.getMobile());
 			
 	        Map<String, String> param = new LinkedHashMap<String, String>();;
             param.put("method", "alipay.user.userinfo.share");
