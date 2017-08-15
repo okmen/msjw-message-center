@@ -8,6 +8,7 @@ import cn.message.model.alipay.AlipayServiceEnvConstants;
 
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
 
 /**
  * API调用客户端工厂
@@ -26,7 +27,6 @@ public class AlipayAPIClientFactory {
      * @return
      */
     public static AlipayClient getAlipayClient(){
-        
         if(null == alipayClient){
             alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY, AlipayServiceEnvConstants.APP_ID, 
                 AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);

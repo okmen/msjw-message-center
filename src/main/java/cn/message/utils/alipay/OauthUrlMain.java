@@ -26,6 +26,6 @@ public class OauthUrlMain {
 		
 		
 					
-		System.out.println("支付宝 出道科技:"+clickUrlToSellerList);
+		System.out.println("支付宝 出道科技:"+clickUrlToSellerList1);
 	}
 }
