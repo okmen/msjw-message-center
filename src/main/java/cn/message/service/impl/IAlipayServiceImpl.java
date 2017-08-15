@@ -185,6 +185,17 @@ public class IAlipayServiceImpl implements IAlipayService {
 			jsonObject = JSON.parseObject(xddd);
 			String accessToken = jsonObject.getString("access_token");
 			
+			AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			
+			AlipayUserInfoShareRequest request = new AlipayUserInfoShareRequest();
+			AlipayUserInfoShareResponse response = alipayClient.execute(request,accessToken);
+			if(response.isSuccess()){
+				System.out.println("调用成功================");
+			} else {
+				System.out.println("调用失败====----------------");
+			}
+			logger.info("xxxxxxxxxxxxxxx：" + response);
+			
 	        Map<String, String> param = new LinkedHashMap<String, String>();;
             param.put("method", "alipay.user.userinfo.share");
             param.put("timestamp", dateFormat.format(new Date()));
@@ -203,7 +214,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 			AlipaySystemOauthTokenRequest oauthTokenRequest = new AlipaySystemOauthTokenRequest();
 			oauthTokenRequest.setCode(code);
 			oauthTokenRequest.setGrantType(AlipayServiceEnvConstants.GRANT_TYPE);
-			AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			
 			AlipaySystemOauthTokenResponse oauthTokenResponse = alipayClient.execute(oauthTokenRequest);
 			// 成功获得authToken
 			if (null != oauthTokenResponse && oauthTokenResponse.isSuccess()) {
