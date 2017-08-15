@@ -192,7 +192,7 @@ public class IAlipayServiceImpl implements IAlipayService {
             param.put("charset", "GBK");
             param.put("version", "1.0");
             param.put("sign_type", "RSA");
-            param.put("sign",AlipaySignature.rsaSign(parameters, AlipayServiceEnvConstants.PRIVATE_KEY, "GBK"));
+            param.put("sign",AlipaySignature.rsaSign(param, AlipayServiceEnvConstants.PRIVATE_KEY, "GBK"));
             content = content = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
             
             logger.info("content2：" + content);
