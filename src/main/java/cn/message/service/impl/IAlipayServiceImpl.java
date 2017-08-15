@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -177,9 +178,9 @@ public class IAlipayServiceImpl implements IAlipayService {
 	        
 	        content = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, parameters, 100000, 100000);
 	        logger.info("content1：" + content);
-	        
-	        
-	        String accessToken = "";
+	        AlipaySystemOauthTokenResponse alipaySystemOauthTokenResponse = JSON.parseObject(content, AlipaySystemOauthTokenResponse.class);
+	        logger.info("ddddddddddd" + alipaySystemOauthTokenResponse.getAccessToken());
+	        String accessToken = alipaySystemOauthTokenResponse.getAccessToken();
 	        
 	        
 	        Map<String, String> param = new LinkedHashMap<String, String>();;
