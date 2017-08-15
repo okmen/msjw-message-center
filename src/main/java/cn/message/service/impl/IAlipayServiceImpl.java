@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -177,12 +178,12 @@ public class IAlipayServiceImpl implements IAlipayService {
 	        parameters.put("sign", AlipaySignature.rsaSign(parameters, AlipayServiceEnvConstants.PRIVATE_KEY, "GBK"));
 	        
 	        content = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, parameters, 100000, 100000);
-	        logger.info("content1：" + content);
-	        AlipaySystemOauthTokenResponse alipaySystemOauthTokenResponse = JSON.parseObject(content, AlipaySystemOauthTokenResponse.class);
-	        logger.info("ddddddddddd" + alipaySystemOauthTokenResponse.getAccessToken());
-	        String accessToken = alipaySystemOauthTokenResponse.getAccessToken();
-	        
-	        
+	        logger.info("alipay.system.oauth.token响应的信息是：" + content);
+	        JSONObject jsonObject =  JSON.parseObject(content);
+			String xddd = jsonObject.getString("alipay_system_oauth_token_response");
+			jsonObject = JSON.parseObject(xddd);
+			String accessToken = jsonObject.getString("access_token");
+			
 	        Map<String, String> param = new LinkedHashMap<String, String>();;
             param.put("method", "alipay.user.userinfo.share");
             param.put("timestamp", dateFormat.format(new Date()));
@@ -305,5 +306,17 @@ public class IAlipayServiceImpl implements IAlipayService {
 
 	public void setGrantType(String grantType) {
 		this.grantType = grantType;
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		String xx = "{\"alipay_system_oauth_token_response\": {\"access_token\": \"authusrB0bed4977307f43ce84ba1bcdd6c45X13\", \"alipay_user_id\": \"20880057743797774564222911313713\", \"expires_in\": 600, \"re_expires_in\": 2592000, \"refresh_token\": \"authusrBa05faa911c61490cab22280a6a9feX13\", \"user_id\": \"2088012107137130\"}, \"sign\": \"wm2tMto94t5VSXAU/WEburuaWUOpRSpdQVlioNTOq7diWKp34E4M0TrxnAgOnIJaoFbkPcXpe0d/JuGenUOXz+Pxnez78B9kHjsgcm0bg2usOOiXNd7Ka6I78uDG9WEe+yUM4u0Jn/b5ARBaovpnAYy1LZL8hdJ62rbljCy7mGM=\"}";
+		
+		JSONObject jsonObject =  JSON.parseObject(xx);
+		String xddd = jsonObject.getString("alipay_system_oauth_token_response");
+		jsonObject = JSON.parseObject(xddd);
+		String access_token = jsonObject.getString("access_token");
+		System.out.println(access_token);
 	}
 }
