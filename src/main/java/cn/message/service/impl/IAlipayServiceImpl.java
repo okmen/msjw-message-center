@@ -179,9 +179,10 @@ public class IAlipayServiceImpl implements IAlipayService {
 			parameters.put("code", code);
 			parameters.put("refresh_token", "");
 			parameters.put("sign", AlipaySignature.rsaSign(parameters, AlipayServiceEnvConstants.PRIVATE_KEY, "GBK"));
-
 			content1 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, parameters, 100000, 100000);
 			logger.info("alipay.system.oauth.token响应的信息是：" + content1);
+			
+			
 			JSONObject jsonObject = JSON.parseObject(content1);
 			String xddd = jsonObject.getString("alipay_system_oauth_token_response");
 			jsonObject = JSON.parseObject(xddd);
@@ -200,20 +201,8 @@ public class IAlipayServiceImpl implements IAlipayService {
 			logger.info("alipay.user.userinfo.share：" + content2);
 			
 			
-			Map<String, String> param11 = new LinkedHashMap<String, String>();
-			param11.put("method", "alipay.user.info.share");
-			param11.put("timestamp", dateFormat.format(new Date()));
-			param11.put("app_id", AlipayServiceEnvConstants.APP_ID);
-			param11.put("auth_token", accessToken);
-			param11.put("charset", "UTF-8");
-			param11.put("version", "1.0");
-			param11.put("sign_type", "RSA2");
-			param11.put("sign", AlipaySignature.rsaSign(param11, AlipayServiceEnvConstants.PRIVATE_KEY, "UTF-8"));
-			content3 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
-			logger.info("alipay.user.info.share：" + content3);
 			
-			
-			AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			/*AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			// 3. 利用authCode获得authToken
 			AlipaySystemOauthTokenRequest oauthTokenRequest = new AlipaySystemOauthTokenRequest();
 			oauthTokenRequest.setCode(code);
@@ -248,7 +237,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 				}
 			} else {
 				logger.error("alipay authCode换取authToken失败");
-			}
+			}*/
 		} catch (Exception e) {
 			logger.info("alipay 获取用户信息失败", e);
 		}
