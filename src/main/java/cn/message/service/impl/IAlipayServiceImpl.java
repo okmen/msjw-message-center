@@ -139,7 +139,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 			logger.info("alipay.user.userinfo.share：" + content2);
 			
 			JSONObject jsonObject2 = JSON.parseObject(content2);
-			String userInfoStr = jsonObject.getString("alipay_user_userinfo_share_response");
+			String userInfoStr = jsonObject2.getString("alipay_user_userinfo_share_response");
 			jsonObject2 = JSON.parseObject(userInfoStr);
 			//用户手机号
 			String mobile = jsonObject2.getString("mobile");
@@ -260,5 +260,18 @@ public class IAlipayServiceImpl implements IAlipayService {
 
 	public void setGrantType(String grantType) {
 		this.grantType = grantType;
+	}
+	
+	public static void main(String[] args) {
+		String xx= "{\"alipay_user_userinfo_share_response\":{\"cert_type_value\":\"0\",\"user_type_value\":\"2\",\"is_licence_auth\":\"F\",\"is_certified\":\"T\",\"is_certify_grade_a\":\"T\",\"avatar\":\"https:\\/\\/tfs.alipayobjects.com\\/images\\/partner\\/T1IERdXit7XXXXXXXX\",\"is_student_certified\":\"F\",\"is_bank_auth\":\"T\",\"is_mobile_auth\":\"T\",\"alipay_user_id\":\"2088012107137130\",\"email\":\"1640692414@qq.com\",\"user_id\":\"20880057743797774564222911313713\",\"cert_no\":\"431225199111161414\",\"user_status\":\"T\",\"gender\":\"m\",\"real_name\":\"\u8983\u6C38\u6CE2\",\"is_id_auth\":\"T\",\"mobile\":\"13652311206\"},\"sign\":\"dFoS8eRrzPqWBfxguE/rYpCUBFaqUcJU6v0ztliaFHAXj+a1PlD93oJwWpUYxF1x9ZbpjvEUxvdieKV9JYEOwoq5irgpWRovJIVTrFRW3YHkrt2fZxr7xZjB/AKXGDlE2NLBYTMI42tgjJNoGYu1XfLRof8sORpM+Y2Qtj+R1Gg=\"}";
+		JSONObject jsonObject2 = JSON.parseObject(xx);
+		String userInfoStr = jsonObject2.getString("alipay_user_userinfo_share_response");
+		jsonObject2 = JSON.parseObject(userInfoStr);
+		//用户手机号
+		String mobile = jsonObject2.getString("mobile");
+		String alipayUserId = jsonObject2.getString("alipay_user_id");
+		String nickName = jsonObject2.getString("real_name");
+		String avatar = jsonObject2.getString("avatar");
+		System.out.println(mobile);
 	}
 }
