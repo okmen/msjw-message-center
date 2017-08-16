@@ -29,7 +29,7 @@ public class AlipayAPIClientFactory {
     public static AlipayClient getAlipayClient(){
         if(null == alipayClient){
             alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY, AlipayServiceEnvConstants.APP_ID, 
-                AlipayServiceEnvConstants.PRIVATE_KEYYuan, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
+                AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
         }
         return alipayClient;
     }

@@ -165,8 +165,9 @@ public class IAlipayServiceImpl implements IAlipayService {
 	public AlipayUserInfo callback4UserId(String code) {
 		String content1 = "";
 		String content2 = "";
+		String content3 = "";
 		try {
-			/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Map<String, String> parameters = new LinkedHashMap<String, String>();
 			parameters.put("app_id", AlipayServiceEnvConstants.APP_ID);
 			parameters.put("method", "alipay.system.oauth.token");
@@ -196,9 +197,22 @@ public class IAlipayServiceImpl implements IAlipayService {
 			param.put("sign_type", "RSA2");
 			param.put("sign", AlipaySignature.rsaSign(param, AlipayServiceEnvConstants.PRIVATE_KEY, "UTF-8"));
 			content2 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
-
-			logger.info("content2：" + content2);*/
-
+			logger.info("alipay.user.userinfo.share：" + content2);
+			
+			
+			Map<String, String> param11 = new LinkedHashMap<String, String>();
+			param11.put("method", "alipay.user.info.share");
+			param11.put("timestamp", dateFormat.format(new Date()));
+			param11.put("app_id", AlipayServiceEnvConstants.APP_ID);
+			param11.put("auth_token", accessToken);
+			param11.put("charset", "UTF-8");
+			param11.put("version", "1.0");
+			param11.put("sign_type", "RSA2");
+			param11.put("sign", AlipaySignature.rsaSign(param11, AlipayServiceEnvConstants.PRIVATE_KEY, "UTF-8"));
+			content3 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
+			logger.info("alipay.user.info.share：" + content3);
+			
+			
 			AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			// 3. 利用authCode获得authToken
 			AlipaySystemOauthTokenRequest oauthTokenRequest = new AlipaySystemOauthTokenRequest();
