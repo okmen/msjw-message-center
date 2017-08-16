@@ -21,8 +21,8 @@ public class OauthUrlMain {
 		String clickUrlToSellerList1 = "https://openauth.alipay.com/oauth2/publicAppAuthorize.htm" +
 				"?app_id=" +AlipayServiceEnvConstants.APP_ID+
 				"&scope=auth_user" +
-				"&redirect_uri="+EncodeUtil.encodeUTF8("http://szjjapi.stc.gov.cn/oauthAlipay/callback.html")+
-				"&state=http://szjjapi.stc.gov.cn";
+				"&redirect_uri="+EncodeUtil.encodeUTF8("http://gzh.stc.gov.cn/api/oauthAlipay/callback.html")+
+				"&state=http://gzh.stc.gov.cn";
 		
 		
 					

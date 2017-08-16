@@ -166,12 +166,12 @@ public class IAlipayServiceImpl implements IAlipayService {
 		String content1 = "";
 		String content2 = "";
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Map<String, String> parameters = new LinkedHashMap<String, String>();
 			parameters.put("app_id", AlipayServiceEnvConstants.APP_ID);
 			parameters.put("method", "alipay.system.oauth.token");
-			parameters.put("charset", "GBK");
-			parameters.put("sign_type", "RSA");
+			parameters.put("charset", "UTF-8");
+			parameters.put("sign_type", "RSA2");
 			parameters.put("timestamp", dateFormat.format(new Date()));
 			parameters.put("version", "1.0");
 			parameters.put("grant_type", "authorization_code");
@@ -191,36 +191,35 @@ public class IAlipayServiceImpl implements IAlipayService {
 			param.put("timestamp", dateFormat.format(new Date()));
 			param.put("app_id", AlipayServiceEnvConstants.APP_ID);
 			param.put("auth_token", accessToken);
-			param.put("charset", "GBK");
+			param.put("charset", "UTF-8");
 			param.put("version", "1.0");
-			param.put("sign_type", "RSA");
-			param.put("sign", AlipaySignature.rsaSign(param, AlipayServiceEnvConstants.PRIVATE_KEY, "GBK"));
+			param.put("sign_type", "RSA2");
+			param.put("sign", AlipaySignature.rsaSign(param, AlipayServiceEnvConstants.PRIVATE_KEY, "UTF-8"));
 			content2 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
 
-			logger.info("content2：" + content2);
+			logger.info("content2：" + content2);*/
 
-			/*AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			// 3. 利用authCode获得authToken
 			AlipaySystemOauthTokenRequest oauthTokenRequest = new AlipaySystemOauthTokenRequest();
 			oauthTokenRequest.setCode(code);
 			oauthTokenRequest.setGrantType(AlipayServiceEnvConstants.GRANT_TYPE);
-
-			
 			AlipaySystemOauthTokenResponse oauthTokenResponse = alipayClient.execute(oauthTokenRequest);
+			
+			logger.info("oauthTokenResponse：" + JSON.toJSONString(oauthTokenResponse));
 			// 成功获得authToken
 			if (null != oauthTokenResponse && oauthTokenResponse.isSuccess()) {
 				String access_Token = oauthTokenResponse.getAccessToken();
 				logger.info("accessToken：" + access_Token);
+				
+				AlipayUserInfoShareRequest userinfoShareRequest = new AlipayUserInfoShareRequest();
+				AlipayUserInfoShareResponse userinfoShareResponse = alipayClient.execute(userinfoShareRequest,access_Token);
+				logger.info("userinfoShareResponse：" + JSON.toJSONString(userinfoShareResponse));
+				
 				// 4. 利用authToken获取用户信息
 				AlipayUserUserinfoShareRequest userUserinfoShareRequest = new AlipayUserUserinfoShareRequest();
-				AlipayUserUserinfoShareResponse userUserinfoShareResponse = alipayClient
-						.execute(userUserinfoShareRequest, access_Token);
-				logger.info("===1：" + userUserinfoShareResponse);
-
-				AlipayUserInfoShareRequest userinfoShareRequest = new AlipayUserInfoShareRequest();
-				AlipayUserInfoShareResponse userinfoShareResponse = alipayClient.execute(userinfoShareRequest,
-						access_Token);
-				logger.info("===2：" + userinfoShareResponse);
+				AlipayUserUserinfoShareResponse userUserinfoShareResponse = alipayClient.execute(userUserinfoShareRequest, access_Token);
+				logger.info("userUserinfoShareResponse：" + JSON.toJSONString(userUserinfoShareResponse));
 
 				// 成功获得用户信息
 				if (null != userinfoShareResponse && userinfoShareResponse.isSuccess()) {
@@ -235,7 +234,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 				}
 			} else {
 				logger.error("alipay authCode换取authToken失败");
-			}*/
+			}
 		} catch (Exception e) {
 			logger.info("alipay 获取用户信息失败", e);
 		}
