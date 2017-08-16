@@ -169,7 +169,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Map<String, String> parameters = new LinkedHashMap<String, String>();
-			parameters.put("app_id", AlipayServiceEnvConstants.APP_ID);
+			parameters.put("app_id", AlipayServiceEnvConstants.APP_ID_TEST);
 			parameters.put("method", "alipay.system.oauth.token");
 			parameters.put("charset", "UTF-8");
 			parameters.put("sign_type", "RSA2");
@@ -178,8 +178,8 @@ public class IAlipayServiceImpl implements IAlipayService {
 			parameters.put("grant_type", "authorization_code");
 			parameters.put("code", code);
 			parameters.put("refresh_token", "");
-			parameters.put("sign", AlipaySignature.rsaSign(parameters, AlipayServiceEnvConstants.PRIVATE_KEY, "GBK"));
-			content1 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, parameters, 100000, 100000);
+			parameters.put("sign", AlipaySignature.rsaSign(parameters, AlipayServiceEnvConstants.PRIVATE_KEY_TEST, "GBK"));
+			content1 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY_TEST, parameters, 100000, 100000);
 			logger.info("alipay.system.oauth.token响应的信息是：" + content1);
 			
 			
@@ -191,13 +191,13 @@ public class IAlipayServiceImpl implements IAlipayService {
 			Map<String, String> param = new LinkedHashMap<String, String>();
 			param.put("method", "alipay.user.userinfo.share");
 			param.put("timestamp", dateFormat.format(new Date()));
-			param.put("app_id", AlipayServiceEnvConstants.APP_ID);
+			param.put("app_id", AlipayServiceEnvConstants.APP_ID_TEST);
 			param.put("auth_token", accessToken);
 			param.put("charset", "UTF-8");
 			param.put("version", "1.0");
 			param.put("sign_type", "RSA2");
-			param.put("sign", AlipaySignature.rsaSign(param, AlipayServiceEnvConstants.PRIVATE_KEY, "UTF-8"));
-			content2 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
+			param.put("sign", AlipaySignature.rsaSign(param, AlipayServiceEnvConstants.PRIVATE_KEY_TEST, "UTF-8"));
+			content2 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY_TEST, param, 100000, 100000);
 			logger.info("alipay.user.userinfo.share：" + content2);
 			
 			

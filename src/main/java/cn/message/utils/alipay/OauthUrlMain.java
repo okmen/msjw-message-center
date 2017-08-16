@@ -14,8 +14,8 @@ public class OauthUrlMain {
 		String clickUrlToSellerList = "https://openauth.alipay.com/oauth2/publicAppAuthorize.htm" +
 					"?app_id=" +AlipayServiceEnvConstants.APP_ID+
 					"&scope=auth_user" +
-					"&redirect_uri="+EncodeUtil.encodeUTF8("http://qinyongbo.tunnel.qydev.com/web/oauthAlipay/callback.html")+
-					"&state=http://qinyongbo.tunnel.qydev.com";
+					"&redirect_uri="+EncodeUtil.encodeUTF8("http://gzh.stc.gov.cn/api/oauthAlipay/callback.html")+
+					"&state=http://gzh.stc.gov.cn";
 		
 		
 		String clickUrlToSellerList1 = "https://openauth.alipay.com/oauth2/publicAppAuthorize.htm" +
@@ -26,6 +26,8 @@ public class OauthUrlMain {
 		
 		
 					
-		System.out.println("支付宝 出道科技:"+clickUrlToSellerList1);
+		System.out.println("支付宝 出道科技:"+clickUrlToSellerList);
+		System.out.println("支付宝 深圳交警:"+clickUrlToSellerList1);
+		
 	}
 }
