@@ -98,69 +98,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 			logger.info("支付宝异步发送消息异常", e);
 		}
 	}
-
-	public String getAppAuthToken(String appAuthCode) throws AlipayApiException {
-		callback4UserId(appAuthCode);
-		alipayGateWay = "https://openapi.alipay.com/gateway.do";
-		appId = "2016082201786470";
-		privateKey = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDHaKUHE1t/gbOlvfvh/lajinXLMJXF16MlhcRtPYU1xDXspTN4dieEjABKNuGxYc72Jiu6MVdG0Jo3j6/bsQsekeRtTjwDpyzxwEnGMs+hbhxdJ4l7RpRb9f3WzGhlSQzVjIPsq0+RgWpLV1+hJ/CCUYbmuXjmbp51y5prJswv8drqKHi5Vp97Vsdm//Tx1bHcQEGCv4UhNVdDVgGYCRmGSHwNbpR+NXp1BS6SLIjjUpIKOJfgrBFKnAtPm4f7hnf+ch0DHw7SJVb4z/W1fEmy2VJuAgigNdEzhSaOC/2mHj3zO6Qu/cMkp6C3ZB4QdO5jjhixctka7fh9TBoy9+OzAgMBAAECggEBAJrTAO7RdMU3KwiQzbTWCObJZlPw0RjfKGjFx5EZpwfr5AJs8d2hv2UGXmNA4VMcIdi0IldaX+03ocVp5pyohX2iwLytdaNQdXDuX1lnshYgrB0XyYLRdfdAs2nHI3cglLppczSafhj3ZlRA7prtq6tDKX6SmvAvCxFil+6CHR9LRgzKMMHtHrkGCqxCnVzTDLadoDVdV66oLolJN9/fzDxa8B++uEItCYps/O6rR8yWA0eZj9/74XUhIimrtjCGQAh0BMykOjOIupFVHX3bQURBGmcOdGZeHFhCQtts7CQhf0oXh1+oXVgwtbdaSUpqQfkDexbC72tGhL4Wln8PQeECgYEA61dBOqJFgAzM+Sd2yUnrJQGL5ZIRuw56Hzae3DvNhzbc1eVpLmw8DaAwSZS4IjoaNwO5iBRaqu1ia/t30mUWrC9geCQs1yiXaucr7Fe8DcCupZr2vpz6FM0DC2G/ZFig/JGStX4mfYkIIafCdeiPfvxmnSpMq4mGS5eBpnfMsycCgYEA2OnmJeZ1Hd8W0UZ+CJ9cgX7yTq7yBndFxKFGBZ5xZzk6SC7UMeyEQ3BHQ3mUZ/1pIycIbqK+GoLN1zg3wPTlwuulIMW0iuWw3ggvGcrw60U/Y8CqmFT3GUgl11Nr+YLe3FcFJ3xB9yQOB2wfTySZH0rKusRbVc4mc+cfVUE6MpUCgYB3p4hxsFmXzmpU75y0oRGeYhfn5AmBys2KmzHQFdPcwKctVZPR15P89Yo3jxbDyDjV6d3l8ztaFpHpBxUX8u/BIeFxlCr8RhYec2TgqIbjkyj46D42EggQlV/L5Knz8h//6l/mSTp2rzpkKjBz1IdI8DmYBQ6wVJ7kRibUJar9FwKBgQDB1nshYUlFcWeNikX0ZJyg6BWWdMW5O3qwVUIioU1L5hsMCDT9jBNBxKMaTBpvt0ft7uKdI3dob32MlyNTnkV4I2ZD3AkTmmCseXnFvdH/HLmh5blNOZg7Ensmadjydp27H1RuzZ6RQLn8rgVojxb6nLZ/ohrQmdFI/7/DSu+75QKBgQCua4XB5i3kZ0oz9/ykFxlNZl/Cbm+aqaIlQ8Mrd7eKlEDP8HmQ8OhuJL14jpIFt1h/vgmlVwfIQY6B7qED8sNAETNoVNDDoIZwVJt1QuEoOxN1vxRfEg0W7Tn/p0jOPfsG/0SgXYtyAcbBkasuFV5GSAqbjJIjckGtm3a+PBIqKQ==";
-		charset = "utf-8";
-		alipayPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1enDJFrhV3BXiXli2MKBRc3GPlag17iKdnZ7uEr4sCUUAh4oz1dnU3ukSTrl98YCB7BNaOarDMwwtph226BquIzuVuL9bIGkwarrZddR+rlC6/sbrIBiYzDqFvXnqPddV04QtgMyBNsjPSneDn0bxamjUI80vZImYITznzJGNQNdCXQCGm9N8aBX/S1mG7ycPogHr/HTszvIB144My/SwbHubMqIczn9BsZEfvoAuVH4P+vddjcPIeow4FgOQSBHRfRH9LYfvxiE1aTDr7WRzpAJL2n4VJoXf30amd956F9fnCWlNXJ3qKbQWUomLP7GRqqRgHjG4oUEyqEKwJqaHwIDAQAB";
-		signType = "RSA2";
-		AlipayClient alipayClient = new DefaultAlipayClient(alipayGateWay, appId, privateKey, "json", charset,
-				alipayPublicKey, signType);
-		AlipaySystemOauthTokenRequest request1 = new AlipaySystemOauthTokenRequest();// 创建API对应的request类
-
-		request1.setGrantType(grantType);
-		request1.setCode(appAuthCode);
-		AlipaySystemOauthTokenResponse response1 = null;
-		try {
-			response1 = alipayClient.execute(request1);// 通过alipayClient调用API，获得对应的response类
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		System.out.print(response1);
-		// 根据response中的结果继续业务逻辑处理
-		String access_token = response1.getAccessToken();
-		String alipayUserId = response1.getAlipayUserId();
-		String refreshToken = response1.getRefreshToken();
-
-		AlipayUserUserinfoShareRequest request = new AlipayUserUserinfoShareRequest();// 创建API对应的request类
-		AlipayUserUserinfoShareResponse response = alipayClient.execute(request, access_token);// 在请求方法中传入上一步获得的access_token
-		System.out.print(response);
-		// TODO 根据response中的结果继续业务逻辑处理
-		return null;
-
-		/*
-		 * AlipayClient alipayClient = new DefaultAlipayClient(alipayGateWay,
-		 * appId, privateKey, "json", charset,alipayPublicKey, signType);
-		 * AlipayOpenAuthTokenAppRequest requestLogin1 = new
-		 * AlipayOpenAuthTokenAppRequest(); requestLogin1.setBizContent("{" +
-		 * "\"grant_type\":\"authorization_code\"," + "\"code\":\"" +
-		 * appAuthCode + "\"" + "}"); AlipayOpenAuthTokenAppResponse
-		 * alipayOpenAuthTokenAppResponse = alipayClient.execute(requestLogin1);
-		 * 
-		 * if (alipayOpenAuthTokenAppResponse.isSuccess()) {
-		 * System.out.println("调用成功"); } else { System.out.println("调用失败"); }
-		 * String appAuthToken =
-		 * alipayOpenAuthTokenAppResponse.getAppAuthToken();
-		 * 
-		 * AlipayClient alipayClient11 = new DefaultAlipayClient(alipayGateWay,
-		 * appId, privateKey, "json", charset,alipayPublicKey, signType);
-		 * AlipayUserUserinfoShareRequest request = new
-		 * AlipayUserUserinfoShareRequest(); requestLogin1.setBizContent("{" +
-		 * "\"auth_token\":\"6e36a61321074f0daefebaeaf1beTX13\",");
-		 * 
-		 * AlipayUserUserinfoShareResponse response =
-		 * alipayClient11.execute(request); if(response.isSuccess()){
-		 * System.out.println("调用成功"); } else { System.out.println("调用失败"); }
-		 * 
-		 * 
-		 * return appAuthToken;
-		 */
-
-	}
-
+	
 	@Override
 	public AlipayUserInfo callback4UserId(String code) {
 		String content1 = "";
@@ -200,7 +138,15 @@ public class IAlipayServiceImpl implements IAlipayService {
 			content2 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
 			logger.info("alipay.user.userinfo.share：" + content2);
 			
-			
+			JSONObject jsonObject2 = JSON.parseObject(content2);
+			String userInfoStr = jsonObject.getString("alipay_user_userinfo_share_response");
+			jsonObject2 = JSON.parseObject(userInfoStr);
+			//用户手机号
+			String mobile = jsonObject2.getString("mobile");
+			String alipayUserId = jsonObject2.getString("alipay_user_id");
+			String nickName = jsonObject2.getString("real_name");
+			String avatar = jsonObject2.getString("avatar");
+			return new AlipayUserInfo(alipayUserId, nickName, avatar, mobile);
 			
 			/*AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			// 3. 利用authCode获得authToken
@@ -314,15 +260,5 @@ public class IAlipayServiceImpl implements IAlipayService {
 
 	public void setGrantType(String grantType) {
 		this.grantType = grantType;
-	}
-
-	public static void main(String[] args) {
-		String xx = "{\"alipay_system_oauth_token_response\": {\"access_token\": \"authusrB0bed4977307f43ce84ba1bcdd6c45X13\", \"alipay_user_id\": \"20880057743797774564222911313713\", \"expires_in\": 600, \"re_expires_in\": 2592000, \"refresh_token\": \"authusrBa05faa911c61490cab22280a6a9feX13\", \"user_id\": \"2088012107137130\"}, \"sign\": \"wm2tMto94t5VSXAU/WEburuaWUOpRSpdQVlioNTOq7diWKp34E4M0TrxnAgOnIJaoFbkPcXpe0d/JuGenUOXz+Pxnez78B9kHjsgcm0bg2usOOiXNd7Ka6I78uDG9WEe+yUM4u0Jn/b5ARBaovpnAYy1LZL8hdJ62rbljCy7mGM=\"}";
-
-		JSONObject jsonObject = JSON.parseObject(xx);
-		String xddd = jsonObject.getString("alipay_system_oauth_token_response");
-		jsonObject = JSON.parseObject(xddd);
-		String access_token = jsonObject.getString("access_token");
-		System.out.println(access_token);
 	}
 }
