@@ -171,8 +171,8 @@ public class IAlipayServiceImpl implements IAlipayService {
 			Map<String, String> parameters = new LinkedHashMap<String, String>();
 			parameters.put("app_id", AlipayServiceEnvConstants.APP_ID);
 			parameters.put("method", "alipay.system.oauth.token");
-			parameters.put("charset", "UTF-8");
-			parameters.put("sign_type", "RSA2");
+			parameters.put("charset", "GBK");
+			parameters.put("sign_type", "RSA");
 			parameters.put("timestamp", dateFormat.format(new Date()));
 			parameters.put("version", "1.0");
 			parameters.put("grant_type", "authorization_code");
@@ -193,9 +193,9 @@ public class IAlipayServiceImpl implements IAlipayService {
 			param.put("timestamp", dateFormat.format(new Date()));
 			param.put("app_id", AlipayServiceEnvConstants.APP_ID);
 			param.put("auth_token", accessToken);
-			param.put("charset", "UTF-8");
+			param.put("charset", "GBK");
 			param.put("version", "1.0");
-			param.put("sign_type", "RSA2");
+			param.put("sign_type", "RSA");
 			param.put("sign", AlipaySignature.rsaSign(param, AlipayServiceEnvConstants.PRIVATE_KEY, "UTF-8"));
 			content2 = WebUtils.doPost(AlipayServiceEnvConstants.ALIPAY_GATEWAY, param, 100000, 100000);
 			logger.info("alipay.user.userinfo.share：" + content2);
