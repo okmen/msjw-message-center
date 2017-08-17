@@ -22,7 +22,7 @@ public class OauthUrlMain {
 				"?app_id=" +AlipayServiceEnvConstants.APP_ID+
 				"&scope=auth_userinfo" +
 				"&redirect_uri="+EncodeUtil.encodeUTF8("http://gzh.stc.gov.cn/api/oauthAlipay/callback.html")+
-				"&state=http://gzh.stc.gov.cn";
+				"&state=http://gzh.stc.gov.cn/h5/";
 		
 		
 					
