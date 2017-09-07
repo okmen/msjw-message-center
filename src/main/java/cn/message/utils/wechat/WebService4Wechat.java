@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.model.MenuModel;
+import cn.message.model.wechat.MessageChannelModel;
 import cn.message.model.wechat.TemplateDataModel;
 import cn.message.utils.GsonUtil;
 import cn.sdk.util.GsonBuilderUtil;
@@ -84,6 +85,19 @@ public class WebService4Wechat {
 		String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="
 				+ accessToken;
 		String json = GsonBuilderUtil.toJson(templateDataModel);
+		return HttpRequest.sendPost4Wechat(url, json);
+	}
+	/**
+	 * 发送服务通知
+	 * @param accessToken
+	 * @param messageChannelModel
+	 * @return
+	 */
+	public static String sendServiceMessage(String accessToken,
+			MessageChannelModel messageChannelModel) {
+		String url = "https://api.weixin.qq.com/cityservice/sendmsgdata?access_token="
+				+ accessToken;
+		String json = GsonBuilderUtil.toJson(messageChannelModel);
 		return HttpRequest.sendPost4Wechat(url, json);
 	}
 	
