@@ -1,9 +1,5 @@
 package cn.message.service;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,15 +11,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.config.IConfig;
 import cn.message.model.MsgChannelResultModel;
 import cn.message.model.wechat.MessageChannelModel;
 import cn.message.utils.GsonUtil;
 import cn.message.utils.wechat.WebService4Wechat;
+import cn.sdk.bean.BaseBean;
 import cn.sdk.cache.ICacheManger;
-import cn.sdk.util.DateUtil2;
-import net.sf.json.JSONObject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:junit-test.xml" })
@@ -34,10 +31,35 @@ public class TestMessageService {
 	@Autowired
 	private IMobileMessageService mobileMessageService;
 	@Autowired
+    @Qualifier("templateMessageService")
+	private ITemplateMessageService templateMessageService;
+	@Autowired
 	private IMessageCachedImpl iMessageCached;
 	@Test
 	public void sendMessage(){
 		mobileMessageService.sendMessage("13652311206", "test");
+	}
+	
+	@Test
+	public void testChannel(){
+		MessageChannelModel model = new MessageChannelModel();
+		model.setOpenid("oPyqQjpxF91kxJUg-jTuKrpZ62CY");
+		model.setBiz_template_id("s4ia2sLd4C-0IpkLLbGIbug42B1mdjrfnGyqfgbmMb8");
+		model.setResult_page_style_id("4P3yuc5LgEgbuQ6w2ZEZzZw0J4Cpz8_qtEszelOARpU");
+		model.setDeal_msg_style_id("4P3yuc5LgEgbuQ6w2ZEZzbEZz3IWDGV7iJiPSpYQCDw");
+		model.setCard_style_id("");
+		model.setOrder_no("888888");
+		model.setUrl("http://gzh.stc.gov.cn/h5/#/submitSuccess?type=2&title=createVehicleInfo_JD33&waterNumber=888888&orgName=深圳市车管所&orgAddr=深圳市南山区龙井路128号&appointmentDate=2017-09-06&appointmentTime=12:00-17:00&name=开发测试");
+		Map<String, cn.message.model.wechat.MessageChannelModel.Property> map = new HashMap<String, cn.message.model.wechat.MessageChannelModel.Property>();
+		map.put("first", new MessageChannelModel().new Property("您好，您的业务办理预约申请已成功提交，具体信息如下。","#212121"));
+		map.put("business", new MessageChannelModel().new Property("机动车在线预约-档案更正","#212121"));
+		map.put("order", new MessageChannelModel().new Property("888888","#212121"));
+		map.put("time", new MessageChannelModel().new Property("2017-09-09 12:00-17:00","#212121"));
+		map.put("address", new MessageChannelModel().new Property("深圳市车管所","#212121"));
+		map.put("remark", new MessageChannelModel().new Property("请您持身份证及业务办理所需材料在预约办理时间段内完成取号，不能办理业务请及时取消。","#212121"));
+		model.setData(map);
+		BaseBean baseBean = templateMessageService.sendServiceMessage(model);
+		System.out.println("发送结果："+JSON.toJSONString(baseBean));
 	}
 	
 	@Test
@@ -229,7 +251,7 @@ public class TestMessageService {
 	}
 	
 	/**
-	 * 服务通知
+	 * 发送服务通知
 	 */
 	public boolean sendServiceMessage(MessageChannelModel model) {
 		try {

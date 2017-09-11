@@ -1,22 +1,25 @@
 package cn.message.service.impl;
-import java.util.HashMap;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.dao.IMessageDao;
+import cn.message.model.MsgChannelResultModel;
 import cn.message.model.TemplateMessageModel;
+import cn.message.model.wechat.MessageChannelModel;
 import cn.message.model.wechat.TemplateDataModel;
 import cn.message.model.wechat.TemplateDataModel.Property;
 import cn.message.service.ITemplateMessageService;
 import cn.message.utils.GsonUtil;
 import cn.message.utils.wechat.WebService4Wechat;
-import cn.sdk.util.GsonBuilderUtil;
+import cn.sdk.bean.BaseBean;
 import cn.sdk.webservice.WebServiceClient;
 /**
  * 消息中心
@@ -75,6 +78,56 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 			logger.error("发送模板消息异常:"+"openId="+openId+",templateId="+url+"map="+map,e);
 		}
 		return false;
+	}
+	
+	/**
+	 * 发送服务通知：未关注“深圳交警”公众号发送服务通知，已关注则发送模板消息
+	 * @param messageChannelModel 消息通路请求参数
+	 */
+	public BaseBean sendServiceMessage(MessageChannelModel model) {
+		BaseBean refBean = new BaseBean();
+		try {
+			String json = WebService4Wechat.sendServiceMessage(iMessageCached.getAccessToken(), model);
+			logger.info("消息通路发送结果:"+json);
+			
+			MsgChannelResultModel result = GsonUtil.fromJson(json, MsgChannelResultModel.class);
+			if(null != result){ 
+				int errcode = result.getErrcode();
+				if(0 == errcode){
+					refBean.setCode(result.getErrcode()+"");
+					refBean.setMsg(result.getErrmsg());
+					refBean.setData(result.getResult_page_url());
+					return refBean;
+				}
+				
+				//token失效返回值 重新获取token
+				if(40001 == errcode){
+					logger.info("返回值40001,重新获取token并重发该条记录");
+					String newToken = iMessageCached.initTokenAndTicket();
+					json = WebService4Wechat.sendServiceMessage(newToken, model);
+					logger.info("重新获取token后发送结果："+json);
+					
+					result = GsonUtil.fromJson(json, MsgChannelResultModel.class);
+					if(null != result){ 
+						errcode = result.getErrcode();
+						if(0 == errcode){
+							refBean.setCode(result.getErrcode()+"");
+							refBean.setMsg(result.getErrmsg());
+							refBean.setData(result.getResult_page_url());
+							return refBean;
+						}
+					}
+				}
+				
+				//发送失败
+				refBean.setCode(result.getErrcode()+"");
+				refBean.setMsg(result.getErrmsg());
+				
+			}
+		} catch (Exception e) {
+			logger.error("发送消息通路异常:"+JSON.toJSONString(model), e);
+		}
+		return refBean;
 	}
 
 	@Override
