@@ -172,6 +172,8 @@
 				<h5.domain>np.tunnel.qydev.com</h5.domain>
 				<wechat.menu.file>menu_dev.json</wechat.menu.file>
 				
+				<!-- 域名地址 -->
+				<templateSendUrl>http://testh5.chudaokeji.com/h5/#/submitSuccess?</templateSendUrl>
 				
 				<!-- 支付宝参数配置 -->
 				<alipay.alipayPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1enDJFrhV3BXiXli2MKBRc3GPlag17iKdnZ7uEr4sCUUAh4oz1dnU3ukSTrl98YCB7BNaOarDMwwtph226BquIzuVuL9bIGkwarrZddR+rlC6/sbrIBiYzDqFvXnqPddV04QtgMyBNsjPSneDn0bxamjUI80vZImYITznzJGNQNdCXQCGm9N8aBX/S1mG7ycPogHr/HTszvIB144My/SwbHubMqIczn9BsZEfvoAuVH4P+vddjcPIeow4FgOQSBHRfRH9LYfvxiE1aTDr7WRzpAJL2n4VJoXf30amd956F9fnCWlNXJ3qKbQWUomLP7GRqqRgHjG4oUEyqEKwJqaHwIDAQAB</alipay.alipayPublicKey>
@@ -249,6 +251,9 @@
 				<java.domain>testjava.chudaokeji.com</java.domain>
 				<h5.domain>testh5.chudaokeji.com</h5.domain>
 				<wechat.menu.file>menu_test.json</wechat.menu.file>
+				
+				<!-- 域名地址 -->
+				<templateSendUrl>http://testh5.chudaokeji.com/h5/#/submitSuccess?</templateSendUrl>
 				
 				<!-- 支付宝参数配置 -->
 				<alipay.alipayPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1enDJFrhV3BXiXli2MKBRc3GPlag17iKdnZ7uEr4sCUUAh4oz1dnU3ukSTrl98YCB7BNaOarDMwwtph226BquIzuVuL9bIGkwarrZddR+rlC6/sbrIBiYzDqFvXnqPddV04QtgMyBNsjPSneDn0bxamjUI80vZImYITznzJGNQNdCXQCGm9N8aBX/S1mG7ycPogHr/HTszvIB144My/SwbHubMqIczn9BsZEfvoAuVH4P+vddjcPIeow4FgOQSBHRfRH9LYfvxiE1aTDr7WRzpAJL2n4VJoXf30amd956F9fnCWlNXJ3qKbQWUomLP7GRqqRgHjG4oUEyqEKwJqaHwIDAQAB</alipay.alipayPublicKey>
@@ -328,6 +333,9 @@
 				<java.domain>https://szjjapi.stc.gov.cn</java.domain>
 				<h5.domain>https://gzh.stc.gov.cn</h5.domain>
 				<wechat.menu.file>menu_online.json</wechat.menu.file>
+				
+				<!-- 域名地址 -->
+				<templateSendUrl>http://gzh.stc.gov.cn/h5/#/submitSuccess?</templateSendUrl>
 				
 				<!-- 支付宝参数配置 -->
 				<alipay.alipayPublicKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB</alipay.alipayPublicKey>

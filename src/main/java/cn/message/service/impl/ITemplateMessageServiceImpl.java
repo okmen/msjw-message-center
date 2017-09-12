@@ -129,6 +129,16 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 		}
 		return refBean;
 	}
+	
+	/**
+	 * 获取域名地址
+	 * @return
+	 */
+	public String getTemplateSendUrl() {
+		String url = iMessageCached.getTemplateSendUrl();
+		logger.info("获取到的域名地址是：" + url);
+		return url;
+	}
 
 	@Override
 	public boolean hmdahs() throws Exception{

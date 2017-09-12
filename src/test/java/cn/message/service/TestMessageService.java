@@ -17,6 +17,7 @@ import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.config.IConfig;
 import cn.message.model.MsgChannelResultModel;
 import cn.message.model.wechat.MessageChannelModel;
+import cn.message.model.wechat.MessageChannelModel.Property;
 import cn.message.utils.GsonUtil;
 import cn.message.utils.wechat.WebService4Wechat;
 import cn.sdk.bean.BaseBean;
@@ -43,7 +44,8 @@ public class TestMessageService {
 	@Test
 	public void testChannel(){
 		MessageChannelModel model = new MessageChannelModel();
-		model.setOpenid("oPyqQjpxF91kxJUg-jTuKrpZ62CY");
+		
+		/*model.setOpenid("oPyqQjpxF91kxJUg-jTuKrpZ62CY");
 		model.setBiz_template_id("s4ia2sLd4C-0IpkLLbGIbug42B1mdjrfnGyqfgbmMb8");
 		model.setResult_page_style_id("4P3yuc5LgEgbuQ6w2ZEZzZw0J4Cpz8_qtEszelOARpU");
 		model.setDeal_msg_style_id("4P3yuc5LgEgbuQ6w2ZEZzbEZz3IWDGV7iJiPSpYQCDw");
@@ -57,7 +59,41 @@ public class TestMessageService {
 		map.put("time", new MessageChannelModel().new Property("2017-09-09 12:00-17:00","#212121"));
 		map.put("address", new MessageChannelModel().new Property("深圳市车管所","#212121"));
 		map.put("remark", new MessageChannelModel().new Property("请您持身份证及业务办理所需材料在预约办理时间段内完成取号，不能办理业务请及时取消。","#212121"));
+		model.setData(map);*/
+		
+		/*model.setOpenid("oPyqQjpxF91kxJUg-jTuKrpZ62CY");
+		model.setBiz_template_id("s4ia2sLd4C-0IpkLLbGIbv3QTn_7dV2OuKaPDHYBrNQ");
+		model.setResult_page_style_id("4P3yuc5LgEgbuQ6w2ZEZzZw0J4Cpz8_qtEszelOARpU");
+		model.setDeal_msg_style_id("4P3yuc5LgEgbuQ6w2ZEZzbEZz3IWDGV7iJiPSpYQCDw");
+		model.setCard_style_id("");
+		model.setOrder_no("L12345678");
+		model.setUrl("http://gzh.stc.gov.cn/h5/#/submitSuccess?type=2&title=illegalAppointment&waterNumber=L12345678&orgName=龙华交警大队违法处理点&serviceCall=13800138000&orgAddr=龙华新区大道创业花园向荣大厦188栋&appointmentDate=2017-09-21&appointmentTime=12:00-17:00");
+		Map<String, cn.message.model.wechat.MessageChannelModel.Property> map = new HashMap<String, cn.message.model.wechat.MessageChannelModel.Property>();
+		map.put("first", new MessageChannelModel().new Property("您好，您的业务办理预约申请已成功提交，具体信息如下。","#212121"));
+		map.put("business", new MessageChannelModel().new Property("交通违法办理-违法处理预约","#212121"));
+		map.put("order", new MessageChannelModel().new Property("L12345678","#212121"));
+		map.put("time", new MessageChannelModel().new Property("2017-09-21" + " " + "12:00-17:00","#212121"));
+		map.put("address", new MessageChannelModel().new Property("龙华交警大队违法处理点","#212121"));
+		map.put("remark", new MessageChannelModel().new Property("请您持身份证及业务办理所需材料在预约办理时间段内完成取号，不能办理业务请及时取消。","#212121"));
+		model.setData(map);*/
+		
+		model.setOpenid("oPyqQjpxF91kxJUg-jTuKrpZ62CY");
+		model.setBiz_template_id("s4ia2sLd4C-0IpkLLbGIbmdPgvKIb6VMfR1zxNIe_fw");
+		model.setResult_page_style_id("PMw9-nhDOOQuMzL7-cVZ3DqyaaLEvpIWsopaXE1qvC0");
+		model.setDeal_msg_style_id("PMw9-nhDOOQuMzL7-cVZ3CZoVDr0ojGdWvwZf7SZK6A");
+		model.setCard_style_id("");
+		model.setOrder_no("L12345678");
+		model.setUrl("");
+		Map<String, cn.message.model.wechat.MessageChannelModel.Property> map = new HashMap<String, cn.message.model.wechat.MessageChannelModel.Property>();
+		map.put("first", new MessageChannelModel().new Property("您好，您的预约申请已取消，具体信息如下","#212121"));
+		map.put("businessType", new MessageChannelModel().new Property("交通违法办理","#212121"));
+		map.put("business", new MessageChannelModel().new Property("违法处理预约","#212121"));
+		map.put("order", new MessageChannelModel().new Property("L12345678","#212121"));
+		map.put("time", new MessageChannelModel().new Property("2017-09-21" + " " + "12:00-17:00","#212121"));
+		map.put("address", new MessageChannelModel().new Property("龙华交警大队违法处理点","#212121"));
+		map.put("remark", new MessageChannelModel().new Property("","#212121"));
 		model.setData(map);
+		
 		BaseBean baseBean = templateMessageService.sendServiceMessage(model);
 		System.out.println("发送结果："+JSON.toJSONString(baseBean));
 	}
@@ -172,20 +208,20 @@ public class TestMessageService {
 		model.setData(map);*/
 		
 		//交通违法办理-预约成功提醒
-		model.setBiz_template_id("s4ia2sLd4C-0IpkLLbGIbv3QTn_7dV2OuKaPDHYBrNQ");
+		/*model.setBiz_template_id("s4ia2sLd4C-0IpkLLbGIbv3QTn_7dV2OuKaPDHYBrNQ");
 		model.setResult_page_style_id("4P3yuc5LgEgbuQ6w2ZEZzZw0J4Cpz8_qtEszelOARpU");
 		model.setDeal_msg_style_id("4P3yuc5LgEgbuQ6w2ZEZzbEZz3IWDGV7iJiPSpYQCDw");
 		model.setCard_style_id("");
-		model.setOrder_no("123456");
-		model.setUrl("http://gzh.stc.gov.cn/h5/#/submitSuccess?type=2&title=createVehicleInfo_JD17&waterNumber=123456&orgName=深圳市车管所&orgAddr=深圳市南山区龙井路128号&appointmentDate=2017-09-06&appointmentTime=12:00-17:00&name=开发测试");
+		model.setOrder_no("L123456");
+		model.setUrl("http://gzh.stc.gov.cn/h5/#/submitSuccess?type=2&title=illegalAppointment&waterNumber=L123456&orgName=龙华交警大队违法处理点&serviceCall=13800138000&orgAddr=龙华新区大道创业花园向荣大厦188栋&appointmentDate=2017-09-21&appointmentTime=12:00-17:00");
 		Map<String, cn.message.model.wechat.MessageChannelModel.Property> map = new HashMap<String, cn.message.model.wechat.MessageChannelModel.Property>();
 		map.put("first", new MessageChannelModel().new Property("您好，开发测试，您的业务办理预约申请已成功提交，具体信息如下。","#212121"));
-		map.put("business", new MessageChannelModel().new Property("交通违法办理预约","#212121"));
-		map.put("order", new MessageChannelModel().new Property("123456","#212121"));
-		map.put("time", new MessageChannelModel().new Property("2017-09-06 12:00-17:00","#212121"));
-		map.put("address", new MessageChannelModel().new Property("深圳市车管所","#212121"));
+		map.put("business", new MessageChannelModel().new Property("交通违法办理-违法处理预约","#212121"));
+		map.put("order", new MessageChannelModel().new Property("L123456","#212121"));
+		map.put("time", new MessageChannelModel().new Property("2017-09-13 12:00-17:00","#212121"));
+		map.put("address", new MessageChannelModel().new Property("龙华交警大队违法处理点","#212121"));
 		map.put("remark", new MessageChannelModel().new Property("请您持身份证及业务办理所需材料在预约办理时间段内完成取号，不能办理业务请及时取消。","#212121"));
-		model.setData(map);
+		model.setData(map);*/
 		
 		//交通违法办理-取消预约提醒
 		/*model.setBiz_template_id("s4ia2sLd4C-0IpkLLbGIbmdPgvKIb6VMfR1zxNIe_fw");

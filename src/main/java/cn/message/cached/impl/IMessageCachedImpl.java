@@ -82,6 +82,15 @@ public class IMessageCachedImpl implements IMessageCached{
 	
 	@Value("${menuFile}")
 	private String menuFile;
+	
+	/**
+	 * 模板详情域名地址
+	 */
+	@Value("${templateSendUrl}")
+    private String templateSendUrl;
+    public String getTemplateSendUrl() {
+		return templateSendUrl;
+	}
 
 	@Autowired
 	@Qualifier("jedisCacheManagerImpl")
