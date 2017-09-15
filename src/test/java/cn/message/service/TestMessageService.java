@@ -1,5 +1,6 @@
 package cn.message.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,11 +18,11 @@ import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.config.IConfig;
 import cn.message.model.MsgChannelResultModel;
 import cn.message.model.wechat.MessageChannelModel;
-import cn.message.model.wechat.MessageChannelModel.Property;
 import cn.message.utils.GsonUtil;
 import cn.message.utils.wechat.WebService4Wechat;
 import cn.sdk.bean.BaseBean;
 import cn.sdk.cache.ICacheManger;
+import cn.sdk.util.DateUtil2;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:junit-test.xml" })
@@ -100,7 +101,6 @@ public class TestMessageService {
 	
 	@Test
 	public void testMsgChannel(){
-		String token = getAccessToken();
 		//改成自己的openid
 		String openid = "oPyqQjpxF91kxJUg-jTuKrpZ62CY";
 		/*boolean isFollow = judgeIsFollow(token, openid);
@@ -240,6 +240,22 @@ public class TestMessageService {
 		map.put("remark", new MessageChannelModel().new Property("","#212121"));
 		model.setData(map);*/
 		
+		//随手拍举报-业务办理通知
+		model.setBiz_template_id("z0HL_wBSsoF7AR42tGzuFMalEi3RKowXmg9nKNTC0BM");
+		model.setResult_page_style_id("23ClyLHM5Fr790uz7t-fxiodPnL9ohRzcnlGWEudkL8");
+		model.setDeal_msg_style_id("23ClyLHM5Fr790uz7t-fxlzJePTelFGvOKtKR4udm1o");
+		model.setCard_style_id("");
+		model.setOrder_no("rz123456");
+		String dateStr = DateUtil2.date2str(new Date());
+		model.setUrl("http://gzh.stc.gov.cn/h5/#/submitSuccess?type=1&title=starUserAuth&waterNumber=rz123456&bidDate=" + dateStr);
+		Map<String, cn.message.model.wechat.MessageChannelModel.Property> map = new HashMap<String, cn.message.model.wechat.MessageChannelModel.Property>();
+		map.put("first", new MessageChannelModel().new Property("您好，开发测试666，您的业务办理申请已成功提交，具体信息如下。","#212121"));
+		map.put("keyword1", new MessageChannelModel().new Property(dateStr,"#212121"));
+		map.put("keyword2", new MessageChannelModel().new Property("星级用户认证","#212121"));
+		map.put("keyword3", new MessageChannelModel().new Property("待初审","#212121"));
+		map.put("remark", new MessageChannelModel().new Property("","#212121"));
+		model.setData(map);
+		
 		sendServiceMessage(model);
 	}
 	
@@ -291,7 +307,9 @@ public class TestMessageService {
 	 */
 	public boolean sendServiceMessage(MessageChannelModel model) {
 		try {
-			String json = WebService4Wechat.sendServiceMessage(getAccessToken(), model);
+			// 请求http://szjj.u-road.com/api/wechat/asdasdasdas.html?key=qxwsed@!s1334  获取token
+			String token = "EVvMvkxjJFIqk9L6XPvL4qcBlibIrtEBUoPcL0DFqyeyTLAQWSJEKfwsoX7uTSxoCL4nJJ1qH6GwHEHVG1hw-7z5H_PhGuFhbK--GDu958nItk-FcbDYwXqSYq3JKsWjSHKgCGADSV";
+			String json = WebService4Wechat.sendServiceMessage(token, model);
 			
 			logger.info("消息通路发送结果:"+json);
 			MsgChannelResultModel result = GsonUtil.fromJson(json, MsgChannelResultModel.class);
