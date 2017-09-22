@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.message.dao.mapper.LoginLogMapper">
+    <resultMap type="cn.message.bean.LoginLog" id="LoginLog">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="cert" column="cert" />
+		<result property="phone" column="phone" />
+		<result property="listtime" column="listtime" />
+		<result property="openid" column="openid" />
+		<result property="email" column="email" />
+		<result property="isrz" column="isrz" />
+		<result property="uid" column="uid" />
+	</resultMap>
+	
+	<sql id="AllLoginLog">
+		`id`, `name`, `cert`,`phone`, `listtime`,`openid`, `email`, `isrz`,`uid`
+	</sql>
+	
+	<select id="queryLoginByMobile" resultMap="LoginLog" >
+		SELECT
+			<include refid="AllLoginLog"></include>
+		FROM
+			`login_log`
+		WHERE 1 = 1
+		AND	`phone` in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+ 			 #{item}  
+ 		</foreach>  
+	</select>
+</mapper>

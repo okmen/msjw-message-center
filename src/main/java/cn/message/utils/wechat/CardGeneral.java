@@ -1,49 +1,26 @@
 package cn.message.utils.wechat;
 
-import cn.message.utils.wechat.CardModel.Card.MemberCard;
-import cn.message.utils.wechat.CardModel.Card.MemberCard.BaseInfo;
-import cn.message.utils.wechat.CardModel.Card.MemberCard.BaseInfo.DateInfo;
-import cn.message.utils.wechat.CardModel.Card.MemberCard.BaseInfo.Sku;
-import cn.message.utils.wechat.CardModel.Card.MemberCard.CustomCell;
+import cn.message.utils.wechat.CardGeneral.GeneralCard.BaseInfo;
+import cn.message.utils.wechat.CardGeneral.GeneralCard.CustomCell;
 import cn.sdk.util.GsonBuilderUtil;
 
 
-public class CardModel {
-	private Card card;
-	
-	public Card getCard() {
-		return card;
-	}
-	public void setCard(Card card) {
-		this.card = card;
-	}
-	public CardModel(Card card) {
-		super();
-		this.card = card;
-	}
-	public CardModel(){}
-	static class Card{
-		private String card_type;
-		private MemberCard member_card;
-		public String getCard_type() {
-			return card_type;
+public class CardGeneral {
+		private String card_id;
+		private GeneralCard general_card;
+		public String getCard_id() {
+			return card_id;
 		}
-		public void setCard_type(String card_type) {
-			this.card_type = card_type;
+		public void setCard_id(String card_id) {
+			this.card_id = card_id;
 		}
-		public MemberCard getMember_card() {
-			return member_card;
+		public GeneralCard getGeneral_card() {
+			return general_card;
 		}
-		public void setMember_card(MemberCard member_card) {
-			this.member_card = member_card;
+		public void setGeneral_card(GeneralCard general_card) {
+			this.general_card = general_card;
 		}
-		public Card(String card_type, MemberCard member_card) {
-			super();
-			this.card_type = card_type;
-			this.member_card = member_card;
-		}
-		public Card(){}
-		static class MemberCard{
+		static class GeneralCard{
 			private String background_pic_url;
 			private BaseInfo base_info;
 			private Boolean supply_bonus;
@@ -125,11 +102,11 @@ public class CardModel {
 			public void setCustom_cell2(CustomCell custom_cell2) {
 				this.custom_cell2 = custom_cell2;
 			}
-			public MemberCard(String background_pic_url,
-					BaseInfo base_info, Boolean supply_bonus,
-					Boolean supply_balance, String prerogative,
-					Boolean auto_activate, String activate_url,
-					CustomCell custom_cell1, CustomCell custom_cell2) {
+			public GeneralCard(String background_pic_url, BaseInfo base_info,
+					Boolean supply_bonus, Boolean supply_balance,
+					String prerogative, Boolean auto_activate,
+					String activate_url, CustomCell custom_cell1,
+					CustomCell custom_cell2) {
 				super();
 				this.background_pic_url = background_pic_url;
 				this.base_info = base_info;
@@ -142,7 +119,7 @@ public class CardModel {
 				this.custom_cell2 = custom_cell2;
 			}
 
-			public MemberCard(){}
+			public GeneralCard(){}
 			static class BaseInfo{
 				private String logo_url;
 				private String brand_name;
@@ -420,89 +397,93 @@ public class CardModel {
 				public CustomCell(){}
 			}
 		}
-		
-	}
 	
 	
 	public static String init() {
-		CardModel cardModel = new CardModel();
+		CardGeneral cardModel = new CardGeneral();
 		
-		DateInfo dateInfo = new DateInfo("DATE_TYPE_PERMANENT");
-		Sku sku = new Sku(100000000);
-		BaseInfo baseInfo = new BaseInfo("http://mmbiz.qpic.cn/mmbiz_jpg/JjjL3kHmeRcj2FgibA9q7MUJkATZZy0nAPiczfYlQwsGX4hR20WF4RtDJ1ibK80eFu62JoRQ9k1U4zFppbpX1wRwQ/0?wx_fmt=jpeg",
-						"深圳交警", "CODE_TYPE_TEXT", "电子行驶证_测试", "Color010", "", 
-						"0755-83333333", 
-						"\r\n1、此证件仅限深圳地区使用。\r\n\r\n2、可作为已持有证件的凭证，民警查验后视为已出示相应证件。\r\n\r\n3、如有疑问，可致电深圳交警服务专线0755-83333333。\r\n\r\nThis electronic certificate is available as your driving or car license in police's inspection in Shenzhen.Please call special line of traffic police 0755-83333333 if you have any question",
-						dateInfo, sku, 1, false, "电子行驶证_测试", "http://szjj.u-road.com/szjjpro/index.php/Business/Member/unlogin/carList", false,
-						false, "预约类业务", 
-						"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc2b699cf2f919b58&redirect_uri=http://szjj.u-road.com/szjjpro/index.php/ectroniclicense/exszyuyuelink&response_type=code&scope=snsapi_base&state=0#wechat_redirect",
-						"点击进入", true);
+		cardModel.setCard_id("pILMDwI0YyTv1ikElE4IOHDxU00I");
+		GeneralCard member_card = new GeneralCard();
+		member_card.setActivate_url("http://testjava.chudaokeji.com/h5/activeXsCard.html");
 		
-		CustomCell customCell1 = new CustomCell("我的车辆", "点击进入", "http://szjj.u-road.com/szjjpro/index.php/Business/Member/unlogin/carList3");
-		CustomCell customCell2 = new CustomCell("办理类业务", "点击进入", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc2b699cf2f919b58&redirect_uri=http://szjj.u-road.com/szjjpro/index.php/ectroniclicense/exszbanlilink&response_type=code&scope=snsapi_base&state=0#wechat_redirect");
+		BaseInfo baseInfo = new BaseInfo();
+		baseInfo.setPromotion_url("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc2b699cf2f919b58&redirect_uri=http://gzh.stc.gov.cn/szjjpro/index.php/infoquery/policeinteraction/failureReport&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
+		member_card.setBase_info(baseInfo);
 		
-		MemberCard generalCard = new MemberCard("http://mmbiz.qpic.cn/mmbiz_png/JjjL3kHmeRdZibiavOoe3hOtlFJLWMWgP4EDShb4BDDGSD40ZPb9Trb2tsBqyl4pqT3j3ibNoQibjI8icbxrmicUpGGw/0?wx_fmt=png",
-				baseInfo,false,false,"领取深圳交警电子行驶证，尽享无忧服务", false, "http://szjj.u-road.com/szjjpro/ectroniclicense/unlogin/exszActive", customCell1, customCell2);
-		
-		Card card = new Card("MEMBER_CARD",generalCard);
-		cardModel.setCard(card);
+		cardModel.setGeneral_card(member_card);
 		
 		String json = GsonBuilderUtil.toJson(cardModel);
 		System.out.println(json);
 		return json;
 	}
 	
-	public static void main(String[] args) {
-		init();
+	
+	/**
+	 * 
+	 * 驾驶证卡
+	 * @param cardId
+	 * @param promotion_url
+	 * @param center_url
+	 * @param activate_url
+	 * @param custom_cell1_url
+	 * @param custom_cell2_url
+	 * @return
+	 */
+	public static String update(String cardId,String promotion_url,String center_url,String activate_url,String custom_cell1_url){
+		CardGeneral cardModel = new CardGeneral();
+		cardModel.setCard_id(cardId);
+		GeneralCard member_card = new GeneralCard();
+		
+		BaseInfo baseInfo = new BaseInfo();
+		baseInfo.setPromotion_url(promotion_url);
+		baseInfo.setCenter_url(center_url);
+		
+		CustomCell custom_cell1 = new CustomCell();
+		custom_cell1.setUrl(custom_cell1_url);
+
+		member_card.setCustom_cell1(custom_cell1);
+		
+		member_card.setActivate_url(activate_url);
+		member_card.setBase_info(baseInfo);
+		
+		cardModel.setGeneral_card(member_card);
+		String json = GsonBuilderUtil.toJson(cardModel);
+		return json;
 	}
-}	
-//$data = array(
-//		"card"=>array(
-//			"card_type" => "GENERAL_CARD",
-//			"general_card"=>array(
-//				"sub_card_type"=>"DRIVING_LICENSE",
-//				"background_pic_url"=>"http://mmbiz.qpic.cn/mmbiz_png/JjjL3kHmeRdZibiavOoe3hOtlFJLWMWgP4EDShb4BDDGSD40ZPb9Trb2tsBqyl4pqT3j3ibNoQibjI8icbxrmicUpGGw/0?wx_fmt=png",
-//				"base_info"=>array(
-//					"logo_url"=>"http://mmbiz.qpic.cn/mmbiz_jpg/JjjL3kHmeRcj2FgibA9q7MUJkATZZy0nAPiczfYlQwsGX4hR20WF4RtDJ1ibK80eFu62JoRQ9k1U4zFppbpX1wRwQ/0?wx_fmt=jpeg",
-//					"brand_name"=>"深圳交警",
-//					"code_type"=>"CODE_TYPE_TEXT",
-//					"title"=>"电子行驶证",
-//					"color"=>"Color010",
-//					"notice"=>"",
-//					"service_phone"=>"0755-83333333",
-//					"description"=>"\r\n1、此证件仅限深圳地区使用。\r\n\r\n2、可作为已持有证件的凭证，民警查验后视为已出示相应证件。\r\n\r\n3、如有疑问，可致电深圳交警服务专线0755-83333333。\r\n\r\nThis electronic certificate is available as your driving or car license in police's inspection in Shenzhen.Please call special line of traffic police 0755-83333333 if you have any question",
-//					"date_info"=>array(
-//						"type"=>"DATE_TYPE_PERMANENT"
-//					),
-//					"sku"=>array(
-//						"quantity"=>100000000
-//					),
-//					"get_limit"=>1,
-//					"can_give_friend"=> false,
-//					"center_title"=>"电子行驶证",
-//					"center_url"=>"http://szjj.u-road.com/szjjpro/index.php/Business/Member/unlogin/carList",
-//					"can_share"=> false,
-//					"use_custom_code"=>false,
-//					"promotion_url_name"=>"预约类业务",
-//					"promotion_url"=>"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc2b699cf2f919b58&redirect_uri=http://szjj.u-road.com/szjjpro/index.php/ectroniclicense/exszyuyuelink&response_type=code&scope=snsapi_base&state=0#wechat_redirect",
-//					"promotion_url_sub_title"=>"点击进入",
-//					"need_push_on_view"=> true
-//				),
-//				"supply_bonus" => false,
-//				"supply_balance"=> false,
-//				"prerogative"=> "领取深圳交警电子行驶证，尽享无忧服务",
-//				"auto_activate"=> false ,
-//				"activate_url"=> "http://szjj.u-road.com/szjjpro/ectroniclicense/unlogin/exszActive",
-//				"custom_cell1"=> array(
-//					"name"=> "我的车辆",
-//					"tips"=> "点击进入",
-//					"url"=>"http://szjj.u-road.com/szjjpro/index.php/Business/Member/unlogin/carList3"
-//				),
-//				"custom_cell2"=> array(
-//					"name"=> "办理类业务",
-//					"tips"=> "点击进入",
-//					"url"=>"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc2b699cf2f919b58&redirect_uri=http://szjj.u-road.com/szjjpro/index.php/ectroniclicense/exszbanlilink&response_type=code&scope=snsapi_base&state=0#wechat_redirect"
-//				)
-//			)
-//		)
-//	);
+	
+	/**
+	 * 行驶证卡 
+	 * @param cardId
+	 * @param promotion_url
+	 * @param center_url
+	 * @param activate_url
+	 * @param custom_cell1_url
+	 * @param custom_cell2_url
+	 * @return
+	 */
+	public static String update(String cardId,String promotion_url,String center_url,String activate_url,String custom_cell1_url,String custom_cell2_url){
+		CardGeneral cardModel = new CardGeneral();
+		cardModel.setCard_id(cardId);
+		GeneralCard member_card = new GeneralCard();
+		
+		BaseInfo baseInfo = new BaseInfo();
+		baseInfo.setPromotion_url(promotion_url);
+		baseInfo.setCenter_url(center_url);
+		
+		CustomCell custom_cell1 = new CustomCell();
+		custom_cell1.setUrl(custom_cell1_url);
+
+		CustomCell custom_cell2 = new CustomCell();
+		custom_cell2.setUrl(custom_cell2_url);
+		
+		member_card.setCustom_cell1(custom_cell1);
+		member_card.setCustom_cell2(custom_cell2);
+		
+		member_card.setActivate_url(activate_url);
+		member_card.setBase_info(baseInfo);
+		
+		cardModel.setGeneral_card(member_card);
+		String json = GsonBuilderUtil.toJson(cardModel);
+		return json;
+	}
+}

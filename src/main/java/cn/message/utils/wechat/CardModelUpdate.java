@@ -1,5 +1,7 @@
 package cn.message.utils.wechat;
 
+import cn.message.utils.wechat.CardModelUpdate.MemberCard.BaseInfo;
+import cn.message.utils.wechat.CardModelUpdate.MemberCard.CustomCell;
 import cn.sdk.util.GsonBuilderUtil;
 
 
@@ -402,11 +404,42 @@ public class CardModelUpdate {
 		
 		cardModel.setCard_id("pILMDwI0YyTv1ikElE4IOHDxU00I");
 		MemberCard member_card = new MemberCard();
-		member_card.setActivate_url("http://testjava.chudaokeji.com/h5/activeJsCard.html");
+		member_card.setActivate_url("http://testjava.chudaokeji.com/h5/activeXsCard.html");
+		
+		BaseInfo baseInfo = new BaseInfo();
+		baseInfo.setPromotion_url("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc2b699cf2f919b58&redirect_uri=http://gzh.stc.gov.cn/szjjpro/index.php/infoquery/policeinteraction/failureReport&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
+		member_card.setBase_info(baseInfo);
+		
 		cardModel.setMember_card(member_card);
 		
 		String json = GsonBuilderUtil.toJson(cardModel);
 		System.out.println(json);
+		return json;
+	}
+	
+	public static String updateSZJJCard(String cardId,String promotion_url,String center_url,String activate_url,String custom_cell1_url,String custom_cell2_url){
+		CardModelUpdate cardModel = new CardModelUpdate();
+		cardModel.setCard_id(cardId);
+		MemberCard member_card = new MemberCard();
+		
+		BaseInfo baseInfo = new BaseInfo();
+		baseInfo.setPromotion_url(promotion_url);
+		baseInfo.setCenter_url(center_url);
+		
+		CustomCell custom_cell1 = new CustomCell();
+		custom_cell1.setUrl(custom_cell1_url);
+
+		CustomCell custom_cell2 = new CustomCell();
+		custom_cell2.setUrl(custom_cell1_url);
+		
+		member_card.setCustom_cell1(custom_cell1);
+		member_card.setCustom_cell2(custom_cell2);
+		
+		member_card.setActivate_url(activate_url);
+		member_card.setBase_info(baseInfo);
+		
+		cardModel.setMember_card(member_card);
+		String json = GsonBuilderUtil.toJson(cardModel);
 		return json;
 	}
 	

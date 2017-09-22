@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -60,6 +59,52 @@ public class HttpRequest {
         return result;
     }
 
+    /**
+     * 向指定URL发送GET方法的请求
+     * @param url
+     * @return URL 所代表远程资源的响应结果
+     */
+    public static String sendGet(String url,int timeout) {
+        String result = "";
+        BufferedReader in = null;
+        try {
+            String urlNameString = url;
+            logger.info(urlNameString);
+            URL realUrl = new URL(urlNameString);
+            // 打开和URL之间的连接
+            URLConnection conn = realUrl.openConnection();
+            conn.setConnectTimeout(timeout);
+            conn.setReadTimeout(timeout);
+            // 设置通用的请求属性
+            conn.setRequestProperty("accept", "*/*");
+            conn.setRequestProperty("connection", "Keep-Alive");
+            conn.setRequestProperty("user-agent",
+                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("Content-Type", "application/json");
+            // 建立实际的连接
+            conn.connect();
+            // 定义 BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(
+            		conn.getInputStream(),"utf-8"));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+        	logger.error("发送GET请求出现异常"+url,e);
+        }finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        logger.info(result);
+        return result;
+    }
     /**
      * 向指定 URL 发送POST方法的请求
      * 
@@ -128,6 +173,7 @@ public class HttpRequest {
         	logger.info(params);
         	URL url = new URL(requestUrl);
         	HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        	conn.setConnectTimeout(2000);
         	conn.setDoOutput(true);
         	conn.setDoInput(true);
         	conn.setUseCaches(false);
@@ -161,5 +207,68 @@ public class HttpRequest {
 		}
 		logger.info(buffer.toString());
         return buffer.toString();
+    }
+    
+    /**
+     * 发送post请求获取图片
+     * @param url
+     * @param param
+     * @param dir
+     * @return
+     */
+    public static FileModel sendPost4File(String url, String param) {
+    	PrintWriter out = null;
+    	InputStream inputStream = null;
+    	try {
+            // 创建URL对象
+            URL realUrl = new URL(url);
+            // 获取连接对象
+            URLConnection urlConnection = realUrl.openConnection();
+            // 设置允许输入流输入数据到本地
+            urlConnection.setDoInput(true);
+            // 设置允许输出流输出到服务器
+            urlConnection.setDoOutput(true);
+            
+            // 获取URLConnection对象对应的输出流
+            out = new PrintWriter(urlConnection.getOutputStream());
+            // 发送请求参数
+            out.print(param);
+            // flush输出流的缓冲
+            out.flush();
+            String disposition = urlConnection.getHeaderField("Content-Disposition");
+            String suffix = disposition.substring(disposition.indexOf("."), disposition.length()-1);
+            inputStream = urlConnection.getInputStream();
+            return new FileModel(suffix, inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            if(out!=null){
+               out.close();
+            }
+        }
+    	return null;
+    }
+    
+    public static class FileModel{
+    	private String suffix;
+    	private InputStream inputStream;
+		public String getSuffix() {
+			return suffix;
+		}
+		public void setSuffix(String suffix) {
+			this.suffix = suffix;
+		}
+		public InputStream getInputStream() {
+			return inputStream;
+		}
+		public void setInputStream(InputStream inputStream) {
+			this.inputStream = inputStream;
+		}
+		
+		public FileModel(String suffix,InputStream inputStream){
+			this.suffix = suffix;
+			this.inputStream = inputStream;
+		}
+		public FileModel(){}
     }
 }

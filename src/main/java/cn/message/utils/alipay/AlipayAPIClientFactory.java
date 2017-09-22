@@ -8,7 +8,6 @@ import cn.message.model.alipay.AlipayServiceEnvConstants;
 
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.internal.util.AlipaySignature;
 
 /**
  * API调用客户端工厂

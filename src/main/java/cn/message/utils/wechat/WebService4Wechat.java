@@ -113,12 +113,16 @@ public class WebService4Wechat {
 	
 	
 	public static void main(String[] args) {
-		Map<String, Object> map  = getAccessToken("wxc2b699cf2f919b58","cbfabef2717b14e416de93dd83498862");
+	/*	Map<String, Object> map  = getAccessToken("wx65a828b7abc4516d","d4624c36b6795d1d99dcf0547af5443d");
 		String accessToken = map.get("access_token").toString();
-		System.out.println(accessToken);
-		/*String json = MenuModel.initFromH5("wxc2b699cf2f919b58","http://szjj.u-road.com/h5");
-		createMenu("SbW4Lx-UoVehWNJZTOGCH606GzLMLCvpphAFrEe88tUYgUxn2Eo3IhOk8Qv-ZafTfWVjud9DUE8iv0cjFWNGodV8bp5FfX0_xzsrXCyZ0oYNGBeCHAYRM",json);
-*/	}
+		System.out.println(accessToken);*/
+		String json = MenuModel.initFromH5("wxc2b699cf2f919b58","http://gzh.stc.gov.cn/h5/");
+		createMenu("EBV6i34qdsdmsI4SkgXVzMXm0EFEQPZte4RkFyw520EDvChlGu8_G2NUN2SCgPTRb-9w7PvCRjqBxe5zzv_tHtxY-GZrRONqEARnnJsvbpcg1Jc_qpdqFX8PmEaWnLgqXXYeCJAGGH",json);
+		
+		//kfaccountAdd("_4jN_NIPYK6kM0Cb2S4TGMGttvW2Z4tlSqq7aoMy8wZFYOnTPGzS58TGAjWznEXz-m7TZp9lxBC7bkhxRhoPkHGTGvzE6Fb8hsHT2cUuKkMFJIbAHALPO");
+		//String identifyId = "XXIzTtMqCxwOaawoE91+VH1v2SEO57gbqsd2RCMcI1+KGfKDnIdco1Q2e58MsIPcfDVTNWwccPbeEFfMI1sUwiehJ4uK2HsMSIguodUDz02wq2rV7niqH4mil37/tAp7";
+		//getImage("g15cVFV1OhVs4FEZoo7k1ISgrHi5gZ0l1AH-R-aEV9N4qIArbKFpfJQ-XvSO4KLXhI_aB3Da6p5CEghNeyCNgS608YOa30eyr2lXpQtnJ9KJwSvZNuY_UGgFGwbu0qBkXJBiCEASEW", identifyId);
+	}
 	
 	/**
 	 * 查询菜单
@@ -141,6 +145,31 @@ public class WebService4Wechat {
 		String result = HttpRequest.sendGet(url);
 		Map<String, Object> map = GsonUtil.fromJson(result, Map.class);
 		return map;
+	}
+	
+	
+	/**
+	 * 创建客服接口
+	 * @param accessToken
+	 * @param openId
+	 * @return
+	 */
+	public static boolean kfaccountAdd(String accessToken){
+		Kf kf = new Kf();
+		kf.setKf_account("account_1@chudaokeji_kkyq");
+		kf.setNickname("测试客服1");
+		String kfData = GsonUtil.toJson(kf);
+		
+		String url = "https://api.weixin.qq.com/customservice/kfaccount/add?access_token="+accessToken;
+		String result = HttpRequest.sendPost(url, kfData);
+		Map<String, Object> map = GsonUtil.fromJson(result, Map.class);
+		BaseWechatResult baseWechatResult = GsonUtil.fromJson(result, BaseWechatResult.class);
+		if(null != baseWechatResult){
+			if(0 == baseWechatResult.getErrcode()){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -200,9 +229,9 @@ public class WebService4Wechat {
 	 * @return
 	 */
 	public static boolean activateXsCard(String accessToken,String cardId,String code){
-		String url = "https://api.weixin.qq.com/card/generalcard/activate?access_token="+ accessToken;
+		String url = "https://api.weixin.qq.com/card/membercard/activate?access_token="+ accessToken;
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("card_number", code);
+		map.put("membership_number", code);
 		map.put("code", code);
 		map.put("card_id", cardId);
 		
@@ -216,6 +245,17 @@ public class WebService4Wechat {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * 刷脸获取照片
+	 * @param accessToken
+	 * @param openId
+	 * @return
+	 */
+	public static void getImage(String accessToken,String identifyId){
+		String url = "https://api.weixin.qq.com/cityservice/face/identify/getimage?access_token="+accessToken;
+		HttpRequest.sendPost4File(url, "{\"identify_id\":\""+identifyId+"\"}");
 	}
 	
 	public static class BaseWechatResult{
@@ -242,6 +282,30 @@ public class WebService4Wechat {
 		}
 		public void setCode(String code) {
 			this.code = code;
+		}
+	}
+	
+	public static class Kf{
+		private String kf_account;
+		private String nickname;
+		private String password;
+		public String getKf_account() {
+			return kf_account;
+		}
+		public void setKf_account(String kf_account) {
+			this.kf_account = kf_account;
+		}
+		public String getNickname() {
+			return nickname;
+		}
+		public void setNickname(String nickname) {
+			this.nickname = nickname;
+		}
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
 		}
 	}
 }

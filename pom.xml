@@ -134,11 +134,11 @@
 				<dubbo.provider.timeout><![CDATA[5000]]></dubbo.provider.timeout>
 				<dubbo.monitor.address><![CDATA[192.168.1.120:7070]]></dubbo.monitor.address>
 
-				<mysql.message.read.url><![CDATA[jdbc:mysql://192.168.1.121:3306/service?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8]]></mysql.message.read.url>
+				<mysql.message.read.url><![CDATA[jdbc:mysql://192.168.1.121:3306/service?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true]]></mysql.message.read.url>
 				<mysql.message.read.username><![CDATA[root]]></mysql.message.read.username>
 				<mysql.message.read.password><![CDATA[123456]]></mysql.message.read.password>
 
-				<mysql.message.write.url><![CDATA[jdbc:mysql://192.168.1.121:3306/service?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8]]></mysql.message.write.url>
+				<mysql.message.write.url><![CDATA[jdbc:mysql://192.168.1.121:3306/service?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true]]></mysql.message.write.url>
 				<mysql.message.write.username><![CDATA[root]]></mysql.message.write.username>
 				<mysql.message.read.password><![CDATA[123456]]></mysql.message.read.password>
 
@@ -192,6 +192,8 @@
 				<alipay.alipayGateWay>https://openapi.alipay.com/gateway.do</alipay.alipayGateWay>
 				<alipay.grantType>authorization_code</alipay.grantType>
 				
+				<!-- 开发环境不可运行 -->
+				<run.timer.ip>xxxxxxxxxxxxxxx</run.timer.ip>
 			</properties>
 		</profile>
 
@@ -266,6 +268,8 @@
 				<alipay.alipayGateWay>https://openapi.alipay.com/gateway.do</alipay.alipayGateWay>
 				<alipay.grantType>authorization_code</alipay.grantType>
 				
+				<!-- 测试环境不可运行 -->
+				<run.timer.ip>xxxxxxxxxxxxxxxxxxxxxxxx</run.timer.ip>
 			</properties>
 		</profile>
 		
@@ -348,6 +352,8 @@
 				<alipay.alipayGateWay>https://openapi.alipay.com/gateway.do</alipay.alipayGateWay>
 				<alipay.grantType>authorization_code</alipay.grantType>
 				
+				<!-- 交警机器 223 这台 可以运行定时推送模板消息程序 -->
+				<run.timer.ip>192.168.2.223</run.timer.ip>
 			</properties>
 		</profile>
 	</profiles>

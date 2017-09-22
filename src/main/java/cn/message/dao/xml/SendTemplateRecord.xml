@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.message.dao.mapper.SendTemplateRecordMapper">
+    <resultMap type="cn.message.bean.SendTemplateRecord" id="SendTemplateRecord">
+		<result property="id" column="id" />
+		<result property="openId" column="open_id" />
+		<result property="idCard" column="id_card" />
+		<result property="lxdh" column="lxdh" />
+		<result property="xh" column="xh" />
+		<result property="pch" column="pch" />
+		<result property="response" column="response" />
+		<result property="request" column="request" />
+		<result property="createTime" column="create_time" />
+		<result property="state" column="state" />
+	</resultMap>
+	
+	<sql id="AllSendTemplateRecord">
+		`id`, `open_id`, `id_card`,`lxdh`,`xh`, `pch`,`response`, `request`, `create_time`,`state`
+	</sql>
+	
+	<insert id="insertSendTemplateRecord" parameterType="cn.message.bean.SendTemplateRecord" useGeneratedKeys="true" keyProperty="id"  >
+		insert into send_template_record (open_id,id_card,lxdh,xh,pch,response,request,create_time,state,type)
+		values(#{openId}, #{idCard},#{lxdh},#{xh}, #{pch}, #{response},#{request}, #{createTime},#{state},#{type})
+	</insert>
+	
+	<insert id="batchInsertSendTemplateRecord" parameterType="java.util.List" >  
+   	 	insert into send_template_record (open_id,id_card,lxdh,xh,pch,response,request,create_time,state,type)   
+    	values  
+    	<foreach collection="list" item="item" index="index" separator="," >  
+        	(#{item.openId}, #{item.idCard},#{item.lxdh}, #{item.xh}, #{item.pch}, #{item.response},#{item.request}, #{item.createTime},#{item.state},#{item.type})  
+    	</foreach>  
+	</insert>  
+</mapper>

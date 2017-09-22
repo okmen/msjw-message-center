@@ -68,7 +68,7 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 			 }
     	 }
 		 
-		 if(IEvent.EVENT_USER_GET_CARD.equals(event)){
+		 /*if(IEvent.EVENT_USER_GET_CARD.equals(event)){
 			 String openId = model.getFromUserName();
 			 String cardId = model.getCardId();
 			 String code = model.getCode();
@@ -94,7 +94,7 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 				 iMessageDao.insertWxMembercard(newWxMembercard);
 			 }
 			 message = null;
-		 }
+		 }*/
 		 
     	 //用户打开公众号会推送这个包过来 (第一次推送的包)
     	 if(IEvent.EVENT_TYPE_LOCATION.equals(event)){

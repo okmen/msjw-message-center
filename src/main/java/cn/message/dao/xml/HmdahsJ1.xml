@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.message.dao.mapper.HmdahsJ1Mapper">
+    <resultMap type="cn.message.bean.HmdahsJ1" id="HmdahsJ1">
+		<result property="id" column="id" />
+		<result property="pch" column="pch" />
+		<result property="xh" column="xh" />
+		<result property="uId" column="u_id" />
+		<result property="lxdh" column="lxdh" />
+		<result property="jszhm" column="jszhm" />
+		<result property="hphm" column="hphm" />
+		<result property="hpzl" column="hpzl" />
+		<result property="message" column="message" />
+		<result property="hslx" column="hslx" />
+		<result property="state" column="state" />
+		<result property="stateAlipay" column="state_alipay" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+	
+	<sql id="AllHmdahsJ1">
+		`id`, `pch`, `xh`,`u_id`, `lxdh`,`jszhm`, `hphm`, `hpzl`,`message`,`hslx`,`state`,`create_time`
+	</sql>
+	
+	<insert id="batchInsertHmdahsJ1" parameterType="java.util.List" >  
+   	 	insert into hm_dahs_j1 (pch,xh,u_id,lxdh,jszhm,hphm,hpzl,message,hslx,state,state_alipay,create_time)   
+    	values  
+    	<foreach collection="list" item="item" index="index" separator="," >  
+        	(#{item.pch},#{item.xh},#{item.uId},#{item.lxdh},#{item.jszhm},#{item.hphm},#{item.hpzl},#{item.message},#{item.hslx},#{item.state},#{item.stateAlipay},#{item.createTime})  
+    	</foreach>  
+	</insert>  
+	
+	<select id="queryHmdahsJ14Wechat" resultMap="HmdahsJ1" >
+		SELECT
+			<include refid="AllHmdahsJ1"></include>
+		FROM
+			`hm_dahs_j1`
+		WHERE 1 = 1
+ 		AND state = 0
+	</select>
+	
+	<select id="queryHmdahsJ14Alipay" resultMap="HmdahsJ1" >
+		SELECT
+			<include refid="AllHmdahsJ1"></include>
+		FROM
+			`hm_dahs_j1`
+		WHERE 1 = 1
+ 		AND state_alipay = 0
+	</select>
+    
+	<update id="updateHmdahsJ1State4Wechat">
+		update hm_dahs_j1 
+			set 
+				state = #{state}
+		where 
+			id = #{id}
+	</update>
+	
+	<update id="updateHmdahsJ1State4Alipay">
+		update hm_dahs_j1 
+			set 
+				state_alipay = #{state}
+		where 
+			id = #{id}
+	</update>
+	
+	<update id="batchUpdateHmdahsJ1" parameterType="java.util.List">  
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">  
+                update hm_dahs_j1 
+                set state = #{item.state}
+                where id = #{item.id}  
+         </foreach>  
+    </update>  
+</mapper>

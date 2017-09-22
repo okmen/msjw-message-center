@@ -2,6 +2,7 @@ package cn.message.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -30,6 +31,9 @@ import com.alipay.api.response.AlipayUserUserinfoShareResponse;
 import cn.message.model.alipay.AlipayPostMessageModel;
 import cn.message.model.alipay.AlipayServiceEnvConstants;
 import cn.message.model.alipay.AlipayUserInfo;
+import cn.message.model.alipay.TemplateDataAlipayModel;
+import cn.message.model.alipay.TemplateDataAlipayModel.Template;
+import cn.message.model.alipay.TemplateDataAlipayModel.Property;
 import cn.message.model.alipay.message.IMessage;
 import cn.message.service.IAlipayService;
 import cn.message.utils.GsonUtil;
@@ -38,7 +42,19 @@ import cn.message.utils.alipay.dispatch.MessageDispatch;
 import cn.message.utils.alipay.dispatch.executor.AbstractGeneralExecutor;
 import cn.message.utils.wechat.HttpRequest;
 import cn.sdk.util.DateUtil;
+import cn.sdk.util.GsonBuilderUtil;
 import cn.sdk.util.HttpUtils;
+
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.request.AlipayOpenPublicMessageCustomSendRequest;
+import com.alipay.api.request.AlipayOpenPublicMessageSingleSendRequest;
+import com.alipay.api.request.AlipaySystemOauthTokenRequest;
+import com.alipay.api.request.AlipayUserInfoShareRequest;
+import com.alipay.api.response.AlipayOpenPublicMessageCustomSendResponse;
+import com.alipay.api.response.AlipayOpenPublicMessageSingleSendResponse;
+import com.alipay.api.response.AlipaySystemOauthTokenResponse;
+import com.alipay.api.response.AlipayUserInfoShareResponse;
 
 @Service("alipayService")
 @SuppressWarnings(value = "all")
@@ -262,16 +278,38 @@ public class IAlipayServiceImpl implements IAlipayService {
 		this.grantType = grantType;
 	}
 	
-	public static void main(String[] args) {
-		String xx= "{\"alipay_user_userinfo_share_response\":{\"cert_type_value\":\"0\",\"user_type_value\":\"2\",\"is_licence_auth\":\"F\",\"is_certified\":\"T\",\"is_certify_grade_a\":\"T\",\"avatar\":\"https:\\/\\/tfs.alipayobjects.com\\/images\\/partner\\/T1IERdXit7XXXXXXXX\",\"is_student_certified\":\"F\",\"is_bank_auth\":\"T\",\"is_mobile_auth\":\"T\",\"alipay_user_id\":\"2088012107137130\",\"email\":\"1640692414@qq.com\",\"user_id\":\"20880057743797774564222911313713\",\"cert_no\":\"431225199111161414\",\"user_status\":\"T\",\"gender\":\"m\",\"real_name\":\"\u8983\u6C38\u6CE2\",\"is_id_auth\":\"T\",\"mobile\":\"13652311206\"},\"sign\":\"dFoS8eRrzPqWBfxguE/rYpCUBFaqUcJU6v0ztliaFHAXj+a1PlD93oJwWpUYxF1x9ZbpjvEUxvdieKV9JYEOwoq5irgpWRovJIVTrFRW3YHkrt2fZxr7xZjB/AKXGDlE2NLBYTMI42tgjJNoGYu1XfLRof8sORpM+Y2Qtj+R1Gg=\"}";
-		JSONObject jsonObject2 = JSON.parseObject(xx);
-		String userInfoStr = jsonObject2.getString("alipay_user_userinfo_share_response");
-		jsonObject2 = JSON.parseObject(userInfoStr);
-		//用户手机号
-		String mobile = jsonObject2.getString("mobile");
-		String alipayUserId = jsonObject2.getString("alipay_user_id");
-		String nickName = jsonObject2.getString("real_name");
-		String avatar = jsonObject2.getString("avatar");
-		System.out.println(mobile);
+	
+	public static void main(String[] args) throws AlipayApiException {
+		AlipayClient alipayClient = AlipayAPIClientFactory
+				.getAlipayClient();
+		AlipayOpenPublicMessageSingleSendRequest request = new AlipayOpenPublicMessageSingleSendRequest();
+		String json ="{\"to_user_id\":\"2088312278245396\",\"template\":{\"template_id\":\"62a773bd975b42e2a304ed4578e62b03\",\"context\":{\"remark\":{\"value\":\"在线办理,请点击详情\",\"color\":\"\"},\"action_name\":\"查看详情\",\"keyword1\":{\"value\":\"交通违法信息通知\",\"color\":\"\"},\"head_color\":\"\",\"first\":{\"value\":\"您绑定的粤B8A17R于2017-08-19 10:53:28在新洲九街-新洲九街因有在允许停放时段以外停放的的违法行为被监控设备记录，请您自违法发生之日起45日内处理完毕。逾期未处理完毕的，自第46日起停驶该机动车。未停驶上路将予以罚款300元，并扣留车辆。\",\"color\":\"\"},\"keyword2\":{\"value\":\"2017年09月18日\",\"color\":\"\"},\"url\":\"http://zhifubao.chudaokeji.com/#/trafficPushNews?digits=7684&numberPlate=%E7%B2%A4B8A17R&plateType=02\"}}}";
+		Map<String, Property> map = new HashMap<String, Property>();
+		map.put("first", new Property("您的驾驶证状态为“注销可恢复”，为不影响您驾驶证的正常使用，请您尽快办理恢复驾驶证资格业务。", ""));
+		map.put("keyword1", new Property("驾驶证注销", ""));
+		map.put("keyword2", new Property(DateUtil.format(new Date(), new SimpleDateFormat("yyyy年MM月dd日")), ""));
+		map.put("remark", new Property("点击进入“预约类业务”，选择“驾驶证业务”办理恢复驾驶资格业务。", ""));
+		
+		//高锡刚 正式号
+		Template template = new Template("62a773bd975b42e2a304ed4578e62b03", "", "", "", map);
+		TemplateDataAlipayModel alipayModel = new TemplateDataAlipayModel("2088312278245396",template);
+		//request.setBizContent(GsonBuilderUtil.toJson(alipayModel));
+		request.setBizContent(json);
+		AlipayOpenPublicMessageSingleSendResponse response = alipayClient.execute(request);
+		
+		System.out.println(response.getBody());
+		System.out.println(response.getCode());
+		System.out.println(response.getErrorCode());
+		if(response.isSuccess()){
+			System.out.println("调用成功");
+		} else {
+			System.out.println("调用失败");
+		}
+		
+		//Template template = new Template("f90dbfff7a3e4a8287b02a500d89049d", "", "", "", map);
+		//TemplateDataAlipayModel alipayModel = new TemplateDataAlipayModel("2088312278245396",template);
+		
+		//request.setBizContent(json);
+		
 	}
 }

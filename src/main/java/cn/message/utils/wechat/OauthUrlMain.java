@@ -36,10 +36,10 @@ public class OauthUrlMain {
 		String clickUrlToSellerList3=
 				"https://open.weixin.qq.com/connect/oauth2/authorize" +
 						"?appid=wxc2b699cf2f919b58"+ //一摇惊喜
-						"&redirect_uri=" + EncodeUtil.encodeUTF8("http://szjj.u-road.com/api/oauth/callback.html")+
+						"&redirect_uri=" + EncodeUtil.encodeUTF8("http://gzh.stc.gov.cn/api/oauth/callback.html")+
 						"&response_type=code" +
 						"&scope=snsapi_userinfo" +
-						"&state=http://szjj.u-road.com/h5" +
+						"&state=http://gzh.stc.gov.cn/h5/" +
 						"#wechat_redirect";
 		System.out.println("深圳交警:"+clickUrlToSellerList3);
 	}

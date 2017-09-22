@@ -1,5 +1,15 @@
 package cn.message.service.impl;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,19 +18,35 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.response.AlipayOpenPublicMessageSingleSendResponse;
 
+import cn.message.bean.HmdahsJ1;
+import cn.message.bean.LoginLog;
+import cn.message.bean.SendTemplateRecord;
+import cn.message.bean.TaskDispatch;
+import cn.message.bean.UserBind;
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.dao.IMessageDao;
 import cn.message.model.MsgChannelResultModel;
 import cn.message.model.TemplateMessageModel;
+import cn.message.model.UserCarInfo.Data.Car;
+import cn.message.model.alipay.TemplateDataAlipayModel;
 import cn.message.model.wechat.MessageChannelModel;
 import cn.message.model.wechat.TemplateDataModel;
 import cn.message.model.wechat.TemplateDataModel.Property;
 import cn.message.service.ITemplateMessageService;
+import cn.message.utils.EncodeUtil;
 import cn.message.utils.GsonUtil;
+import cn.message.utils.NetWorkIp;
+import cn.message.utils.hmdahs.AlipayHmdahsJ1;
+import cn.message.utils.hmdahs.BaseHmdahsJ1;
+import cn.message.utils.hmdahs.WechatHmdahsJ1;
 import cn.message.utils.wechat.WebService4Wechat;
 import cn.sdk.bean.BaseBean;
 import cn.sdk.webservice.WebServiceClient;
+import cn.sdk.util.CollectionUtil;
+import cn.sdk.util.GsonBuilderUtil;
+import cn.sdk.util.StringUtil;
 /**
  * 消息中心
  * @author gxg
@@ -45,9 +71,7 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 			model.setTemplate_id(templateId);
 			model.setUrl(url);
 			model.setData(map);
-			String json = WebService4Wechat.sendTemplateMessage(
-					iMessageCached.getAccessToken(),
-					model);
+			String json = WebService4Wechat.sendTemplateMessage(iMessageCached.getAccessToken(),model);
 			
 			logger.info("模板消息发送结果:"+json);
 			TemplateMessageModel result = GsonUtil.fromJson(json, TemplateMessageModel.class);
@@ -61,9 +85,7 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 				if(40001 == errcode){
 					 logger.info("返回值40001,重新获取token并重发该条记录");
 					 String newToken = iMessageCached.initTokenAndTicket();
-					 json = WebService4Wechat.sendTemplateMessage(
-							 newToken,model);
-					 logger.info("重发返回值："+json);
+					 json = WebService4Wechat.sendTemplateMessage(newToken,model);
 					 result = GsonUtil.fromJson(json, TemplateMessageModel.class);
 					 if(null != result){ 
 						errcode = result.getErrcode();
@@ -141,30 +163,163 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 	}
 
 	@Override
-	public boolean hmdahs() throws Exception{
-		String interfaceNumber = "HM_DAHS";  //接口编号
+	public void gainHmdahsData() throws Exception {
+		List<HmdahsJ1> list = new ArrayList<HmdahsJ1>();
 		
-		//拼装xml数据
-		StringBuffer sb = new StringBuffer();
-			sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
-			.append("<request>")
-				.append("<head>")   
-					.append("<yhdh>").append("C").append("</yhdh>")  
-					.append("<ip>").append("183.14.132.26").append("</ip>")    
-					.append("<lsh>").append("1").append("</lsh>")   
-					.append("<code>").append("J1").append("</code>")    
-				.append("</head>")   
-				.append("<body>")   
-					.append("<sqm>").append("A95670E4F5A0E66453480D2681A9CCCC").append("</sqm>")    
-				.append("</body>")   					
-			.append("</request>");
-			
+		BaseHmdahsJ1 templateHmdahsJ1 = new BaseHmdahsJ1(messageDao, iMessageCached);
+		templateHmdahsJ1.getHmdahsJ1(0);
+	}
+	
+	@Override
+	public int sendMessageWechat4Timer() throws Exception {
+		//执行总数
+		int sum = 0;
+		//成功总数
+		int sendCount = 0;
 		try {
-			JSONObject respStr = WebServiceClient.getInstance().requestWebService(iMessageCached.getUrl(), iMessageCached.getMethod(), 
-					interfaceNumber,sb.toString(),iMessageCached.getUserid(),iMessageCached.getUserpwd(),iMessageCached.getKey());
+			WechatHmdahsJ1 templateHmdahsJ1 = new WechatHmdahsJ1(messageDao, iMessageCached);
+			List<HmdahsJ1> list = messageDao.queryHmdahsJ14Wechat();
+			if(null == list || list.size() == 0) {
+				logger.info("queryHmdahsJ14Wechat 无待发送数据");
+				return 0;
+			}
+				
+			//获取到需要发送模板消息的用户对象
+			Set<UserBind> userBindSet = templateHmdahsJ1.getAllUserBinds(list);
+			Map<String, List<UserBind>> userBindMap = templateHmdahsJ1.group(userBindSet);
+				
+			//执行总数
+			sum = list.size();
+			//真正发送模板消息
+			for (int i = 0; i < list.size(); i++) {
+				HmdahsJ1 hmdahsJ1 = list.get(i);
+				String xh = hmdahsJ1.getXh();
+				String pch = hmdahsJ1.getPch(); 
+				String message = hmdahsJ1.getMessage();
+				String hslx = hmdahsJ1.getHslx();
+				String hphm = hmdahsJ1.getHphm();
+				String lxdh = hmdahsJ1.getLxdh();
+				String jszhm = hmdahsJ1.getJszhm();
+					
+				List<UserBind> userBinds = userBindMap.get(lxdh);
+				if(null == userBinds){
+					//已发送,手机号码无法在用户表中匹配openId
+					int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Wechat(hmdahsJ1.getId(), WechatHmdahsJ1.STATE_1);
+					continue;
+				} 
+					
+				for (UserBind userBind : userBinds) {
+					String mobile = userBind.getMobileNumber();
+					String openId = userBind.getOpenId();
+					//组装模板消息数据对象
+					TemplateDataModel model = templateHmdahsJ1.getTemplateModel(openId, message,hslx,mobile,hphm);	
+					if(null == model) {
+						//已发送,精准推送 message 内容无法匹配模板规则
+						int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Wechat(hmdahsJ1.getId(), WechatHmdahsJ1.STATE_2);
+						continue;
+					}
+						
+					//设置为发送完成
+					messageDao.updateHmdahsJ1State4Wechat(hmdahsJ1.getId(), WechatHmdahsJ1.STATE_3);
+					sendCount ++;
+						
+					String request = GsonBuilderUtil.toJson(model);
+					String response = templateHmdahsJ1.sendMessage4Hmdahs(model);
+					String state = "";
+					if(StringUtil.isNotBlank(response)){
+						TemplateMessageModel result = GsonBuilderUtil.fromJson(response, TemplateMessageModel.class);
+						state = result.getErrcode()+"";
+					}
+					int sendTemplateRecordsCount = messageDao.insertSendTemplateRecord(new SendTemplateRecord(openId,jszhm,lxdh,xh,pch,response,request,new Date(),state,WechatHmdahsJ1.TYPE));
+				}
+			}
 		} catch (Exception e) {
+			logger.error("定时发送模板消息出现异常",e);
 			throw e;
+		}finally{
+			logger.info("本次共处理微信数据："+sum);
+			return sendCount;
 		}
-		return false;
+	}
+
+	@Override
+	public int sendMessageAlipay4Timer() throws Exception {
+		// TODO Auto-generated method stub
+		//执行总数
+		int sum = 0;
+		//成功总数
+		int sendCount = 0;
+		try {
+			AlipayHmdahsJ1 alipayHmdahsJ1 = new AlipayHmdahsJ1(messageDao, iMessageCached);
+			List<HmdahsJ1> list = messageDao.queryHmdahsJ14Alipay();
+			if(null == list || list.size() == 0) {
+				logger.info("queryHmdahsJ14Alipay 无待发送数据");
+				return 0;
+			}
+				
+			//获取到需要发送模板消息的用户对象
+			Set<LoginLog> loginLogSet = alipayHmdahsJ1.getAllLoginLogs(list);
+			Map<String, List<LoginLog>> loginLogMap = alipayHmdahsJ1.group(loginLogSet);
+				
+			//执行总数
+			sum = list.size();
+			//真正发送模板消息
+			for (int i = 0; i < list.size(); i++) {
+				HmdahsJ1 hmdahsJ1 = list.get(i);
+				String xh = hmdahsJ1.getXh();
+				String pch = hmdahsJ1.getPch(); 
+				String message = hmdahsJ1.getMessage();
+				String hslx = hmdahsJ1.getHslx();
+				String hphm = hmdahsJ1.getHphm();
+				String lxdh = hmdahsJ1.getLxdh();
+				String jszhm = hmdahsJ1.getJszhm();
+					
+				List<LoginLog> loginLogs = loginLogMap.get(lxdh);
+				if(null == loginLogs){
+					//设置为已发送
+					int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Alipay(hmdahsJ1.getId(), AlipayHmdahsJ1.STATE_1);
+					continue;
+				} 
+					
+				for (LoginLog loginLog : loginLogs) {
+					String mobile = loginLog.getPhone();
+					String uid = loginLog.getUid();
+					
+					if(StringUtil.isBlank(uid)){
+						//已发送,uid 为空
+						int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Alipay(hmdahsJ1.getId(), AlipayHmdahsJ1.STATE_4);
+						continue;
+					}
+					
+					//组装模板消息数据对象
+					TemplateDataAlipayModel model = alipayHmdahsJ1.getTemplateModel(uid, message,hslx,mobile,hphm);	
+					if(null == model) {
+						//已发送,精准推送 message 内容无法匹配模板规则
+						int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Alipay(hmdahsJ1.getId(), AlipayHmdahsJ1.STATE_2);
+						continue;
+					}
+						
+					//设置为发送完成
+					messageDao.updateHmdahsJ1State4Alipay(hmdahsJ1.getId(), AlipayHmdahsJ1.STATE_3);
+					sendCount ++;
+						
+					String request = GsonBuilderUtil.toJson(model);
+					AlipayOpenPublicMessageSingleSendResponse response = alipayHmdahsJ1.sendMessage4Hmdahs(model);
+					String state = "";
+					String responseBody = "";
+					if(null != response){
+						state = response.getCode();
+						responseBody = response.getBody();
+					}
+					int sendTemplateRecordsCount = messageDao.insertSendTemplateRecord(new SendTemplateRecord(uid,jszhm,lxdh,xh,pch,responseBody,request,new Date(),state,AlipayHmdahsJ1.TYPE));
+				}
+			}
+		} catch (Exception e) {
+			logger.error("定时发送模板消息出现异常",e);
+			throw e;
+		}finally{
+			logger.info("本次共处理支付宝数据："+sum);
+			return sendCount;
+		}
 	}
 }
