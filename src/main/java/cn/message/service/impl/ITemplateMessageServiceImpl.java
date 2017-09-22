@@ -1,52 +1,39 @@
 package cn.message.service.impl;
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alipay.api.response.AlipayOpenPublicMessageSingleSendResponse;
-
 import cn.message.bean.HmdahsJ1;
 import cn.message.bean.LoginLog;
 import cn.message.bean.SendTemplateRecord;
-import cn.message.bean.TaskDispatch;
 import cn.message.bean.UserBind;
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.dao.IMessageDao;
 import cn.message.model.MsgChannelResultModel;
 import cn.message.model.TemplateMessageModel;
-import cn.message.model.UserCarInfo.Data.Car;
 import cn.message.model.alipay.TemplateDataAlipayModel;
 import cn.message.model.wechat.MessageChannelModel;
 import cn.message.model.wechat.TemplateDataModel;
 import cn.message.model.wechat.TemplateDataModel.Property;
 import cn.message.service.ITemplateMessageService;
-import cn.message.utils.EncodeUtil;
 import cn.message.utils.GsonUtil;
-import cn.message.utils.NetWorkIp;
 import cn.message.utils.hmdahs.AlipayHmdahsJ1;
 import cn.message.utils.hmdahs.BaseHmdahsJ1;
 import cn.message.utils.hmdahs.WechatHmdahsJ1;
 import cn.message.utils.wechat.WebService4Wechat;
 import cn.sdk.bean.BaseBean;
-import cn.sdk.webservice.WebServiceClient;
-import cn.sdk.util.CollectionUtil;
 import cn.sdk.util.GsonBuilderUtil;
 import cn.sdk.util.StringUtil;
+
+import com.alibaba.fastjson.JSON;
+import com.alipay.api.response.AlipayOpenPublicMessageSingleSendResponse;
 /**
  * 消息中心
  * @author gxg

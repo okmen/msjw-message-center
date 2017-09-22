@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import cn.message.bean.HmdahsJ1;
 import cn.message.bean.LoginLog;
 import cn.message.bean.SendTemplateRecord;
-import cn.message.bean.TaskDispatch;
 import cn.message.bean.UserBind;
 import cn.message.bean.WxMembercard;
 import cn.message.dao.IMessageDao;
