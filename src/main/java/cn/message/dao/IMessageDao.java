@@ -90,4 +90,11 @@ public interface IMessageDao {
 	 * @return
 	 */
 	List<LoginLog> queryLoginByMobile(List<String> mobiles);
+	
+	/**
+	 * 查询发送记录
+	 * @param state
+	 * @return
+	 */
+	List<SendTemplateRecord> querySendTemplateRecordByState(String state);
 }

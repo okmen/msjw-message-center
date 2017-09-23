@@ -96,4 +96,10 @@ public class IMessageDaoImpl implements IMessageDao {
 		// TODO Auto-generated method stub
 		return hmdahsJ1Mapper.queryHmdahsJ14Alipay();
 	}
+
+	@Override
+	public List<SendTemplateRecord> querySendTemplateRecordByState(String state) {
+		// TODO Auto-generated method stub
+		return sendTemplateRecordMapper.querySendTemplateRecordByState(state);
+	}
 }

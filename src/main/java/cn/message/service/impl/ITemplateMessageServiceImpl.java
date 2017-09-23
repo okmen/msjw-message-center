@@ -309,4 +309,15 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 			return sendCount;
 		}
 	}
+
+	@Override
+	public int sendMessage4Fault() throws Exception {
+		
+		List<SendTemplateRecord> list = messageDao.querySendTemplateRecordByState("40001");
+		for (SendTemplateRecord sendTemplateRecord : list) {
+			String response = WebService4Wechat.sendTemplateMessage("SbW4Lx-UoVehWNJZTOGCH6zTbL9fdmKg_Ga2IRimD-qVXChH2XupcfbIvf7rea4VrQ40SdQof100ZjTUJYjN-xUgnU93CDh3XM7PE6hdAuyunU9Ru_3QPbFPat4aU25ZPSYkCIAZCI", sendTemplateRecord.getRequest());
+			logger.info(response);
+		}
+		return 0;
+	}
 }

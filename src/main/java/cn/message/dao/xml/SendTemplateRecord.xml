@@ -31,4 +31,13 @@
         	(#{item.openId}, #{item.idCard},#{item.lxdh}, #{item.xh}, #{item.pch}, #{item.response},#{item.request}, #{item.createTime},#{item.state},#{item.type})  
     	</foreach>  
 	</insert>  
+	
+	<select id="querySendTemplateRecordByState" resultMap="SendTemplateRecord" >
+		SELECT
+			<include refid="AllSendTemplateRecord"></include>
+		FROM
+			`send_template_record`
+		WHERE 1 = 1
+ 		AND state = #{state}
+	</select>
 </mapper>

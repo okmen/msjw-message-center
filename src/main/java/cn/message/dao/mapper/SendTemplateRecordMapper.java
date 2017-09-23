@@ -18,4 +18,11 @@ public interface SendTemplateRecordMapper {
 	 * @return
 	 */
 	int batchInsertSendTemplateRecord(List<SendTemplateRecord> list);
+	
+	/**
+	 * 查询发送记录
+	 * @param state
+	 * @return
+	 */
+	List<SendTemplateRecord> querySendTemplateRecordByState(String state);
 }

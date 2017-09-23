@@ -149,6 +149,19 @@ public class WebService4Wechat {
 	
 	
 	/**
+	 * 发送模板消息
+	 * @param accessToken
+	 * @param templateDataModel
+	 * @return
+	 */
+	public static String sendTemplateMessage(String accessToken,
+			String json) {
+		String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="
+				+ accessToken;
+		return HttpRequest.sendPost4Wechat(url, json);
+	}
+	
+	/**
 	 * 创建客服接口
 	 * @param accessToken
 	 * @param openId
