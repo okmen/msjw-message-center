@@ -253,7 +253,7 @@ public class BaseHmdahsJ1 {
 		try {
 			if(StringUtil.isBlank(mobile)) return null;
 			
-			String url = "http://szjjapi.stc.gov.cn/user/getLoginInfoByLoginName.html?loginName="+mobile+"&sourceOfCertification=Z";
+			String url = "http://gzh.stc.gov.cn/api/user/getLoginInfoByLoginName.html?loginName="+mobile+"&sourceOfCertification=Z";
 			String result = HttpRequest.sendGet(url,10000);
 			
 			if(StringUtil.isBlank(result)) return null;
