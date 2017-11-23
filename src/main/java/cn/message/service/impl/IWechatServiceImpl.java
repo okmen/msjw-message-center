@@ -236,4 +236,14 @@ public class IWechatServiceImpl implements IWechatService {
 	public String getApiTicket() {
 		return iMessageCached.getApiTicket();
 	}
+
+	@Override
+	public void setAuthOpenid(String key) {
+		iMessageCached.setAuthOpenid(key);
+	}
+
+	@Override
+	public String getAuthOpenid(String key) {
+		return iMessageCached.getAuthOpenid(key);
+	}
 }

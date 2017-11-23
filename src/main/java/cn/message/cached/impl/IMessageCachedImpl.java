@@ -216,4 +216,10 @@ public class IMessageCachedImpl implements IMessageCached{
 	public String getMenuFile() {
 		return menuFile;
 	}
+	public void setAuthOpenid(String key){
+		objectcacheManger.set(auth_openid + key, key, exprieTime);
+	}
+	public String getAuthOpenid(String key){
+		return objectcacheManger.getString(auth_openid + key);
+	}
 }
