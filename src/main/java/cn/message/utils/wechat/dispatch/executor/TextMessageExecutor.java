@@ -107,6 +107,15 @@ public class TextMessageExecutor extends AbstractGeneralExecutor{
 		if(KeyWord.KEYWORD_BM.equals(content.trim())){
 			message = new TextMessage("网盘链接:https://pan.baidu.com/s/1cuAPoq");
 		}
+		
+		if(KeyWord.KEYWORD_KFR.equals(content.trim())){
+			message = new NewsMessage(
+					1,
+					new String[] { "跟蜀黍来一场说走就走的警营之旅！" },
+					new String[] { "" },
+					new String[] { "http://gzh.stc.gov.cn/fileserver/file/20171124185857.jpg" },
+					new String[] { "http://gfd178.com/design/4R2qFnBJ" });
+		}
 		return message;
 	}
 }
