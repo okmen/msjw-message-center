@@ -116,6 +116,16 @@ public class TextMessageExecutor extends AbstractGeneralExecutor{
 					new String[] { "http://gzh.stc.gov.cn/fileserver/file/20171124185857.jpg" },
 					new String[] { "http://gfd178.com/design/4R2qFnBJ" });
 		}
+		
+		if(KeyWord.KEYWORD_QGJTAQR.equals(content.trim())){
+			message = new NewsMessage(
+					1,
+					new String[] { "尊法守规明礼，安全文明出行" },
+					new String[] { "" },
+					new String[] { "http://gzh.stc.gov.cn/fileserver/file/_20171201175512.jpg" },
+					new String[] { "http://gfd178.com/design/4R2qFnBJ" });
+		}
+		
 		return message;
 	}
 }
