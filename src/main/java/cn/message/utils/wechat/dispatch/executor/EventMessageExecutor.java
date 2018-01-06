@@ -68,8 +68,9 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 			 }
     	 }
 		 
-		 /*if(IEvent.EVENT_USER_GET_CARD.equals(event)){
-			 String openId = model.getFromUserName();
+		 if(IEvent.EVENT_USER_GET_CARD.equals(event)){
+			 logger.info("【微信卡包】领卡事件开始执行.........................................");
+			 /*String openId = model.getFromUserName();
 			 String cardId = model.getCardId();
 			 String code = model.getCode();
 			 Integer isGiveByFriend = StringUtil.isNotBlank(model.getIsGiveByFriend()) ? Integer.parseInt(model.getIsGiveByFriend()) : null;
@@ -93,8 +94,8 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 				 newWxMembercard.setIntime(new Date());
 				 iMessageDao.insertWxMembercard(newWxMembercard);
 			 }
-			 message = null;
-		 }*/
+			 message = null;*/
+		 }
 		 
     	 //用户打开公众号会推送这个包过来 (第一次推送的包)
     	 if(IEvent.EVENT_TYPE_LOCATION.equals(event)){
