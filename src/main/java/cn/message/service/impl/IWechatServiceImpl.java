@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.message.bean.WxMembercard;
 import cn.message.cached.impl.IMessageCachedImpl;
 import cn.message.dao.IMessageDao;
@@ -201,11 +203,12 @@ public class IWechatServiceImpl implements IWechatService {
 			throws Exception {
 		try {
 			String code = WebService4Wechat.decryptCode(iMessageCached.getAccessToken(), decryptCode);
-			WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
 			if("".equals(code)) {
 				logger.error("decryptCode 解密失败,decryptCode="+decryptCode);
 				return false;
 			}
+			//
+			WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
 			//在激活之前 本来会新建一张卡记录的 , 但是由于是异步的 可能在激活的时候 微信还没有推送消息过来  ,这里做一个新增操作
 			if(null == wxMembercard){
 				 WxMembercard newWxMembercard = new WxMembercard();
@@ -224,12 +227,46 @@ public class IWechatServiceImpl implements IWechatService {
 			if(!bool){
 				logger.error("activateCard 激活行驶证失败,openId="+openId + ",cardId="+cardId + ",code="+code);
 				return false;
-			}
+			}/*else{
+				//激活行驶证成功，修改state=1,身份证号idno
+				WxMembercard updateWxMembercard = new WxMembercard();
+				updateWxMembercard.setState(1);
+				String idno = iMessageDao.queryIdCardByOpenId(openId);
+				updateWxMembercard.setIdno(idno);
+				updateWxMembercard.setOpenid(openId);
+				updateWxMembercard.setCardid(cardId);
+				iMessageDao.updateWxMembercard(updateWxMembercard);
+				logger.debug("【卡包-行驶证】修改卡信息，WxMembercard=" + JSON.toJSONString(updateWxMembercard));
+			}*/
 			return true;
 		} catch (Exception e) {
 			logger.error("activeXsCard 激活行驶证出现异常,openId="+openId+",cardId="+cardId+",decryptCode="+decryptCode,e);
 			return false;
 		}
+	}
+
+	@Override
+	public WxMembercard selectWxMembercard(String openId, String cardId) {
+		WxMembercard wxMembercard = null;
+		try {
+			wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
+		} catch (Exception e) {
+			logger.info("【微信卡包】selectWxMembercard异常：openId="+openId+",cardId="+cardId);
+			e.printStackTrace();
+		}
+		return wxMembercard;
+	}
+
+	@Override
+	public int insertWxMembercard(WxMembercard wxMembercard) {
+		int count = 0;
+		try {
+			count = iMessageDao.insertWxMembercard(wxMembercard);
+		} catch (Exception e) {
+			logger.info("【微信卡包】insertWxMembercard异常：wxMembercard="+JSON.toJSONString(wxMembercard));
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	@Override
