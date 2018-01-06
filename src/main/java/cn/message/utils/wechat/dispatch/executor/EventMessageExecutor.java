@@ -69,20 +69,15 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
     	 }
 		 
 		 if(IEvent.EVENT_USER_GET_CARD.equals(event)){
-			 logger.info("【微信卡包】领卡事件开始执行.........................................");
-			 /*String openId = model.getFromUserName();
+			 logger.info("【微信卡包】触发领卡事件..........................");
+			 String openId = model.getFromUserName();
 			 String cardId = model.getCardId();
 			 String code = model.getCode();
 			 Integer isGiveByFriend = StringUtil.isNotBlank(model.getIsGiveByFriend()) ? Integer.parseInt(model.getIsGiveByFriend()) : null;
 			 String giveOpenId = model.getGiveOpenId();
-			 String outerStr = model.getOuterStr();
-			 logger.info("用户领取卡券:code="+code);
+			 //logger.info("用户领取卡券:code="+code);
 			 WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
-			 if(null != wxMembercard){
-				 wxMembercard.setState(0);
-				 wxMembercard.setCode(code);
-				 iMessageDao.updateWxMembercard(wxMembercard);
-			 }else{
+			 if(null == wxMembercard){
 				 WxMembercard newWxMembercard = new WxMembercard();
 				 newWxMembercard.setOpenid(openId);
 				 newWxMembercard.setCode(code);
@@ -90,11 +85,20 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 				 newWxMembercard.setIsgivebyfriend(isGiveByFriend);
 				 newWxMembercard.setGiveopenid(giveOpenId);
 				 newWxMembercard.setState(0);
-				 newWxMembercard.setOuterstr(outerStr);
 				 newWxMembercard.setIntime(new Date());
-				 iMessageDao.insertWxMembercard(newWxMembercard);
+				 int addcount = iMessageDao.insertWxMembercard(newWxMembercard);
+				 logger.info("【微信卡包】新增领卡记录结果："+addcount);
+			 }else{
+				 Integer state = wxMembercard.getState();
+				 if(state == 0){//未激活
+					 logger.info("【微信卡包】已领过卡但未激活");
+				 }else if(state == 1){//已激活
+					 logger.info("【微信卡包】已激活卡");
+				 }else{
+					 logger.info("【微信卡包】其他卡状态，state=" + state);
+				 }
 			 }
-			 message = null;*/
+			 message = null;
 		 }
 		 
     	 //用户打开公众号会推送这个包过来 (第一次推送的包)
