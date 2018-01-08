@@ -194,6 +194,9 @@
 				
 				<!-- 开发环境不可运行 -->
 				<run.timer.ip>xxxxxxxxxxxxxxx</run.timer.ip>
+				
+				<!-- 微信卡包 -->
+				<card.h5.domain>http://testh5.chudaokeji.com</card.h5.domain>
 			</properties>
 		</profile>
 
@@ -270,6 +273,9 @@
 				
 				<!-- 测试环境不可运行 -->
 				<run.timer.ip>xxxxxxxxxxxxxxxxxxxxxxxx</run.timer.ip>
+				
+				<!-- 微信卡包 -->
+				<card.h5.domain>http://testh5.chudaokeji.com</card.h5.domain>
 			</properties>
 		</profile>
 		
@@ -354,6 +360,9 @@
 				
 				<!-- 交警机器 223 这台 可以运行定时推送模板消息程序 -->
 				<run.timer.ip>192.168.2.223</run.timer.ip>
+				
+				<!-- 微信卡包 -->
+				<card.h5.domain>http://gzh.stc.gov.cn</card.h5.domain>
 			</properties>
 		</profile>
 	</profiles>

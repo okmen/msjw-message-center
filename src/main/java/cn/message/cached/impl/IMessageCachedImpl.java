@@ -13,6 +13,15 @@ import cn.sdk.serialization.ISerializeManager;
 @Service
 public class IMessageCachedImpl implements IMessageCached{
 	protected Logger log = Logger.getLogger(this.getClass());
+	
+	/**
+	 * 用户id
+	 */
+	@Value("${cardH5Domain}")
+	private String cardH5Domain;
+	public String getCardH5Domain() {
+		return cardH5Domain;
+	}
 
 	/**
 	 * 用户id

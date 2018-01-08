@@ -43,6 +43,11 @@ public class IWechatServiceImpl implements IWechatService {
 	private IMessageDao iMessageDao;
 	
 	@Override
+	public String getCardH5Domain() {
+		return iMessageCached.getCardH5Domain();
+	}
+
+	@Override
 	public boolean checkServer(String signature, String timestamp, String nonce) {
 		String [] array = new String[]{iMessageCached.getToken(),timestamp,nonce};
 		Arrays.sort(array);
@@ -160,44 +165,77 @@ public class IWechatServiceImpl implements IWechatService {
 	}
 
 	@Override
-	public boolean activeJsCard(String openId,String cardId,String decryptCode) throws Exception {
+	public BaseBean activeJsCard(String openId,String cardId,String decryptCode,String ljjf,String syrq,String zjcx) throws Exception {
+		BaseBean baseBean = new BaseBean();
 		try {
 			String code = WebService4Wechat.decryptCode(iMessageCached.getAccessToken(), decryptCode);
-			WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
 			if("".equals(code)) {
 				logger.error("decryptCode 解密失败,decryptCode="+decryptCode);
-				return false;
-			}
-			//在激活之前 本来会新建一张卡记录的 , 但是由于是异步的 可能在激活的时候 微信还没有推送消息过来  ,这里做一个新增操作
-			if(null == wxMembercard){
-				 WxMembercard newWxMembercard = new WxMembercard();
-				 newWxMembercard.setOpenid(openId);
-				 newWxMembercard.setCode(code);
-				 newWxMembercard.setCardid(cardId);
-				 newWxMembercard.setIsgivebyfriend(0);
-				 newWxMembercard.setGiveopenid("0");
-				 newWxMembercard.setState(0);
-				 newWxMembercard.setOuterstr("default");
-				 newWxMembercard.setIntime(new Date());
-				 iMessageDao.insertWxMembercard(newWxMembercard);
+				baseBean.setCode(MsgCode.businessError);
+				baseBean.setMsg("code非法！");
+				return baseBean;
 			}
 			
-			boolean bool = WebService4Wechat.activateJsCard(iMessageCached.getAccessToken(), cardId, code, "", "", "");
-			if(!bool){
-				logger.error("activateCard 激活驾驶证失败,openId="+openId + ",cardId="+cardId + ",code="+code);
-				return false;
+			WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
+			//有数据，可能是老数据，也可能是领卡事件新增的
+			if(null != wxMembercard){
+				Integer state = wxMembercard.getState();
+				if(state == 1){//已激活过
+					baseBean.setCode(MsgCode.businessError);
+					baseBean.setMsg("已激活！");
+					return baseBean;
+				}else{
+					//调微信接口激活
+					boolean bool = WebService4Wechat.activateJsCard(iMessageCached.getAccessToken(), cardId, code, ljjf, syrq, zjcx);
+					if(bool){
+						//激活行驶证成功，修改state=1,身份证号idno
+						WxMembercard updateWxMembercard = new WxMembercard();
+						try {
+							updateWxMembercard.setState(1);
+							String idno = iMessageDao.queryIdCardByOpenId(openId);
+							updateWxMembercard.setIdno(idno);
+							updateWxMembercard.setOpenid(openId);
+							updateWxMembercard.setCardid(cardId);
+							int updatecount = iMessageDao.updateWxMembercard(updateWxMembercard);
+							logger.info("【微信卡包】激活电子驾驶证并修改卡结果："+updatecount);
+						} catch (Exception e) {
+							logger.error("【微信卡包】电子驾驶证修改卡信息异常，WxMembercard=" + JSON.toJSONString(updateWxMembercard));
+							e.printStackTrace();
+						}
+					}else{
+						logger.info("【微信卡包】activeJsCard 激活驾驶失败,openId="+openId + ",cardId="+cardId + ",code="+code);
+						baseBean.setCode(MsgCode.businessError);
+						baseBean.setMsg("激活失败，请重试！");
+						return baseBean;
+					}
+				}
+			}else{
+				baseBean.setCode(MsgCode.businessError);
+				baseBean.setMsg("系统繁忙，请稍后重试！");
+				return baseBean;
 			}
-			return true;
+			
+			baseBean.setCode(MsgCode.success);
+			baseBean.setMsg("激活成功！");
+			baseBean.setData(code);
+			return baseBean;
 		} catch (Exception e) {
-			logger.error("activeJsCard 激活驾驶证出现异常,openId="+openId+",cardId="+cardId+",decryptCode="+decryptCode,e);
-			return false;
+			logger.error("【微信卡包】activeJsCard 激活驾驶证出现异常,openId="+openId+",cardId="+cardId+",decryptCode="+decryptCode,e);
+			e.printStackTrace();
+			baseBean.setCode(MsgCode.exception);
+			baseBean.setMsg(MsgCode.systemMsg);
+			return baseBean;
 		}
 	}
 
 	@Override
-	public boolean updateJsCard(String code, String cardId, String ljjf,
-			String zjcx, String syrq) {
-		return false;
+	public boolean updateJsCard(String code, String cardId, String ljjf, String syrq, String zjcx) {
+		try {
+			return WebService4Wechat.updateJsCard(iMessageCached.getAccessToken(), cardId, code, ljjf, syrq, zjcx);
+		} catch (Exception e) {
+			logger.error("【微信卡包】updateJsCard 更新驾驶证出现异常,cardId="+cardId+",code="+code,e);
+			return false;
+		}
 	}
 
 	@Override
@@ -208,7 +246,7 @@ public class IWechatServiceImpl implements IWechatService {
 			if("".equals(code)) {
 				logger.error("decryptCode 解密失败,decryptCode="+decryptCode);
 				baseBean.setCode(MsgCode.businessError);
-				baseBean.setMsg("code解密失败！");
+				baseBean.setMsg("code非法！");
 				return baseBean;
 			}
 			
@@ -277,6 +315,7 @@ public class IWechatServiceImpl implements IWechatService {
 			
 			baseBean.setCode(MsgCode.success);
 			baseBean.setMsg("激活成功！");
+			baseBean.setData(code);
 			return baseBean;
 		} catch (Exception e) {
 			logger.error("【微信卡包】activeXsCard 激活行驶证出现异常,openId="+openId+",cardId="+cardId+",decryptCode="+decryptCode,e);
@@ -288,27 +327,15 @@ public class IWechatServiceImpl implements IWechatService {
 	}
 
 	@Override
-	public WxMembercard selectWxMembercard(String openId, String cardId) {
-		WxMembercard wxMembercard = null;
+	public String queryIdCardByOpenId(String openId) {
+		String idCard = null;
 		try {
-			wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
+			idCard = iMessageDao.queryIdCardByOpenId(openId);
 		} catch (Exception e) {
-			logger.info("【微信卡包】selectWxMembercard异常：openId="+openId+",cardId="+cardId);
+			logger.error("【微信卡包】queryIdCardByOpenId异常：openId="+openId);
 			e.printStackTrace();
 		}
-		return wxMembercard;
-	}
-
-	@Override
-	public int insertWxMembercard(WxMembercard wxMembercard) {
-		int count = 0;
-		try {
-			count = iMessageDao.insertWxMembercard(wxMembercard);
-		} catch (Exception e) {
-			logger.info("【微信卡包】insertWxMembercard异常：wxMembercard="+JSON.toJSONString(wxMembercard));
-			e.printStackTrace();
-		}
-		return count;
+		return idCard;
 	}
 
 	@Override
