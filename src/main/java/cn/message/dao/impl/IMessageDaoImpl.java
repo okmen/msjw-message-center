@@ -35,6 +35,11 @@ public class IMessageDaoImpl implements IMessageDao {
 	
 	
 	@Override
+	public String queryIdCardByOpenId(String openId) {
+		return userBindMapper.queryIdCardByOpenId(openId);
+	}
+
+	@Override
 	public int insertWxMembercard(WxMembercard wxMembercard) {
 		return wxMembercardMapper.insertWxMembercard(wxMembercard);
 	}

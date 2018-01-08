@@ -25,6 +25,8 @@ import cn.message.utils.wechat.Sign;
 import cn.message.utils.wechat.WebService4Wechat;
 import cn.message.utils.wechat.dispatch.MessageDispatch;
 import cn.message.utils.wechat.dispatch.executor.AbstractGeneralExecutor;
+import cn.sdk.bean.BaseBean;
+import cn.sdk.util.MsgCode;
 /**
  * 处理微信逻辑
  * @author gxg
@@ -199,49 +201,89 @@ public class IWechatServiceImpl implements IWechatService {
 	}
 
 	@Override
-	public boolean activeXsCard(String openId, String cardId, String decryptCode)
-			throws Exception {
+	public BaseBean activeXsCard(String openId, String cardId, String decryptCode) throws Exception {
+		BaseBean baseBean = new BaseBean();
 		try {
 			String code = WebService4Wechat.decryptCode(iMessageCached.getAccessToken(), decryptCode);
 			if("".equals(code)) {
 				logger.error("decryptCode 解密失败,decryptCode="+decryptCode);
-				return false;
-			}
-			//
-			WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
-			//在激活之前 本来会新建一张卡记录的 , 但是由于是异步的 可能在激活的时候 微信还没有推送消息过来  ,这里做一个新增操作
-			if(null == wxMembercard){
-				 WxMembercard newWxMembercard = new WxMembercard();
-				 newWxMembercard.setOpenid(openId);
-				 newWxMembercard.setCode(code);
-				 newWxMembercard.setCardid(cardId);
-				 newWxMembercard.setIsgivebyfriend(0);
-				 newWxMembercard.setGiveopenid("0");
-				 newWxMembercard.setState(0);
-				 newWxMembercard.setOuterstr("default");
-				 newWxMembercard.setIntime(new Date());
-				 iMessageDao.insertWxMembercard(newWxMembercard);
+				baseBean.setCode(MsgCode.businessError);
+				baseBean.setMsg("code解密失败！");
+				return baseBean;
 			}
 			
-			boolean bool = WebService4Wechat.activateXsCard(iMessageCached.getAccessToken(), cardId, code);
-			if(!bool){
-				logger.error("activateCard 激活行驶证失败,openId="+openId + ",cardId="+cardId + ",code="+code);
-				return false;
-			}/*else{
-				//激活行驶证成功，修改state=1,身份证号idno
-				WxMembercard updateWxMembercard = new WxMembercard();
-				updateWxMembercard.setState(1);
-				String idno = iMessageDao.queryIdCardByOpenId(openId);
-				updateWxMembercard.setIdno(idno);
-				updateWxMembercard.setOpenid(openId);
-				updateWxMembercard.setCardid(cardId);
-				iMessageDao.updateWxMembercard(updateWxMembercard);
-				logger.debug("【卡包-行驶证】修改卡信息，WxMembercard=" + JSON.toJSONString(updateWxMembercard));
-			}*/
-			return true;
+			WxMembercard wxMembercard = iMessageDao.selectWxMembercard(openId, cardId);
+			//有数据，可能是老数据，也可能是领卡事件新增的
+			if(null != wxMembercard){
+				Integer state = wxMembercard.getState();
+				if(state == 1){//已激活过
+					baseBean.setCode(MsgCode.businessError);
+					baseBean.setMsg("已激活！");
+					return baseBean;
+				}else{
+					//调微信接口激活
+					boolean bool = WebService4Wechat.activateXsCard(iMessageCached.getAccessToken(), cardId, code);
+					if(bool){
+						//激活行驶证成功，修改state=1,身份证号idno
+						WxMembercard updateWxMembercard = new WxMembercard();
+						try {
+							updateWxMembercard.setState(1);
+							String idno = iMessageDao.queryIdCardByOpenId(openId);
+							updateWxMembercard.setIdno(idno);
+							updateWxMembercard.setOpenid(openId);
+							updateWxMembercard.setCardid(cardId);
+							int updatecount = iMessageDao.updateWxMembercard(updateWxMembercard);
+							logger.info("【微信卡包】激活电子行驶证并修改卡结果："+updatecount);
+						} catch (Exception e) {
+							logger.error("【微信卡包】电子行驶证修改卡信息异常，WxMembercard=" + JSON.toJSONString(updateWxMembercard));
+							e.printStackTrace();
+						}
+					}else{
+						logger.info("【微信卡包】activateCard 激活行驶证失败,openId="+openId + ",cardId="+cardId + ",code="+code);
+						baseBean.setCode(MsgCode.businessError);
+						baseBean.setMsg("激活失败，请重试！");
+						return baseBean;
+					}
+				}
+			}else{
+				baseBean.setCode(MsgCode.businessError);
+				baseBean.setMsg("系统繁忙，请稍后重试！");
+				return baseBean;
+				/*//调微信接口激活
+				boolean bool = WebService4Wechat.activateXsCard(iMessageCached.getAccessToken(), cardId, code);
+				if(bool){
+					//在激活之前 本来会新建一张卡记录的 , 但是由于是异步的 可能在激活的时候 微信还没有推送消息过来  ,这里做一个新增已激活记录
+					WxMembercard newWxMembercard = new WxMembercard();
+					newWxMembercard.setOpenid(openId);
+					String idno = iMessageDao.queryIdCardByOpenId(openId);
+					newWxMembercard.setIdno(idno);
+					newWxMembercard.setCardid(cardId);
+					newWxMembercard.setCode(code);
+					newWxMembercard.setIsgivebyfriend(0);
+					newWxMembercard.setGiveopenid("");
+					newWxMembercard.setState(1);//已激活
+					newWxMembercard.setOuterid("0");
+					newWxMembercard.setOuterstr("default");
+					newWxMembercard.setIntime(new Date());
+					int count = iMessageDao.insertWxMembercard(newWxMembercard);
+					logger.info("【微信卡包】直接新增激活记录结果："+count);
+				}else{
+					logger.info("【微信卡包】activateCard 激活行驶证失败,openId="+openId + ",cardId="+cardId + ",code="+code);
+					baseBean.setCode(MsgCode.businessError);
+					baseBean.setMsg("激活失败，请重试！");
+					return baseBean;
+				}*/
+			}
+			
+			baseBean.setCode(MsgCode.success);
+			baseBean.setMsg("激活成功！");
+			return baseBean;
 		} catch (Exception e) {
-			logger.error("activeXsCard 激活行驶证出现异常,openId="+openId+",cardId="+cardId+",decryptCode="+decryptCode,e);
-			return false;
+			logger.error("【微信卡包】activeXsCard 激活行驶证出现异常,openId="+openId+",cardId="+cardId+",decryptCode="+decryptCode,e);
+			e.printStackTrace();
+			baseBean.setCode(MsgCode.exception);
+			baseBean.setMsg(MsgCode.systemMsg);
+			return baseBean;
 		}
 	}
 

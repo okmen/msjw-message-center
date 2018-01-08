@@ -10,6 +10,13 @@ import cn.message.bean.WxMembercard;
 
 public interface IMessageDao {
 	/**
+	 * 根据openId获取身份证号
+	 * @param openId
+	 * @return
+	 */
+	String queryIdCardByOpenId(String openId);
+	
+	/**
 	 * 插入会员卡
 	 * @param wxMembercard
 	 * @return

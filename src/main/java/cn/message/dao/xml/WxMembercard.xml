@@ -43,22 +43,13 @@
 		limit 1
 	</select>
 	
-	<update id="updateWxMembercard" useGeneratedKeys="true" keyProperty="id" >
+	<update id="updateWxMembercard" parameterType="cn.message.bean.WxMembercard">
 		update wx_membercard 
 			set 
-				openid = #{openid},
-				idno = #{idno},
-				cardid = #{cardid},
-				code = #{code},
-				isgivebyfriend = #{isgivebyfriend},
-				giveopenid = #{giveopenid},
 				state = #{state},
-				outerid = #{outerid},
-				outerstr = ${outerstr},
-				intime = #{intime},
-				userid = #{userid}
+				idno = #{idno}
 			where 
-				id = #{id}
+				openid = #{openid} and cardid = #{cardid}
 	</update>
 	
 </mapper>

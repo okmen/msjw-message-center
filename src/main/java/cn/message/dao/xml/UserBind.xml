@@ -42,4 +42,12 @@
  		</foreach>  
  		<!-- AND is_bind = 1 -->
 	</select>
+	
+	<select id="queryIdCardByOpenId" resultType="String" >
+		SELECT
+			id_card
+		FROM
+			`t_user_bind`
+		WHERE open_id = #{openId}
+	</select>
 </mapper>

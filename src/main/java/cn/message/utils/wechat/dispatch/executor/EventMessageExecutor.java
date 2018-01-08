@@ -91,11 +91,11 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 			 }else{
 				 Integer state = wxMembercard.getState();
 				 if(state == 0){//未激活
-					 logger.info("【微信卡包】已领过卡但未激活");
+					 logger.info("【微信卡包】已领过卡但未激活，openId="+openId+"，cardId="+cardId);
 				 }else if(state == 1){//已激活
-					 logger.info("【微信卡包】已激活卡");
+					 logger.info("【微信卡包】已激活卡，openId="+openId+"，cardId="+cardId);
 				 }else{
-					 logger.info("【微信卡包】其他卡状态，state=" + state);
+					 logger.info("【微信卡包】其他卡状态，state="+state+"，openId="+openId+"，cardId="+cardId);
 				 }
 			 }
 			 message = null;
