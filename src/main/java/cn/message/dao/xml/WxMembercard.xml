@@ -47,7 +47,9 @@
 		update wx_membercard 
 			set 
 				state = #{state},
-				idno = #{idno}
+				idno = #{idno},
+				outerid = 0,
+				outerstr = 'default'
 			where 
 				openid = #{openid} and cardid = #{cardid}
 	</update>

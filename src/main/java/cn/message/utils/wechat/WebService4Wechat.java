@@ -207,17 +207,15 @@ public class WebService4Wechat {
 	}
 	
 	/**
-	 * 激活驾驶证
+	 * 激活驾驶证（一摇惊喜）
 	 * @param accessToken
 	 * @param decryptCode
 	 * @return
 	 */
-	public static boolean activateJsCard(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
+	public static boolean activateJsCardTest(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
 		String url = "https://api.weixin.qq.com/card/membercard/activate?access_token="+ accessToken;//一摇惊喜
-		//String url = "https://api.weixin.qq.com/card/generalcard/activate?access_token="+ accessToken;//深圳交警
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("membership_number", code);
-		//map.put("card_number", code);
 		map.put("code", code);
 		map.put("card_id", cardId);
 		map.put("init_custom_field_value1", ljjf);
@@ -240,12 +238,12 @@ public class WebService4Wechat {
 	}
 	
 	/**
-	 * 更新驾驶证
+	 * 更新驾驶证（一摇惊喜）
 	 * @param accessToken
 	 * @param decryptCode
 	 * @return
 	 */
-	public static boolean updateJsCard(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
+	public static boolean updateJsCardTest(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
 		/*$wx_url = "https://api.weixin.qq.com/card/generalcard/updateuser?access_token=".$accesstoken;
 		$wx_cardData = array(
 			"code"=> $UserCardCode,
@@ -256,7 +254,6 @@ public class WebService4Wechat {
 		);*/
 		
 		String url = "https://api.weixin.qq.com/card/membercard/updateuser?access_token="+ accessToken;//一摇惊喜
-		//String url = "https://api.weixin.qq.com/card/generalcard/updateuser?access_token="+ accessToken;//深圳交警
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("code", code);
 		map.put("card_id", cardId);
@@ -280,17 +277,104 @@ public class WebService4Wechat {
 	}
 	
 	/**
-	 * 激活行驶证
+	 * 激活行驶证（一摇惊喜）
+	 * @param accessToken
+	 * @param decryptCode
+	 * @return
+	 */
+	public static boolean activateXsCardTest(String accessToken,String cardId,String code){
+		String url = "https://api.weixin.qq.com/card/membercard/activate?access_token="+ accessToken;//一摇惊喜
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("membership_number", code);//一摇惊喜
+		map.put("code", code);
+		map.put("card_id", cardId);
+		
+		String data = GsonBuilderUtil.toJson(map);
+		logger.info("激活行驶证url=" + url + ",data=" + data);
+		
+		String result = HttpRequest.sendPost4Wechat(url,data);
+		BaseWechatResult baseWechatResult = GsonUtil.fromJson(result, BaseWechatResult.class);
+		if(null != baseWechatResult){
+			if(0 == baseWechatResult.getErrcode()){
+				return true;
+			}else{
+				logger.info("【微信卡包】激活电子行驶证失败返回结果：" + GsonBuilderUtil.toJson(baseWechatResult));
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 激活驾驶证（深圳交警）
+	 * @param accessToken
+	 * @param decryptCode
+	 * @return
+	 */
+	public static boolean activateJsCard(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
+		String url = "https://api.weixin.qq.com/card/generalcard/activate?access_token="+ accessToken;//深圳交警
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("card_number", code);
+		map.put("code", code);
+		map.put("card_id", cardId);
+		map.put("init_custom_field_value1", ljjf);
+		map.put("init_custom_field_value2", syrq);
+		map.put("init_custom_field_value3", zjcx);
+		
+		String data = GsonBuilderUtil.toJson(map);
+		logger.info("激活驾驶证url=" + url + ",data=" + data);
+		
+		String result = HttpRequest.sendPost4Wechat(url,data);
+		BaseWechatResult baseWechatResult = GsonUtil.fromJson(result, BaseWechatResult.class);
+		if(null != baseWechatResult){
+			if(0 == baseWechatResult.getErrcode()){
+				return true;
+			}else{
+				logger.info("【微信卡包】激活电子驾驶证失败返回结果：" + GsonBuilderUtil.toJson(baseWechatResult));
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 更新驾驶证（深圳交警）
+	 * @param accessToken
+	 * @param decryptCode
+	 * @return
+	 */
+	public static boolean updateJsCard(String accessToken,String cardId,String code,String ljjf,String syrq,String zjcx){
+		String url = "https://api.weixin.qq.com/card/generalcard/updateuser?access_token="+ accessToken;//深圳交警
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("code", code);
+		map.put("card_id", cardId);
+		map.put("custom_field_value1", ljjf);
+		map.put("custom_field_value2", syrq);
+		map.put("custom_field_value3", zjcx);
+		
+		String data = GsonBuilderUtil.toJson(map);
+		logger.info("更新驾驶证url=" + url + ",data=" + data);
+		
+		String result = HttpRequest.sendPost4Wechat(url,data);
+		BaseWechatResult baseWechatResult = GsonUtil.fromJson(result, BaseWechatResult.class);
+		if(null != baseWechatResult){
+			if(0 == baseWechatResult.getErrcode()){
+				return true;
+			}else{
+				logger.info("【微信卡包】更新电子驾驶证失败返回结果：" + GsonBuilderUtil.toJson(baseWechatResult));
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 激活行驶证（深圳交警）
 	 * @param accessToken
 	 * @param decryptCode
 	 * @return
 	 */
 	public static boolean activateXsCard(String accessToken,String cardId,String code){
-		String url = "https://api.weixin.qq.com/card/membercard/activate?access_token="+ accessToken;//一摇惊喜
-		//String url = "https://api.weixin.qq.com/card/generalcard/activate?access_token=" + accessToken;//深圳交警
+		String url = "https://api.weixin.qq.com/card/generalcard/activate?access_token=" + accessToken;//深圳交警
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("membership_number", code);//一摇惊喜
-		//map.put("card_number", code);//深圳交警
+		map.put("card_number", code);//深圳交警
 		map.put("code", code);
 		map.put("card_id", cardId);
 		
