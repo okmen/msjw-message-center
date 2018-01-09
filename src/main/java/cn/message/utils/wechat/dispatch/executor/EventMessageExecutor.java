@@ -95,6 +95,14 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 					 logger.info("【微信卡包】已领过卡但未激活，openId="+openId+"，cardId="+cardId);
 				 }else if(state == 1){//已激活
 					 logger.info("【微信卡包】已激活卡，openId="+openId+"，cardId="+cardId);
+				 }else if(state == 2){//已删卡
+					 WxMembercard updateWxMembercard = new WxMembercard();
+					 updateWxMembercard.setState(0);//修改为领卡状态state=0
+					 updateWxMembercard.setIdno(wxMembercard.getIdno());
+					 updateWxMembercard.setOpenid(openId);
+					 updateWxMembercard.setCardid(cardId);
+					 int updatecount = iMessageDao.updateWxMembercard(updateWxMembercard);
+					 logger.info("【微信卡包】重新领卡修改状态结果："+updatecount);
 				 }else{
 					 logger.info("【微信卡包】其他卡状态，state="+state+"，openId="+openId+"，cardId="+cardId);
 				 }
