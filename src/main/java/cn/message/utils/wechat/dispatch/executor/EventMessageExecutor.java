@@ -68,8 +68,9 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 			 }
     	 }
 		 
+		 //领卡事件
 		 if(IEvent.EVENT_USER_GET_CARD.equals(event)){
-			 logger.info("【微信卡包】触发领卡事件..........................");
+			 logger.info("【微信卡包】触发领卡事件，openId="+model.getFromUserName());
 			 String openId = model.getFromUserName();
 			 String cardId = model.getCardId();
 			 String code = model.getCode();
@@ -98,6 +99,23 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 					 logger.info("【微信卡包】其他卡状态，state="+state+"，openId="+openId+"，cardId="+cardId);
 				 }
 			 }
+			 message = null;
+		 }
+		 
+		 //删卡事件
+		 if(IEvent.EVENT_USER_DEL_CARD.equals(event)){
+			 logger.info("【微信卡包】触发删卡事件，openId="+model.getFromUserName());
+			 String openId = model.getFromUserName();
+			 String cardId = model.getCardId();
+			 //更新卡状态为state=2
+			 WxMembercard wxMembercard = new WxMembercard();
+			 wxMembercard.setState(2);
+			 String idno = iMessageDao.queryIdCardByOpenId(openId);
+			 wxMembercard.setIdno(idno);
+			 wxMembercard.setOpenid(openId);
+			 wxMembercard.setCardid(cardId);
+			 int updatecount = iMessageDao.updateWxMembercard(wxMembercard);
+			 logger.info("【微信卡包】删卡修改状态结果："+updatecount);
 			 message = null;
 		 }
 		 
