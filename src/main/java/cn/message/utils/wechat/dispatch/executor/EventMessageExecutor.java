@@ -97,7 +97,7 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 					 logger.info("【微信卡包】已激活卡，openId="+openId+"，cardId="+cardId);
 				 }else if(state == 2){//已删卡
 					 WxMembercard updateWxMembercard = new WxMembercard();
-					 updateWxMembercard.setState(0);//修改为领卡状态state=0
+					 updateWxMembercard.setState(1);//修改为重新领卡激活状态state=1
 					 updateWxMembercard.setIdno(wxMembercard.getIdno());
 					 updateWxMembercard.setOpenid(openId);
 					 updateWxMembercard.setCardid(cardId);
