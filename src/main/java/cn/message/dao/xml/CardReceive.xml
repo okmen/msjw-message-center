@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.message.dao.mapper.CardReceiveMapper">
+    <resultMap type="cn.message.bean.CardReceive" id="CardReceive">
+		<result property="id" column="ID" />
+		<result property="alipayUserId" column="alipay_user_id" />
+		<result property="certNo" column="cert_no" />
+		<result property="realName" column="real_name" />
+		<result property="gender" column="gender" />
+		<result property="archiveNumber" column="archive_number" />
+		<result property="type" column="type" />
+	</resultMap>
+	
+	<sql id="AllCardReceive">
+		`ID`, `alipay_user_id`, `cert_no`,`real_name`, `gender`,`archive_number`, `type`
+	</sql>
+	
+	<insert id="insertCardReceive" parameterType="cn.message.bean.CardReceive" useGeneratedKeys="true" keyProperty="id"  >
+		insert into Card_receive (
+			alipay_user_id, cert_no, real_name,gender, archive_number, type
+		)
+		values(
+			#{alipayUserId}, #{certNo}, #{realName}, #{gender}, #{archiveNumber}, #{type}
+		)
+	</insert>
+	
+	<select id="queryReceiveCardCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			Card_receive
+		WHERE 1 = 1
+		AND	cert_no = #{certNo}
+		AND type = #{type}
+	</select>
+	
+	<update id="updateCardReceive" parameterType="cn.message.bean.CardReceive">
+		update Card_receive 
+			set 
+				state = #{state},
+				idno = #{idno},
+				outerid = 0,
+				outerstr = 'default'
+			where 
+				openid = #{openid} and cardid = #{cardid}
+	</update>
+	
+</mapper>

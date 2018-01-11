@@ -2,6 +2,7 @@ package cn.message.dao;
 
 import java.util.List;
 
+import cn.message.bean.CardReceive;
 import cn.message.bean.HmdahsJ1;
 import cn.message.bean.LoginLog;
 import cn.message.bean.SendTemplateRecord;
@@ -9,6 +10,21 @@ import cn.message.bean.UserBind;
 import cn.message.bean.WxMembercard;
 
 public interface IMessageDao {
+	/**
+	 * 支付宝领卡
+	 * @param cardReceive
+	 * @return
+	 */
+	int insertCardReceive(CardReceive cardReceive);
+	
+	/**
+	 * 支付宝查询领卡数量
+	 * @param certNo 身份证号
+	 * @param type 类型
+	 * @return
+	 */
+	int queryReceiveCardCount(String certNo, String type);
+	
 	/**
 	 * 根据openId获取身份证号
 	 * @param openId

@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
 import com.alipay.api.response.AlipayUserUserinfoShareResponse;
 
+import cn.message.bean.CardReceive;
+import cn.message.dao.IMessageDao;
 import cn.message.model.alipay.AlipayPostMessageModel;
 import cn.message.model.alipay.AlipayServiceEnvConstants;
 import cn.message.model.alipay.AlipayUserInfo;
@@ -41,6 +44,7 @@ import cn.message.utils.alipay.AlipayAPIClientFactory;
 import cn.message.utils.alipay.dispatch.MessageDispatch;
 import cn.message.utils.alipay.dispatch.executor.AbstractGeneralExecutor;
 import cn.message.utils.wechat.HttpRequest;
+import cn.sdk.bean.BaseBean;
 import cn.sdk.util.DateUtil;
 import cn.sdk.util.GsonBuilderUtil;
 import cn.sdk.util.HttpUtils;
@@ -62,6 +66,9 @@ public class IAlipayServiceImpl implements IAlipayService {
 
 	Logger logger = Logger.getLogger(IAlipayServiceImpl.class);
 
+	@Autowired
+	private IMessageDao messageDao;
+	
 	@Value("${alipayPublicKey}")
 	private String alipayPublicKey;
 
@@ -311,5 +318,38 @@ public class IAlipayServiceImpl implements IAlipayService {
 		
 		//request.setBizContent(json);
 		
+	}
+
+	@Override
+	public int insertCardReceive(CardReceive cardReceive) {
+		int count = 0;
+		try {
+			count = messageDao.insertCardReceive(cardReceive);
+		} catch (Exception e) {
+			logger.error("【支付宝卡包】写入领卡记录异常：cardReceive="+cardReceive);
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	@Override
+	public int queryReceiveCardCount(String certNo, String type) {
+		int count = 0;
+		try {
+			count = messageDao.queryReceiveCardCount(certNo, type);
+		} catch (Exception e) {
+			logger.error("【支付宝卡包】查询领卡数量异常：certNo="+certNo+",type="+type);
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	@Override
+	public BaseBean receiveJsCard() {
+		
+		
+		
+		
+		return null;
 	}
 }

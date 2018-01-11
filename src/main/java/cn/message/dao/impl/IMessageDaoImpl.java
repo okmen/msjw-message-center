@@ -4,12 +4,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import cn.message.bean.CardReceive;
 import cn.message.bean.HmdahsJ1;
 import cn.message.bean.LoginLog;
 import cn.message.bean.SendTemplateRecord;
 import cn.message.bean.UserBind;
 import cn.message.bean.WxMembercard;
 import cn.message.dao.IMessageDao;
+import cn.message.dao.mapper.CardReceiveMapper;
 import cn.message.dao.mapper.HmdahsJ1Mapper;
 import cn.message.dao.mapper.LoginLogMapper;
 import cn.message.dao.mapper.SendTemplateRecordMapper;
@@ -18,6 +20,9 @@ import cn.message.dao.mapper.WxMembercardMapper;
 
 @Repository
 public class IMessageDaoImpl implements IMessageDao {
+	@Autowired
+	private CardReceiveMapper cardReceiveMapper;
+	
 	@Autowired
 	private WxMembercardMapper wxMembercardMapper;
 	
@@ -34,6 +39,16 @@ public class IMessageDaoImpl implements IMessageDao {
 	private LoginLogMapper loginLogMapper;
 	
 	
+	@Override
+	public int insertCardReceive(CardReceive cardReceive) {
+		return cardReceiveMapper.insertCardReceive(cardReceive);
+	}
+
+	@Override
+	public int queryReceiveCardCount(String certNo, String type) {
+		return cardReceiveMapper.queryReceiveCardCount(certNo, type);
+	}
+
 	@Override
 	public String queryIdCardByOpenId(String openId) {
 		return userBindMapper.queryIdCardByOpenId(openId);
