@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -326,7 +327,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 		try {
 			count = messageDao.insertCardReceive(cardReceive);
 		} catch (Exception e) {
-			logger.error("【支付宝卡包】写入领卡记录异常：cardReceive="+cardReceive);
+			logger.error("【支付宝卡包】写入领卡记录异常：cardReceive="+cardReceive, e);
 			e.printStackTrace();
 		}
 		return count;
@@ -338,7 +339,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 		try {
 			count = messageDao.queryReceiveCardCount(certNo, type);
 		} catch (Exception e) {
-			logger.error("【支付宝卡包】查询领卡数量异常：certNo="+certNo+",type="+type);
+			logger.error("【支付宝卡包】查询领卡数量异常：certNo="+certNo+",type="+type, e);
 			e.printStackTrace();
 		}
 		return count;
