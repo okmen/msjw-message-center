@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -17,18 +16,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.FileItem;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.internal.util.WebUtils;
-import com.alipay.api.request.AlipayOpenAuthTokenAppRequest;
+import com.alipay.api.request.AlipayCommerceDataSendRequest;
 import com.alipay.api.request.AlipayOpenPublicMessageCustomSendRequest;
-import com.alipay.api.request.AlipaySystemOauthTokenRequest;
-import com.alipay.api.request.AlipayUserInfoShareRequest;
-import com.alipay.api.request.AlipayUserUserinfoShareRequest;
-import com.alipay.api.response.AlipayOpenAuthTokenAppResponse;
+import com.alipay.api.request.AlipayOpenPublicMessageSingleSendRequest;
+import com.alipay.api.request.AlipayZdatafrontDatatransferedFileuploadRequest;
+import com.alipay.api.response.AlipayCommerceDataSendResponse;
 import com.alipay.api.response.AlipayOpenPublicMessageCustomSendResponse;
-import com.alipay.api.response.AlipaySystemOauthTokenResponse;
-import com.alipay.api.response.AlipayUserInfoShareResponse;
-import com.alipay.api.response.AlipayUserUserinfoShareResponse;
+import com.alipay.api.response.AlipayOpenPublicMessageSingleSendResponse;
+import com.alipay.api.response.AlipayZdatafrontDatatransferedFileuploadResponse;
 
 import cn.message.bean.CardReceive;
 import cn.message.dao.IMessageDao;
@@ -36,30 +34,17 @@ import cn.message.model.alipay.AlipayPostMessageModel;
 import cn.message.model.alipay.AlipayServiceEnvConstants;
 import cn.message.model.alipay.AlipayUserInfo;
 import cn.message.model.alipay.TemplateDataAlipayModel;
-import cn.message.model.alipay.TemplateDataAlipayModel.Template;
 import cn.message.model.alipay.TemplateDataAlipayModel.Property;
+import cn.message.model.alipay.TemplateDataAlipayModel.Template;
 import cn.message.model.alipay.message.IMessage;
 import cn.message.service.IAlipayService;
 import cn.message.utils.GsonUtil;
 import cn.message.utils.alipay.AlipayAPIClientFactory;
 import cn.message.utils.alipay.dispatch.MessageDispatch;
 import cn.message.utils.alipay.dispatch.executor.AbstractGeneralExecutor;
-import cn.message.utils.wechat.HttpRequest;
 import cn.sdk.bean.BaseBean;
 import cn.sdk.util.DateUtil;
-import cn.sdk.util.GsonBuilderUtil;
-import cn.sdk.util.HttpUtils;
-
-import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayClient;
-import com.alipay.api.request.AlipayOpenPublicMessageCustomSendRequest;
-import com.alipay.api.request.AlipayOpenPublicMessageSingleSendRequest;
-import com.alipay.api.request.AlipaySystemOauthTokenRequest;
-import com.alipay.api.request.AlipayUserInfoShareRequest;
-import com.alipay.api.response.AlipayOpenPublicMessageCustomSendResponse;
-import com.alipay.api.response.AlipayOpenPublicMessageSingleSendResponse;
-import com.alipay.api.response.AlipaySystemOauthTokenResponse;
-import com.alipay.api.response.AlipayUserInfoShareResponse;
+import cn.sdk.util.MsgCode;
 
 @Service("alipayService")
 @SuppressWarnings(value = "all")
@@ -345,12 +330,116 @@ public class IAlipayServiceImpl implements IAlipayService {
 		return count;
 	}
 
-	@Override
-	public BaseBean receiveJsCard() {
-		
-		
-		
-		
-		return null;
+	/*{ "file_type", "trans_picture" },
+	{ "type_id", "cif_driving_shenzhen_police_pic" },
+	{ "file_description", "深圳交警电子驾照正面" },
+	{ "file_name", "certificate.png" },
+	{ "file", Convert.FromBase64String(CertificateResult["result"]["dzz"].ToString()) },*/
+	/**
+	 * 上传驾驶证正面照片
+	 * @param base64Img
+	 * @return
+	 */
+	public BaseBean uploadJsCardImg(String base64Img) {
+		BaseBean baseBean = new BaseBean();
+		try {
+			AlipayZdatafrontDatatransferedFileuploadRequest fileuploadRequest = new AlipayZdatafrontDatatransferedFileuploadRequest();
+			fileuploadRequest.setFileType("trans_picture");
+			fileuploadRequest.setTypeId("cif_driving_shenzhen_police_pic");
+			fileuploadRequest.setFileDescription("深圳交警电子驾照正面");
+			byte[] content = base64Img.getBytes();
+			FileItem file = new FileItem("certificate.png", content);
+			fileuploadRequest.setFile(file);
+			AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY, AlipayServiceEnvConstants.APP_ID, 
+	                AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
+			//AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			AlipayZdatafrontDatatransferedFileuploadResponse response = alipayClient.execute(fileuploadRequest);
+			logger.info("【支付宝卡包】uploadJsCardImg调支付宝接口返回结果：" + JSON.toJSONString(response));
+			if(response.isSuccess()){
+				baseBean.setCode(MsgCode.success);
+				String resultData = response.getResultData();//文件访问地址
+				baseBean.setData(resultData);
+			}else{
+				baseBean.setCode(response.getCode());
+				baseBean.setMsg(response.getMsg());
+				baseBean.setData(response.getBody());
+			}
+		} catch (Exception e) {
+			logger.error("【支付宝卡包】uploadJsCardImg调支付宝接口异常", e);
+			e.printStackTrace();
+		}
+		return baseBean;
+	}
+
+	/*{ "file_type", "trans_picture" },
+    { "type_id", "cif_electronic_driving_shenzhen_police_pic" },
+    { "file_description", "深圳交警电子行驶证正面" },
+    { "file_name", "driving_license.png" },
+    { "file", Convert.FromBase64String(carImageData["result"]["dzz"].ToString()) },*/
+	/**
+	 * 上传行驶证正面照片
+	 * @param base64Img
+	 * @return
+	 */
+	public BaseBean uploadXsCardImg(String base64Img) {
+		BaseBean baseBean = new BaseBean();
+		try {
+			AlipayZdatafrontDatatransferedFileuploadRequest fileuploadRequest = new AlipayZdatafrontDatatransferedFileuploadRequest();
+			fileuploadRequest.setFileType("trans_picture");
+			fileuploadRequest.setTypeId("cif_electronic_driving_shenzhen_police_pic");
+			fileuploadRequest.setFileDescription("深圳交警电子行驶证正面");
+			byte[] content = base64Img.getBytes();
+			FileItem file = new FileItem("driving_license.png", content);
+			fileuploadRequest.setFile(file);
+			AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY, AlipayServiceEnvConstants.APP_ID, 
+					AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
+			//AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			AlipayZdatafrontDatatransferedFileuploadResponse response = alipayClient.execute(fileuploadRequest);
+			logger.info("【支付宝卡包】uploadXsCardImg调支付宝接口返回结果：" + JSON.toJSONString(response));
+			if(response.isSuccess()){
+				baseBean.setCode(MsgCode.success);
+				String resultData = response.getResultData();//文件访问地址
+				baseBean.setData(resultData);
+			}else{
+				baseBean.setCode(response.getCode());
+				baseBean.setMsg(response.getMsg());
+				baseBean.setData(response.getBody());
+			}
+		} catch (Exception e) {
+			logger.error("【支付宝卡包】uploadXsCardImg调支付宝接口异常", e);
+			e.printStackTrace();
+		}
+		return baseBean;
+	}
+	
+	/**
+	 * 发送证件信息到支付宝
+	 * @param bizContent
+	 * @return
+	 */
+	public BaseBean sendCardInfo(String bizContent) {
+		BaseBean baseBean = new BaseBean();
+		logger.info("【支付宝卡包】sendCardInfo请求参数：" + bizContent);
+		try {
+			AlipayCommerceDataSendRequest dataSendRequest = new AlipayCommerceDataSendRequest();
+			dataSendRequest.setBizContent(bizContent);
+			AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY, AlipayServiceEnvConstants.APP_ID, 
+					AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
+			//AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			AlipayCommerceDataSendResponse response = alipayClient.execute(dataSendRequest);
+			logger.info("【支付宝卡包】sendCardInfo调支付宝接口返回结果："+ JSON.toJSONString(response));
+			if(response.isSuccess()){
+				baseBean.setCode(MsgCode.success);
+				baseBean.setData(response.getBody());
+			}else{
+				baseBean.setCode(response.getCode());
+				baseBean.setMsg(response.getMsg());
+				baseBean.setData(response.getBody());
+			}
+		} catch (Exception e) {
+			logger.error("【支付宝卡包】sendCardInfo调用支付宝接口异常，请求参数：" + bizContent, e);
+			e.printStackTrace();
+		}
+		return baseBean;
 	}
 }
