@@ -40,6 +40,11 @@ public class IMessageDaoImpl implements IMessageDao {
 	
 	
 	@Override
+	public int updateCardReceiveType(String alipayUserId, String certNo, String keepType, String deleteType) {
+		return cardReceiveMapper.updateCardReceiveType(alipayUserId, certNo, keepType, deleteType);
+	}
+
+	@Override
 	public int insertCardReceive(CardReceive cardReceive) {
 		return cardReceiveMapper.insertCardReceive(cardReceive);
 	}

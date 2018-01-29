@@ -10,6 +10,17 @@ import cn.message.bean.UserBind;
 import cn.message.bean.WxMembercard;
 
 public interface IMessageDao {
+	
+	/**
+	 * 修改卡包状态为已删除
+	 * @param alipayUserId 支付宝唯一标识
+	 * @param certNo 身份证
+	 * @param keepType 原来状态 car/driver
+	 * @param deleteType 删除状态 deleted_car/deleted_driver
+	 * @return
+	 */
+	int updateCardReceiveType(String alipayUserId, String certNo, String keepType, String deleteType);
+	
 	/**
 	 * 支付宝领卡
 	 * @param cardReceive

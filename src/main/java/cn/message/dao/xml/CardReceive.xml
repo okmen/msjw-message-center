@@ -35,15 +35,15 @@
 		AND type = #{type}
 	</select>
 	
-	<update id="updateCardReceive" parameterType="cn.message.bean.CardReceive">
-		update Card_receive 
-			set 
-				state = #{state},
-				idno = #{idno},
-				outerid = 0,
-				outerstr = 'default'
-			where 
-				openid = #{openid} and cardid = #{cardid}
+	<update id="updateCardReceiveType">
+		UPDATE
+			Card_receive 
+		SET 
+			type = #{deleteType}
+		WHERE 1 = 1
+			AND alipay_user_id = #{alipayUserId}
+			AND cert_no = #{certNo}
+			AND type = #{keepType}
 	</update>
 	
 </mapper>

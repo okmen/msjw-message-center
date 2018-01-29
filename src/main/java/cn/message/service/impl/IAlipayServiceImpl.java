@@ -33,6 +33,7 @@ import cn.message.dao.IMessageDao;
 import cn.message.model.alipay.AlipayPostMessageModel;
 import cn.message.model.alipay.AlipayServiceEnvConstants;
 import cn.message.model.alipay.AlipayUserInfo;
+import cn.message.model.alipay.CardReceiveConstants;
 import cn.message.model.alipay.TemplateDataAlipayModel;
 import cn.message.model.alipay.TemplateDataAlipayModel.Property;
 import cn.message.model.alipay.TemplateDataAlipayModel.Template;
@@ -441,5 +442,36 @@ public class IAlipayServiceImpl implements IAlipayService {
 			e.printStackTrace();
 		}
 		return baseBean;
+	}
+
+	/**
+	 * 修改卡包状态
+	 * @param cardno 身份证
+	 * @param cardtype 卡类型
+	 * @param uid 支付宝唯一标识
+	 * @return
+	 */
+	public boolean updateCardReceiveType(String cardno, String cardtype, String uid) {
+		boolean isSuccess = false;
+		
+		try {
+			int count = 0;
+			if("SZ_E_DRIVING_LICENSE".equals(cardtype)){//驾驶证
+				count = messageDao.updateCardReceiveType(uid, cardno, CardReceiveConstants.CARD_RECEIVE_TYPE_DRIVER, CardReceiveConstants.CARD_RECEIVE_TYPE_DELETED_DRIVER);
+			}else if("SZ_E_VEHICLE_LICENSE".equals(cardtype)){//行驶证
+				count = messageDao.updateCardReceiveType(uid, cardno, CardReceiveConstants.CARD_RECEIVE_TYPE_CAR, CardReceiveConstants.CARD_RECEIVE_TYPE_DELETED_CAR);
+			}
+			
+			if(count > 0){
+				logger.info("【支付宝卡包】updateCardReceiveType修改卡包状态成功，cardno="+cardno+"，cardtype="+cardtype+"，uid="+uid);
+				isSuccess = true;
+			}else{
+				logger.info("【支付宝卡包】updateCardReceiveType修改卡包状态失败，cardno="+cardno+"，cardtype="+cardtype+"，uid="+uid);
+			}
+		} catch (Exception e) {
+			logger.error("【支付宝卡包】updateCardReceiveType修改卡包状态异常，cardno="+cardno+"，cardtype="+cardtype+"，uid="+uid, e);
+			e.printStackTrace();
+		}
+		return isSuccess;
 	}
 }
