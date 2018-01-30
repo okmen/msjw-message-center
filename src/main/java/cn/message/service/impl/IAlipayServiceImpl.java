@@ -22,10 +22,12 @@ import com.alipay.api.internal.util.WebUtils;
 import com.alipay.api.request.AlipayCommerceDataSendRequest;
 import com.alipay.api.request.AlipayOpenPublicMessageCustomSendRequest;
 import com.alipay.api.request.AlipayOpenPublicMessageSingleSendRequest;
+import com.alipay.api.request.AlipayUserCertdocSyncRequest;
 import com.alipay.api.request.AlipayZdatafrontDatatransferedFileuploadRequest;
 import com.alipay.api.response.AlipayCommerceDataSendResponse;
 import com.alipay.api.response.AlipayOpenPublicMessageCustomSendResponse;
 import com.alipay.api.response.AlipayOpenPublicMessageSingleSendResponse;
+import com.alipay.api.response.AlipayUserCertdocSyncResponse;
 import com.alipay.api.response.AlipayZdatafrontDatatransferedFileuploadResponse;
 
 import cn.message.bean.CardReceive;
@@ -351,7 +353,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 			byte[] content = base64Img.getBytes();
 			FileItem file = new FileItem("certificate.png", content);
 			fileuploadRequest.setFile(file);
-			AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY, AlipayServiceEnvConstants.APP_ID, 
+			AlipayClient alipayClient = new DefaultAlipayClient("https://openapipre.alipay.com/gateway.do", AlipayServiceEnvConstants.APP_ID, 
 	                AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
 			//AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			AlipayZdatafrontDatatransferedFileuploadResponse response = alipayClient.execute(fileuploadRequest);
@@ -392,7 +394,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 			byte[] content = base64Img.getBytes();
 			FileItem file = new FileItem("driving_license.png", content);
 			fileuploadRequest.setFile(file);
-			AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY, AlipayServiceEnvConstants.APP_ID, 
+			AlipayClient alipayClient = new DefaultAlipayClient("https://openapipre.alipay.com/gateway.do", AlipayServiceEnvConstants.APP_ID, 
 					AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
 			//AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			AlipayZdatafrontDatatransferedFileuploadResponse response = alipayClient.execute(fileuploadRequest);
@@ -422,12 +424,27 @@ public class IAlipayServiceImpl implements IAlipayService {
 		BaseBean baseBean = new BaseBean();
 		logger.info("【支付宝卡包】sendCardInfo请求参数：" + bizContent);
 		try {
-			AlipayCommerceDataSendRequest dataSendRequest = new AlipayCommerceDataSendRequest();
-			dataSendRequest.setBizContent(bizContent);
-			AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY, AlipayServiceEnvConstants.APP_ID, 
+			/*AlipayCommerceDataSendRequest dataSendRequest = new AlipayCommerceDataSendRequest();
+			dataSendRequest.setBizContent(bizContent);//AlipayServiceEnvConstants.ALIPAY_GATEWAY
+			AlipayClient alipayClient = new DefaultAlipayClient("https://openapipre.alipay.com/gateway.do", AlipayServiceEnvConstants.APP_ID, 
 					AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
 			//AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			AlipayCommerceDataSendResponse response = alipayClient.execute(dataSendRequest);
+			logger.info("【支付宝卡包】sendCardInfo调支付宝接口返回结果："+ JSON.toJSONString(response));
+			if(response.isSuccess()){
+				baseBean.setCode(MsgCode.success);
+				baseBean.setData(response.getBody());
+			}else{
+				baseBean.setCode(response.getCode());
+				baseBean.setMsg(response.getMsg());
+				baseBean.setData(response.getBody());
+			}*/
+			AlipayUserCertdocSyncRequest certdocSyncRequest = new AlipayUserCertdocSyncRequest();
+			certdocSyncRequest.setBizContent(bizContent);
+			AlipayClient alipayClient = new DefaultAlipayClient("https://openapipre.alipay.com/gateway.do", AlipayServiceEnvConstants.APP_ID, 
+					AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
+			//AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			AlipayUserCertdocSyncResponse response = alipayClient.execute(certdocSyncRequest);
 			logger.info("【支付宝卡包】sendCardInfo调支付宝接口返回结果："+ JSON.toJSONString(response));
 			if(response.isSuccess()){
 				baseBean.setCode(MsgCode.success);
