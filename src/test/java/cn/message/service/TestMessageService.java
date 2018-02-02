@@ -13,10 +13,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
 
 import cn.message.bean.CardReceive;
 import cn.message.config.IConfig;
 import cn.message.model.MsgChannelResultModel;
+import cn.message.model.alipay.AlipayServiceEnvConstants;
 import cn.message.model.alipay.CardReceiveConstants;
 import cn.message.model.wechat.MessageChannelModel;
 import cn.message.utils.GsonUtil;
@@ -42,14 +45,27 @@ public class TestMessageService {
 	private ITemplateMessageService templateMessageService;
 	
 	@Test
+	public void testrsaEncrypt() throws Exception{
+		//System.out.println(AlipaySignature.rsaEncrypt("{\"userId\":\"2088702823298124\"}", AlipayServiceEnvConstants.PUBLIC_KEY, AlipayServiceEnvConstants.CHARSET));
+		//System.out.println(AlipaySignature.rsaEncrypt("{\"plateNo\":\"粤B6A42E\",\"plateType\":\"02\",\"mobileNo\":\"15920071829\"}", AlipayServiceEnvConstants.PUBLIC_KEY, AlipayServiceEnvConstants.CHARSET));
+		//System.out.println(AlipaySignature.rsaEncrypt("{\"certNo\":\"445222199209020034\",\"realName\":\"张宇帆\",\"mobileNo\":\"15920071829\"}", AlipayServiceEnvConstants.PUBLIC_KEY, AlipayServiceEnvConstants.CHARSET));
+		System.out.println(AlipaySignature.rsaEncrypt("{\"certNo\":\"445222199209020034\",\"userId\":\"2088702823298124\",\"mobileNo\":\"15920071829\"}", AlipayServiceEnvConstants.PUBLIC_KEY, AlipayServiceEnvConstants.CHARSET));
+	}
+	
+	@Test
+	public void testrsaDecrypt() throws Exception{
+		System.out.println(AlipaySignature.rsaDecrypt("Sb9tt9+yT6EyIkhRtIiOHJxtXTa5jyT0I5nMjHHByL7lFohN8tyZbFeu//i1PyUUPRL54xdQ1CqWz4pCoPfzLBg3cGxlG1I1e59ddN9RnIFh2hRAL9H06H1w6KkAALwchHkYhmLlLFBPIYU4MiED+/mFJiUkU40Tzq/pHTB06Fw=", 
+				AlipayServiceEnvConstants.PRIVATE_KEY, AlipayServiceEnvConstants.CHARSET));
+	}
+	
+	@Test
 	public void testupdateCardReceiveType(){
-		String cardno = "1234";
+		String cardno = "0000";
 		String cardtype = "SZ_E_VEHICLE_LICENSE";
 		String uid = "1234";
 		boolean result = alipayService.updateCardReceiveType(cardno, cardtype, uid);
 		System.out.println(result);
 	}
-	
 	
 	@Test
 	public void testuploadJsCardImg(){

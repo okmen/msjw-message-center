@@ -463,7 +463,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 			if("SZ_E_DRIVING_LICENSE".equals(cardtype)){//驾驶证
 				count = messageDao.updateCardReceiveType(uid, cardno, CardReceiveConstants.CARD_RECEIVE_TYPE_DRIVER, CardReceiveConstants.CARD_RECEIVE_TYPE_DELETED_DRIVER);
 			}else if("SZ_E_VEHICLE_LICENSE".equals(cardtype)){//行驶证
-				count = messageDao.updateCardReceiveType(uid, cardno, CardReceiveConstants.CARD_RECEIVE_TYPE_CAR, CardReceiveConstants.CARD_RECEIVE_TYPE_DELETED_CAR);
+				count = messageDao.updateCardReceiveType(uid, null, CardReceiveConstants.CARD_RECEIVE_TYPE_CAR, CardReceiveConstants.CARD_RECEIVE_TYPE_DELETED_CAR);
 			}
 			
 			if(count > 0){

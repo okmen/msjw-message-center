@@ -42,7 +42,9 @@
 			type = #{deleteType}
 		WHERE 1 = 1
 			AND alipay_user_id = #{alipayUserId}
+			<if test="certNo != null and certNo != ''">
 			AND cert_no = #{certNo}
+			</if>
 			AND type = #{keepType}
 	</update>
 	
