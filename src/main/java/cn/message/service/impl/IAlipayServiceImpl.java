@@ -335,6 +335,37 @@ public class IAlipayServiceImpl implements IAlipayService {
 
 	
 	/**
+	 * 发送证件信息到支付宝（测试公众号）
+	 * @param bizContent
+	 * @return
+	 */
+	public BaseBean sendCardInfoTest(String bizContent) {
+		BaseBean baseBean = new BaseBean();
+		logger.info("【支付宝卡包】sendCardInfoTest请求参数：" + bizContent);
+		try {
+			AlipayUserCertdocSyncRequest certdocSyncRequest = new AlipayUserCertdocSyncRequest();
+			certdocSyncRequest.setBizContent(bizContent);
+			//预发网关，接口调试时用
+			AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY_PRE, AlipayServiceEnvConstants.APP_ID_TEST, 
+					AlipayServiceEnvConstants.PRIVATE_KEY_TEST, "json", AlipayServiceEnvConstants.CHARSET_TEST,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY_TEST, AlipayServiceEnvConstants.SIGN_TYPE_TEST);
+			AlipayUserCertdocSyncResponse response = alipayClient.execute(certdocSyncRequest);
+			logger.info("【支付宝卡包】sendCardInfoTest调支付宝接口返回结果："+ JSON.toJSONString(response));
+			if(response.isSuccess()){
+				baseBean.setCode(MsgCode.success);
+				baseBean.setData(response.getBody());
+			}else{
+				baseBean.setCode(response.getCode());
+				baseBean.setMsg(response.getMsg());
+				baseBean.setData(response.getBody());
+			}
+		} catch (Exception e) {
+			logger.error("【支付宝卡包】sendCardInfoTest调用支付宝接口异常，请求参数：" + bizContent, e);
+			e.printStackTrace();
+		}
+		return baseBean;
+	}
+	
+	/**
 	 * 发送证件信息到支付宝
 	 * @param bizContent
 	 * @return
