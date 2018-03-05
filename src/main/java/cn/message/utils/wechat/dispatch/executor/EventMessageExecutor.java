@@ -38,10 +38,14 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 						 "http://szjj.u-road.com/szjj/assets/images/allico/szwx_0013_xz-164-cb-6.jpg",
 						 "http://szjj.u-road.com/szjj/assets/images/allico/szwx_0015_xz-133.jpg",
 						 "http://szjj.u-road.com/szjj/assets/images/allico/szwx_0012_xz-134.jpg"};
-				 String [] urls = new String[]{"http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/teamAddr",
+				 /*String [] urls = new String[]{"http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/teamAddr",
 						 "http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/vehicleAdrr",
 						 "http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/depotAdrr",
-						 "http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/lochusAdrr"};
+						 "http://szjj.u-road.com/szjjpro/infoquery/convenientinfo/lochusAdrr"};*/
+				 String [] urls = new String[]{"http://gzh.stc.gov.cn/bianminh5/#/cvtInfoQuery/teamAddr",
+						 "http://gzh.stc.gov.cn/bianminh5/#/cvtInfoQuery/vehicleAdrr",
+						 "http://gzh.stc.gov.cn/bianminh5/#/cvtInfoQuery/depotAdrr",
+				 		 "http://gzh.stc.gov.cn/bianminh5/#/cvtInfoQuery/lochusAdrr"};
 				 message =  new NewsMessage(4, titles, descriptions, picUrls, urls);
 			 }
 			 
@@ -57,13 +61,20 @@ public class EventMessageExecutor extends AbstractGeneralExecutor {
 						 "http://szjj.u-road.com/szjj/assets/images/allico/szwx_0005_z.jpg",
 						 "http://szjj.u-road.com/szjj/assets/images/allico/szwx_0006_f.jpg"};
 				 
-				 String [] urls = new String[]{"http://szjj.u-road.com/szjjpro/index.php/handbook/show",
+				 /*String [] urls = new String[]{"http://szjj.u-road.com/szjjpro/index.php/handbook/show",
 						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/informantsReward",
 						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/vehiclePilotManage",
 						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/vehicleIllgalServices",
 						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/roadAccidentServices",
 						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/administrativeLicense",
-						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/legalServices"};
+						 "http://szjj.u-road.com/szjjpro/infoquery/lawguidinfo/legalServices"};*/
+				 String [] urls = new String[]{"http://szjj.u-road.com/szjjpro/index.php/handbook/show",
+						 "http://gzh.stc.gov.cn/bianminh5/#/informantsReward",
+						 "http://gzh.stc.gov.cn/bianminh5/#/vehiclePilotManage",
+						 "http://gzh.stc.gov.cn/bianminh5/#/vehicleIllegal",
+						 "http://gzh.stc.gov.cn/bianminh5/#/roadAccident",
+						 "http://gzh.stc.gov.cn/bianminh5/#/administrativeLicense",
+				 		 "http://gzh.stc.gov.cn/bianminh5/#/legalServices"};
 				 message = new NewsMessage(7, titles, descriptions, picUrls, urls);
 			 }
     	 }
