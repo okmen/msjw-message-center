@@ -377,10 +377,10 @@ public class IAlipayServiceImpl implements IAlipayService {
 			AlipayUserCertdocSyncRequest certdocSyncRequest = new AlipayUserCertdocSyncRequest();
 			certdocSyncRequest.setBizContent(bizContent);
 			//预发网关，接口调试时用
-			AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY_PRE, AlipayServiceEnvConstants.APP_ID, 
-					AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
+			//AlipayClient alipayClient = new DefaultAlipayClient(AlipayServiceEnvConstants.ALIPAY_GATEWAY_PRE, AlipayServiceEnvConstants.APP_ID, 
+			//		AlipayServiceEnvConstants.PRIVATE_KEY, "json", AlipayServiceEnvConstants.CHARSET,AlipayServiceEnvConstants.ALIPAY_PUBLIC_KEY, AlipayServiceEnvConstants.SIGN_TYPE);
 			//正式网关
-			//AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
+			AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			AlipayUserCertdocSyncResponse response = alipayClient.execute(certdocSyncRequest);
 			logger.info("【支付宝卡包】sendCardInfo调支付宝接口返回结果："+ JSON.toJSONString(response));
 			if(response.isSuccess()){
