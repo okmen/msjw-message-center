@@ -372,7 +372,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 	 */
 	public BaseBean sendCardInfo(String bizContent) {
 		BaseBean baseBean = new BaseBean();
-		logger.info("【支付宝卡包】sendCardInfo请求参数：" + bizContent);
+		//logger.info("【支付宝卡包】sendCardInfo请求参数：" + bizContent);
 		try {
 			AlipayUserCertdocSyncRequest certdocSyncRequest = new AlipayUserCertdocSyncRequest();
 			certdocSyncRequest.setBizContent(bizContent);
