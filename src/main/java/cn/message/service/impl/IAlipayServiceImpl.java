@@ -382,7 +382,7 @@ public class IAlipayServiceImpl implements IAlipayService {
 			//正式网关
 			AlipayClient alipayClient = AlipayAPIClientFactory.getAlipayClient();
 			AlipayUserCertdocSyncResponse response = alipayClient.execute(certdocSyncRequest);
-			logger.info("【支付宝卡包】sendCardInfo调支付宝接口返回结果："+ JSON.toJSONString(response));
+			logger.info("【支付宝卡包】sendCardInfo调支付宝接口返回结果："+ response.isSuccess());
 			if(response.isSuccess()){
 				baseBean.setCode(MsgCode.success);
 				baseBean.setData(response.getBody());
