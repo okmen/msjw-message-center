@@ -89,14 +89,15 @@ public class MenuModel {
 				menuModel.new Button("service_guide","办事指南","click",null),
 				menuModel.new Button("trailer_query","拖车查询","view", url.replace("_STATE_", mainUrl+"/#/moveCar")),
 				menuModel.new Button("electronic_police_distributed_query","电子警察分布查询","view", url.replace("_STATE_", mainUrl)),
-				menuModel.new Button("traffic_information_query","交通违法信息查询","view",url.replace("_STATE_", mainUrl+"/#/queryLawless"))
+				menuModel.new Button("traffic_information_query","交通违法信息查询","view",url.replace("_STATE_", mainUrl+"/#/queryLawless")),
+				menuModel.new Button("fault_reporting","故障报错和使用建议","view",url.replace("_STATE_", mainUrl))
 		});
 		
 		
 		Button button3 = menuModel.new Button("traffic_police_interaction","交警互动",null,null);
 		button3.setSub_button(new Button[]{
 			menuModel.new Button("user_center","个人中心","view",	url.replace("_STATE_", mainUrl+"/#/personalCenter")),
-			menuModel.new Button("fault_reporting","故障报错和使用建议","view",url.replace("_STATE_", mainUrl)),
+			menuModel.new Button("dbyy","大鹏通行预约","view",url.replace("_STATE_", "http://gzh.stc.gov.cn/dbyy/#/")),
 			menuModel.new Button("report_information_inquiry","举报信息查询","view",url.replace("_STATE_", mainUrl)),
 			menuModel.new Button("readily_report","随手拍举报","view", url.replace("_STATE_", mainUrl+"/#/takePicturesInform")),
 			menuModel.new Button("emergency_traffic","突发路况","view",url.replace("_STATE_", mainUrl))
@@ -124,14 +125,15 @@ public class MenuModel {
 				menuModel.new Button("service_guide","办事指南","click",null),
 				menuModel.new Button("trailer_query","拖车查询","view", h5Domain+"#/moveCar"),
 				menuModel.new Button("electronic_police_distributed_query","电子警察分布查询","view", "http://gzh.stc.gov.cn/szjjpro/index.php/infoquery/robotpolicequery/chooseArea"),
-				menuModel.new Button("traffic_information_query","交通违法信息查询","view",h5Domain+"#/newqueryLawless?type=nologin")
+				menuModel.new Button("traffic_information_query","交通违法信息查询","view",h5Domain+"#/newqueryLawless?type=nologin"),
+				menuModel.new Button("fault_reporting","故障报错和使用建议","view","https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri=http://gzh.stc.gov.cn/szjjpro/index.php/infoquery/policeinteraction/failureReport&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect")
 		});
 		
 		
 		Button button3 = menuModel.new Button("traffic_police_interaction","交警互动",null,null);
 		button3.setSub_button(new Button[]{
 			menuModel.new Button("user_center","个人中心","view",	h5Domain+"#/personalCenter"),
-			menuModel.new Button("fault_reporting","故障报错和使用建议","view","https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri=http://gzh.stc.gov.cn/szjjpro/index.php/infoquery/policeinteraction/failureReport&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
+			menuModel.new Button("dbyy","大鹏通行预约","view", "http://gzh.stc.gov.cn/dbyy/#/"),
 			menuModel.new Button("report_information_inquiry","举报信息查询","view", h5Domain+"#/takePicturesQuery"),
 			menuModel.new Button("readily_report","随手拍举报","view", h5Domain+"#/takePicturesInform"),
 			menuModel.new Button("emergency_traffic","突发路况","view", "http://mp.weixin.qq.com/s?__biz=MjM5MTgxMjY3MQ==&mid=214709888&idx=1&sn=3e0921863520169e0435d643725f2904")
