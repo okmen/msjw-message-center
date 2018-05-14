@@ -80,7 +80,7 @@
 				state_msjw = #{state}
 		where 
 			id = #{id}
-	</update
+	</update>
 	
 	<update id="batchUpdateHmdahsJ1" parameterType="java.util.List">  
           <foreach collection="list" item="item" index="index" open="" close="" separator=";">  
