@@ -93,6 +93,11 @@ public class IMessageDaoImpl implements IMessageDao {
 	public List<HmdahsJ1> queryHmdahsJ14Wechat() {
 		return hmdahsJ1Mapper.queryHmdahsJ14Wechat();
 	}
+	
+	@Override
+	public List<HmdahsJ1> queryHmdahsJ14Msjw() {
+		return hmdahsJ1Mapper.queryHmdahsJ14Msjw();
+	}
 
 	@Override
 	public int updateHmdahsJ1State4Wechat(Integer id, Integer state) {
@@ -104,6 +109,10 @@ public class IMessageDaoImpl implements IMessageDao {
 		return hmdahsJ1Mapper.updateHmdahsJ1State4Alipay(id, state);
 	}
 
+	@Override
+	public int updateHmdahsJ1State4Msjw(Integer id, Integer state) {
+		return hmdahsJ1Mapper.updateHmdahsJ1State4Msjw(id, state);
+	}
 	@Override
 	public List<UserBind> queryUserBindByMobile(List<String> mobiles) {
 		// TODO Auto-generated method stub

@@ -18,6 +18,7 @@ import cn.message.model.wechat.WechatUserInfo;
 import cn.message.model.wechat.WeiXinOauth2Token;
 import cn.message.model.wechat.message.IMessage;
 import cn.message.service.IWechatService;
+import cn.message.utils.wechat.HttpRequest;
 import cn.message.utils.wechat.MenuFileUtil;
 import cn.message.utils.wechat.OpenIdUtil;
 import cn.message.utils.wechat.SHA1;
@@ -26,6 +27,7 @@ import cn.message.utils.wechat.WebService4Wechat;
 import cn.message.utils.wechat.dispatch.MessageDispatch;
 import cn.message.utils.wechat.dispatch.executor.AbstractGeneralExecutor;
 import cn.sdk.bean.BaseBean;
+import cn.sdk.util.GsonBuilderUtil;
 import cn.sdk.util.MsgCode;
 /**
  * 处理微信逻辑
@@ -526,4 +528,5 @@ public class IWechatServiceImpl implements IWechatService {
 	public String getAuthOpenid(String key) {
 		return iMessageCached.getAuthOpenid(key);
 	}
+
 }

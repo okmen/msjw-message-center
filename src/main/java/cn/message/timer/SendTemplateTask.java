@@ -29,12 +29,14 @@ public class SendTemplateTask {
 		long begin = System.currentTimeMillis();
 		int wechatCount = 0;
 		int aliCount = 0;
+		int msjwCount = 0;
 		String curIp = NetWorkIp.getIp();
 		try {
 			if (runTimerIp.equals(curIp)) {
 				logger.info(curIp+"开始定时发送模板消息数据----------------------------------------------------------------------------");
 				wechatCount = templateMessageService.sendMessageWechat4Timer();
 				aliCount = templateMessageService.sendMessageAlipay4Timer();
+				msjwCount = templateMessageService.sendMessageMSJW4Timer();
 			}
 		} catch (Exception e) {
 			logger.error(curIp+"定时发送模板消息数据异常", e);
@@ -42,6 +44,7 @@ public class SendTemplateTask {
 			long end = System.currentTimeMillis();
 			logger.info(curIp+"本次发送微信数据："+wechatCount);
 			logger.info(curIp+"本次发送支付宝数据："+aliCount);
+			logger.info(curIp+"本次发送民生警务数据："+msjwCount);
 			logger.info(curIp+"结束定时模板消息数据,耗时："+(end-begin)+"----------------------------------------------------------------------------");
 		}
 	}

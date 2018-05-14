@@ -131,4 +131,17 @@ public interface IMessageDao {
 	 * @return
 	 */
 	List<SendTemplateRecord> querySendTemplateRecordByState(String state);
+	/**
+	 * 修改发送状态
+	 * @param list
+	 * @return
+	 */
+
+	int updateHmdahsJ1State4Msjw(Integer id, Integer state);
+	/**
+	 * 查询待发送的数据msjw
+	 * @return
+	 */
+
+	List<HmdahsJ1> queryHmdahsJ14Msjw();
 }

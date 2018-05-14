@@ -26,13 +26,17 @@ import cn.message.service.ITemplateMessageService;
 import cn.message.utils.GsonUtil;
 import cn.message.utils.hmdahs.AlipayHmdahsJ1;
 import cn.message.utils.hmdahs.BaseHmdahsJ1;
+import cn.message.utils.hmdahs.MsjwHmdahsJ1;
 import cn.message.utils.hmdahs.WechatHmdahsJ1;
+import cn.message.utils.wechat.HttpRequest;
 import cn.message.utils.wechat.WebService4Wechat;
 import cn.sdk.bean.BaseBean;
+import cn.sdk.util.DateUtil;
 import cn.sdk.util.GsonBuilderUtil;
 import cn.sdk.util.StringUtil;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.response.AlipayOpenPublicMessageSingleSendResponse;
 /**
  * 消息中心
@@ -225,6 +229,100 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 			throw e;
 		}finally{
 			logger.info("本次共处理微信数据："+sum);
+			return sendCount;
+		}
+	}
+
+	
+	@Override
+	public int sendMessageMSJW4Timer() throws Exception {
+		//执行总数
+		int sum = 0;
+		//成功总数
+		int sendCount = 0;
+		try {
+			MsjwHmdahsJ1 templateHmdahsJ1 = new MsjwHmdahsJ1(messageDao, iMessageCached);
+			List<HmdahsJ1> list = messageDao.queryHmdahsJ14Msjw();
+			if(null == list || list.size() == 0) {
+				logger.info("queryHmdahsJ14Msjw 无待发送数据");
+				return 0;
+			}
+			
+			sum = list.size();
+			String url = " https://msjwt.szga.gov.cn/services/WeChat/message/push";
+			
+			for (HmdahsJ1 hmdahsJ1 : list) {
+				String params = templateHmdahsJ1.getJzModel(hmdahsJ1);
+				if (params != null) {					
+					JSONObject json = new JSONObject();					
+					try {
+						String respStr = HttpRequest.sendPost(url, params);						
+						json = JSONObject.parseObject(respStr);		
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					if (json.getString("code").equals("200")) {
+						int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Msjw(hmdahsJ1.getId(), MsjwHmdahsJ1.STATE_2);
+						sendCount ++;
+					}
+				}
+
+			}
+			//获取到需要发送模板消息的用户对象
+			Set<UserBind> userBindSet = templateHmdahsJ1.getAllUserBinds(list);
+			Map<String, List<UserBind>> userBindMap = templateHmdahsJ1.group(userBindSet);
+				
+			//执行总数
+			sum = list.size();
+			//真正发送模板消息
+			/*for (int i = 0; i < list.size(); i++) {
+				HmdahsJ1 hmdahsJ1 = list.get(i);
+				String xh = hmdahsJ1.getXh();
+				String pch = hmdahsJ1.getPch(); 
+				String message = hmdahsJ1.getMessage();
+				String hslx = hmdahsJ1.getHslx();
+				String hphm = hmdahsJ1.getHphm();
+				String lxdh = hmdahsJ1.getLxdh();
+				String jszhm = hmdahsJ1.getJszhm();
+					
+				List<UserBind> userBinds = userBindMap.get(lxdh);
+				if(null == userBinds){
+					//已发送,手机号码无法在用户表中匹配openId
+					int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Msjw(hmdahsJ1.getId(), MsjwHmdahsJ1.STATE_1);
+					continue;
+				} 
+					
+				for (UserBind userBind : userBinds) {
+					String mobile = userBind.getMobileNumber();
+					String openId = userBind.getOpenId();
+					//组装模板消息数据对象
+					TemplateDataModel model = templateHmdahsJ1.getJzModel(hmdahsJ1);	
+					if(null == model) {
+						//已发送,精准推送 message 内容无法匹配模板规则
+						int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Msjw(hmdahsJ1.getId(), MsjwHmdahsJ1.STATE_2);
+						continue;
+					}
+						
+					//设置为发送完成
+					messageDao.updateHmdahsJ1State4Msjw(hmdahsJ1.getId(), MsjwHmdahsJ1.STATE_3);
+					sendCount ++;
+						
+					String request = GsonBuilderUtil.toJson(model);
+					String response = templateHmdahsJ1.sendMessage4Hmdahs(model);
+					String state = "";
+					if(StringUtil.isNotBlank(response)){
+						TemplateMessageModel result = GsonBuilderUtil.fromJson(response, TemplateMessageModel.class);
+						state = result.getErrcode()+"";
+					}
+					int sendTemplateRecordsCount = messageDao.insertSendTemplateRecord(new SendTemplateRecord(openId,jszhm,lxdh,xh,pch,response,request,new Date(),state,MsjwHmdahsJ1.TYPE));
+				}
+			}*/
+		} catch (Exception e) {
+			logger.error("定时发送模板消息出现异常",e);
+			throw e;
+		}finally{
+			logger.info("本次共处理民生警务数据："+sum);
 			return sendCount;
 		}
 	}

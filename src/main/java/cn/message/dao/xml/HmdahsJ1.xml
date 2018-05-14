@@ -15,18 +15,19 @@
 		<result property="hslx" column="hslx" />
 		<result property="state" column="state" />
 		<result property="stateAlipay" column="state_alipay" />
+		<result property="stateMsjw" column="state_msjw" />
 		<result property="createTime" column="create_time" />
 	</resultMap>
 	
 	<sql id="AllHmdahsJ1">
-		`id`, `pch`, `xh`,`u_id`, `lxdh`,`jszhm`, `hphm`, `hpzl`,`message`,`hslx`,`state`,`create_time`
+		`id`, `pch`, `xh`,`u_id`, `lxdh`,`jszhm`, `hphm`, `hpzl`,`message`,`hslx`,`state`,`state_alipay`,`state_msjw`,`create_time`
 	</sql>
 	
 	<insert id="batchInsertHmdahsJ1" parameterType="java.util.List" >  
-   	 	insert into hm_dahs_j1 (pch,xh,u_id,lxdh,jszhm,hphm,hpzl,message,hslx,state,state_alipay,create_time)   
+   	 	insert into hm_dahs_j1 (pch,xh,u_id,lxdh,jszhm,hphm,hpzl,message,hslx,state,state_alipay,state_msjw,create_time)   
     	values  
     	<foreach collection="list" item="item" index="index" separator="," >  
-        	(#{item.pch},#{item.xh},#{item.uId},#{item.lxdh},#{item.jszhm},#{item.hphm},#{item.hpzl},#{item.message},#{item.hslx},#{item.state},#{item.stateAlipay},#{item.createTime})  
+        	(#{item.pch},#{item.xh},#{item.uId},#{item.lxdh},#{item.jszhm},#{item.hphm},#{item.hpzl},#{item.message},#{item.hslx},#{item.state},#{item.stateAlipay},#{item.stateMsjw},#{item.createTime})  
     	</foreach>  
 	</insert>  
 	
@@ -47,6 +48,15 @@
 		WHERE 1 = 1
  		AND state_alipay = 0
 	</select>
+	
+	<select id="queryHmdahsJ14Msjw" resultMap="HmdahsJ1" >
+		SELECT
+			<include refid="AllHmdahsJ1"></include>
+		FROM
+			`hm_dahs_j1`
+		WHERE 1 = 1
+ 		AND state_msjw = 0
+	</select>
     
 	<update id="updateHmdahsJ1State4Wechat">
 		update hm_dahs_j1 
@@ -63,6 +73,14 @@
 		where 
 			id = #{id}
 	</update>
+	
+	<update id="updateHmdahsJ1State4Msjw">
+		update hm_dahs_j1 
+			set 
+				state_msjw = #{state}
+		where 
+			id = #{id}
+	</update
 	
 	<update id="batchUpdateHmdahsJ1" parameterType="java.util.List">  
           <foreach collection="list" item="item" index="index" open="" close="" separator=";">  

@@ -37,8 +37,8 @@ public class BaseHmdahsJ1 {
 	protected static final String HSLX_5 = "5";
 	
 	private static final String JDCSYYQTZ_KEY = "逾期未检审验";
-	private static final String JSZLJHZTX_KEY = "有效期止为";
-	private static final String JSZYQWHZTX_KEY = "逾期未换证";
+	public static final String JSZLJHZTX_KEY = "有效期止为";
+	public static final String JSZYQWHZTX_KEY = "逾期未换证";
 	private static final String JSRSYTX_KEY = "审验有效期止为";
 	private static final String JSRYQWSYTX_KEY = "逾期未审验状态";
 	private static final String JSZZX_KEY = "注销可恢复";
@@ -47,7 +47,7 @@ public class BaseHmdahsJ1 {
 	private static final String JSZLJHZTX_FIRST = "驾驶证临近换证提醒";
 	private static final String JSZYQWHZTX_FIRST = "驾驶证逾期未换证提醒";
 	private static final String JSRSYTX_FIRST = "驾驶人审验提醒";
-	private static final String JSRYQWSYTX_FIRST = "驾驶人逾期未审验提醒";
+	public static final String JSRYQWSYTX_FIRST = "驾驶人逾期未审验提醒";
 	private static final String JSZZX_FIRST = "驾驶证注销";
 	
 	private static final String JDCSYYQTZ_KEYWORD2 = "办理方式：1、车辆注册未超过六年，点击进入“办理类业务”，选择“机动车业务”办理六年免检业务。（超过六年，需到检测站进行车辆检测过线）2、登录“深圳网上车管所”，点击业务预约服务，预约到全市各车管分所、大队窗口办理，到窗口办理机动车业务必须先预约。";
@@ -161,7 +161,7 @@ public class BaseHmdahsJ1 {
 			Element message = element.element("message");
 			Element hslx = element.element("hslx");
 
-			HmdahsJ1 hmdahsJ1 = new HmdahsJ1(pch, xh, u_id, lxdh, jszhm, hphm,hpzl, message, hslx, new Date(), WechatHmdahsJ1.STATE_0, 0);
+			HmdahsJ1 hmdahsJ1 = new HmdahsJ1(pch, xh, u_id, lxdh, jszhm, hphm,hpzl, message, hslx, new Date(), WechatHmdahsJ1.STATE_0, 0,0);
 			list.add(hmdahsJ1);
 		}
 		if (null != list && 0 != list.size()) {

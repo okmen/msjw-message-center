@@ -43,6 +43,10 @@ public class TestMessageService {
 	@Autowired
     @Qualifier("templateMessageService")
 	private ITemplateMessageService templateMessageService;
+	@Test
+	public void testiiii() throws Exception{
+		templateMessageService.gainHmdahsData();
+	}
 	
 	@Test
 	public void testrsaEncrypt() throws Exception{
@@ -246,8 +250,8 @@ public class TestMessageService {
 	
 	
 	@Test
-	public void sendMessage(){
-		mobileMessageService.sendMessage("13652311206", "test");
+	public void sendMessagehh(){
+		mobileMessageService.sendMessage("13627267056", "test");
 	}
 	
 	@Test

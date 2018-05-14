@@ -29,6 +29,13 @@ public interface HmdahsJ1Mapper {
 	int updateHmdahsJ1State4Alipay(@Param("id")Integer id,@Param("state")Integer state);
 	
 	/**
+	 * 修改发送状态支付宝
+	 * @param list
+	 * @return
+	 */
+	int updateHmdahsJ1State4Msjw(@Param("id")Integer id,@Param("state")Integer state);
+	
+	/**
 	 * 查询待发送的数据wechat
 	 * @return
 	 */
@@ -39,4 +46,10 @@ public interface HmdahsJ1Mapper {
 	 * @return
 	 */
 	List<HmdahsJ1> queryHmdahsJ14Alipay();
+	
+	/**
+	 * 查询待发送的数据wechat
+	 * @return
+	 */
+	List<HmdahsJ1> queryHmdahsJ14Msjw();
 }
