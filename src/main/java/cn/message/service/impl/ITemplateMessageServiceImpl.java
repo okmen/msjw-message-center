@@ -269,55 +269,6 @@ public class ITemplateMessageServiceImpl implements ITemplateMessageService {
 				}
 
 			}
-			//获取到需要发送模板消息的用户对象
-			Set<UserBind> userBindSet = templateHmdahsJ1.getAllUserBinds(list);
-			Map<String, List<UserBind>> userBindMap = templateHmdahsJ1.group(userBindSet);
-				
-			//执行总数
-			sum = list.size();
-			//真正发送模板消息
-			/*for (int i = 0; i < list.size(); i++) {
-				HmdahsJ1 hmdahsJ1 = list.get(i);
-				String xh = hmdahsJ1.getXh();
-				String pch = hmdahsJ1.getPch(); 
-				String message = hmdahsJ1.getMessage();
-				String hslx = hmdahsJ1.getHslx();
-				String hphm = hmdahsJ1.getHphm();
-				String lxdh = hmdahsJ1.getLxdh();
-				String jszhm = hmdahsJ1.getJszhm();
-					
-				List<UserBind> userBinds = userBindMap.get(lxdh);
-				if(null == userBinds){
-					//已发送,手机号码无法在用户表中匹配openId
-					int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Msjw(hmdahsJ1.getId(), MsjwHmdahsJ1.STATE_1);
-					continue;
-				} 
-					
-				for (UserBind userBind : userBinds) {
-					String mobile = userBind.getMobileNumber();
-					String openId = userBind.getOpenId();
-					//组装模板消息数据对象
-					TemplateDataModel model = templateHmdahsJ1.getJzModel(hmdahsJ1);	
-					if(null == model) {
-						//已发送,精准推送 message 内容无法匹配模板规则
-						int hmdahsJ1sCount = messageDao.updateHmdahsJ1State4Msjw(hmdahsJ1.getId(), MsjwHmdahsJ1.STATE_2);
-						continue;
-					}
-						
-					//设置为发送完成
-					messageDao.updateHmdahsJ1State4Msjw(hmdahsJ1.getId(), MsjwHmdahsJ1.STATE_3);
-					sendCount ++;
-						
-					String request = GsonBuilderUtil.toJson(model);
-					String response = templateHmdahsJ1.sendMessage4Hmdahs(model);
-					String state = "";
-					if(StringUtil.isNotBlank(response)){
-						TemplateMessageModel result = GsonBuilderUtil.fromJson(response, TemplateMessageModel.class);
-						state = result.getErrcode()+"";
-					}
-					int sendTemplateRecordsCount = messageDao.insertSendTemplateRecord(new SendTemplateRecord(openId,jszhm,lxdh,xh,pch,response,request,new Date(),state,MsjwHmdahsJ1.TYPE));
-				}
-			}*/
 		} catch (Exception e) {
 			logger.error("定时发送模板消息出现异常",e);
 			throw e;
